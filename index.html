@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ENFOCADOS</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--Y:rgb(250,250,0);--Yd:rgb(215,215,0);--D:#2c3e50;--D2:#1a252f;--V:#10b981;--R:#ef4444;--G:#64748b;--B:#e2e8f0}
+body{font-family:'Inter',sans-serif;background:linear-gradient(160deg,#fffef0 0%,#fff9c4 100%);min-height:100vh;color:#1e293b;line-height:1.6}
+.wrap{max-width:860px;margin:0 auto;padding:1.8rem 1.2rem}
+header{text-align:center;margin-bottom:1.6rem}
+header svg{display:block;margin:0 auto .4rem}
+h1{font-family:'Montserrat',sans-serif;font-size:3rem;font-weight:800;color:var(--D);letter-spacing:-1px}
+.sub{color:var(--G);font-size:1.02rem;font-weight:500}
+.card{background:#fff;border-radius:18px;padding:2rem;box-shadow:0 4px 24px rgba(0,0,0,.08);border:2px solid var(--Y);margin-bottom:1.4rem}
+.field{margin-bottom:1.1rem;text-align:left}
+.field label{display:block;margin-bottom:.3rem;color:var(--D);font-weight:600;font-size:.9rem}
+.field input{width:100%;padding:.82rem 1rem;border:2px solid var(--B);border-radius:10px;font-size:1rem;font-family:inherit;transition:border-color .2s}
+.field input:focus{outline:none;border-color:var(--Y);box-shadow:0 0 0 3px rgba(250,250,0,.18)}
+.field .hint{font-size:.78rem;color:var(--G);margin-top:.3rem}
+.btn{width:100%;padding:.88rem 1.5rem;background:var(--Y);color:var(--D);border:none;border-radius:10px;font-size:1.05rem;font-weight:700;cursor:pointer;font-family:'Montserrat',sans-serif;transition:background .2s,transform .15s,box-shadow .2s;box-shadow:0 3px 8px rgba(250,250,0,.3)}
+.btn:hover{background:var(--Yd);transform:translateY(-1px);box-shadow:0 5px 14px rgba(250,250,0,.4)}
+.btn:disabled{background:#cbd5e1;color:#94a3b8;cursor:not-allowed;transform:none;box-shadow:none}
+.btn-out{background:#fff;color:var(--D);border:2px solid var(--D);box-shadow:none}
+.btn-out:hover{background:var(--D);color:#fff}
+.btn-sm{width:auto;display:inline-block;padding:.6rem 1.3rem;font-size:.92rem}
+.ubar{background:linear-gradient(135deg,var(--Y),rgb(255,255,100));padding:.78rem 1.1rem;border-radius:10px;display:flex;justify-content:space-between;align-items:center;margin-bottom:1.4rem;flex-wrap:wrap;gap:.5rem}
+.ubar span{color:var(--D);font-weight:600;font-size:.93rem}
+.btn-logout{background:var(--D);color:#fff;border:none;padding:.4rem 1rem;border-radius:7px;cursor:pointer;font-weight:600;font-size:.85rem}
+.btn-logout:hover{background:var(--D2)}
+.spin-wrap{text-align:center;padding:2.8rem 0;color:var(--G)}
+.spin{border:3px solid #eee;border-top:3px solid var(--Y);border-radius:50%;width:40px;height:40px;animation:sp .9s linear infinite;margin:0 auto .9rem}
+@keyframes sp{to{transform:rotate(360deg)}}
+.spin-wrap p{font-size:.96rem;font-weight:500}
+.cbox{max-width:540px;margin:0 auto;text-align:center}
+.cbox h2{font-family:'Montserrat',sans-serif;color:var(--D);margin-bottom:.35rem;font-size:1.3rem}
+.cbox>p{color:var(--G);margin-bottom:1.2rem;font-size:.95rem;line-height:1.55}
+.big-icon{font-size:3.8rem;margin-bottom:.6rem}
+.contact-box{background:#f0f4ff;border:2px solid #c7d8ff;border-radius:14px;padding:1.1rem 1.4rem;margin:1rem auto;max-width:420px;text-align:left}
+.contact-box p{color:var(--D);font-size:.9rem;margin-bottom:.25rem}
+.contact-box a{color:#1e40af;font-weight:700;font-size:.95rem;text-decoration:none}
+.contact-box a:hover{text-decoration:underline}
+.err{background:#fef2f2;border-left:4px solid var(--R);padding:.8rem 1rem;border-radius:8px;color:var(--R);margin-top:.7rem;font-size:.88rem}
+.btnrow{display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap;margin-top:1.2rem}
+.reset-link{margin-top:1rem;text-align:center}
+.reset-link a{color:var(--G);font-size:.82rem;text-decoration:none;border-bottom:1px dotted var(--G);cursor:pointer}
+.reset-link a:hover{color:var(--D)}
+.cfg-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:1rem}
+.cfg-grid label{display:block;margin-bottom:.3rem;color:var(--D);font-weight:600;font-size:.9rem}
+.cfg-grid input,.cfg-grid select{width:100%;padding:.7rem;border:2px solid var(--B);border-radius:8px;font-size:1rem;font-family:inherit;transition:border-color .2s}
+.cfg-grid input:focus,.cfg-grid select:focus{outline:none;border-color:var(--Y)}
+.db-info{color:var(--G);font-size:.82rem;margin-bottom:.8rem;display:block}
+.qhdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;padding-bottom:.6rem;border-bottom:2px solid var(--Y)}
+.qnum{font-family:'Montserrat',sans-serif;font-size:1.15rem;color:var(--D);font-weight:700}
+.qprog{color:var(--G);font-weight:600;font-size:.85rem}
+.pbar-bg{background:var(--B);border-radius:4px;height:6px;margin-bottom:1.2rem;overflow:hidden}
+.pbar{background:var(--Y);height:100%;border-radius:4px;transition:width .4s ease}
+.qtxt{font-size:1.12rem;font-weight:500;margin-bottom:1.3rem;line-height:1.65}
+.opts{display:flex;flex-direction:column;gap:.7rem}
+.opt{display:flex;align-items:center;gap:.85rem;padding:1rem 1.1rem;border:2px solid var(--B);border-radius:11px;cursor:pointer;background:#fff;transition:border-color .2s,background .2s,transform .15s}
+.opt:hover:not(.dis){border-color:var(--Y);background:#fffef0;transform:translateX(3px)}
+.opt.dis{cursor:not-allowed;opacity:.85}
+.opt.ok{border-color:var(--V);background:#f0fdf4}
+.opt.ko{border-color:var(--R);background:#fef2f2}
+.oltr{width:34px;height:34px;border-radius:50%;background:var(--B);display:flex;align-items:center;justify-content:center;font-weight:700;font-family:'Montserrat',sans-serif;flex-shrink:0;font-size:.9rem;color:#1e293b;transition:background .2s,color .2s}
+.opt.ok .oltr{background:var(--V);color:#fff}
+.opt.ko .oltr{background:var(--R);color:#fff}
+.fb{margin-top:1.3rem;padding:1.1rem 1.2rem;border-radius:10px}
+.fb.ok{background:#f0fdf4;border-left:4px solid var(--V)}
+.fb.ko{background:#fef2f2;border-left:4px solid var(--R)}
+.fb-title{font-weight:700;font-size:.95rem;margin-bottom:.4rem}
+.fb.ok .fb-title{color:var(--V)}
+.fb.ko .fb-title{color:var(--R)}
+.fb-body{font-size:.9rem;line-height:1.55;color:#1e293b}
+.fb-body strong{color:var(--D)}
+.nav{display:flex;gap:.7rem;margin-top:1.5rem}
+.nav .btn{flex:1}
+.res-wrap{text-align:center}
+.res-wrap h2{font-family:'Montserrat',sans-serif;color:var(--D);font-size:1.75rem;margin-bottom:.15rem}
+.res-score{font-family:'Montserrat',sans-serif;font-size:4.2rem;font-weight:800;color:var(--D);margin:.7rem 0 .1rem}
+.res-lbl{color:var(--G);font-size:1.05rem;font-weight:600;margin-bottom:1rem}
+.score-emoji{font-size:2.2rem;margin-bottom:.2rem}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;margin:1rem 0}
+.stat{background:#f8fafc;border-radius:14px;padding:1rem;border:1px solid var(--B);text-align:center}
+.stat-v{font-family:'Montserrat',sans-serif;font-size:2rem;font-weight:700;margin-bottom:.12rem}
+.stat.ok .stat-v{color:var(--V)}
+.stat.ko .stat-v{color:var(--R)}
+.stat.tot .stat-v{color:var(--D)}
+.stat-l{color:var(--G);font-size:.82rem;font-weight:600}
+.hidden{display:none!important}
+@media(max-width:600px){h1{font-size:2.2rem}.card{padding:1.3rem}.cfg-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <svg width="68" height="68" viewBox="0 0 68 68" fill="none">
+    <circle cx="34" cy="34" r="32" fill="rgb(250,250,0)" stroke="#2c3e50" stroke-width="3"/>
+    <path d="M22 34L30 42L46 26" stroke="#2c3e50" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </svg>
+  <h1>ENFOCADOS</h1>
+  <div class="sub">Plataforma de Preparación para Oposiciones</div>
+</header>
+
+<!-- Pantalla de configuración inicial -->
+<div id="secSetup" class="card">
+  <div class="cbox">
+    <div class="big-icon">⚙️</div>
+    <h2>Configuración Inicial</h2>
+    <p>Ingresa la URL de tu API de Google Apps Script.</p>
+  </div>
+  <div class="field">
+    <label>URL del API (termina en /exec)</label>
+    <input type="text" id="inUrl" placeholder="https://script.google.com/macros/s/.../exec">
+    <div class="hint">Ingresa la URL una sola vez. Se guardará para futuros usos.</div>
+  </div>
+  <div id="setupErr"></div>
+  <button class="btn" onclick="saveUrl()">Guardar y Continuar →</button>
+</div>
+
+<!-- Pantalla de login -->
+<div id="secLogin" class="card hidden">
+  <h2 style="font-family:'Montserrat',sans-serif;text-align:center;margin-bottom:1.2rem;color:var(--D)">Iniciar Sesión</h2>
+  <div class="field">
+    <label>Nombre Completo</label>
+    <input type="text" id="inName" autocomplete="name">
+  </div>
+  <div class="field">
+    <label>Correo Electrónico</label>
+    <input type="email" id="inEmail" autocomplete="email">
+  </div>
+  <div id="loginErr"></div>
+  <button class="btn" onclick="doLogin()">Acceder →</button>
+  <div class="reset-link">
+    <a onclick="resetUrl()">🔄 Cambiar URL del API</a>
+  </div>
+</div>
+
+<!-- Pantalla de carga -->
+<div id="secLoading" class="card hidden">
+  <div class="spin-wrap">
+    <div class="spin"></div>
+    <p id="loadMsg">Cargando datos...</p>
+  </div>
+</div>
+
+<!-- Pantalla de usuario bloqueado -->
+<div id="secBlocked" class="card hidden">
+  <div class="cbox">
+    <div class="big-icon">🔒</div>
+    <h2>Usuario Bloqueado</h2>
+    <p>Su usuario está bloqueado actualmente.</p>
+    <div class="contact-box">
+      <p><strong>Solicite acceso al correo:</strong></p>
+      <a href="/cdn-cgi/l/email-protection#f99f8c9c8b989d9c8a9c8b909c969f909a909895b991968d94989095d79a9694">📧 <span class="__cf_email__" data-cfemail="ddbba8b8afbcb9b8aeb8afb4b8b2bbb4beb4bcb19db5b2a9b0bcb4b1f3beb2b0">[email&#160;protected]</span></a>
+      <p style="margin-top:.8rem">Incluya: <strong>nombre, primer apellido y correo electrónico</strong> para acceder a la <strong>versión Freemium</strong>.</p>
+    </div>
+    <button class="btn btn-out btn-sm" onclick="showScreen('secLogin')">← Volver</button>
+  </div>
+</div>
+
+<!-- Pantalla de usuario no encontrado -->
+<div id="secDenied" class="card hidden">
+  <div class="cbox">
+    <div class="big-icon">❌</div>
+    <h2>Usuario No Registrado</h2>
+    <p>No encontramos tu correo electrónico en nuestra base de datos.</p>
+    <div class="contact-box">
+      <p><strong>Para solicitar acceso, escribe a:</strong></p>
+      <a href="/cdn-cgi/l/email-protection#adcbd8c8dfccc9c8dec8dfc4c8c2cbc4cec4ccc1edc5c2d9c0ccc4c183cec2c0">📧 <span class="__cf_email__" data-cfemail="23455646514247465046514a464c454a404a424f634b4c574e424a4f0d404c4e">[email&#160;protected]</span></a>
+      <p style="margin-top:.8rem">Incluye: <strong>nombre, primer apellido y correo electrónico</strong> para acceder a la <strong>versión Freemium</strong>.</p>
+    </div>
+    <button class="btn btn-out btn-sm" onclick="showScreen('secLogin')">← Volver</button>
+  </div>
+</div>
+
+<!-- Pantalla de error -->
+<div id="secError" class="card hidden">
+  <div class="cbox">
+    <div class="big-icon">⚠️</div>
+    <h2>Error de Conexión</h2>
+    <p id="errMsg"></p>
+    <div class="btnrow">
+      <button class="btn btn-out btn-sm" onclick="showScreen('secLogin')">← Volver</button>
+      <button class="btn btn-sm" onclick="retryLoad()">🔄 Reintentar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Pantalla de configuración del examen -->
+<div id="secConfig" class="card hidden">
+  <div class="ubar"><span id="cfgUser"></span><button class="btn-logout" onclick="showScreen('secLogin')">Cerrar Sesión</button></div>
+  <h3 style="font-family:'Montserrat',sans-serif;color:var(--D);margin-bottom:1rem;font-size:1.1rem">Configura tu Examen</h3>
+  <div class="cfg-grid">
+    <div><label>Número de preguntas <span style="color:var(--G);font-weight:400">(máx. 100)</span></label><input type="number" id="inNum" min="1" max="100" value="10" oninput="if(+this.value>100)this.value=100;if(+this.value<1)this.value=1"></div>
+    <div><label>Filtrar por Materia</label><select id="selMateria"><option value="">Todas las materias</option></select></div>
+  </div>
+  <span class="db-info" id="dbInfo"></span>
+  <button class="btn" onclick="startExam()">🎯 Comenzar Examen</button>
+</div>
+
+<!-- Pantalla de preguntas -->
+<div id="secQ" class="card hidden">
+  <div class="qhdr"><span class="qnum" id="qNum"></span><span class="qprog" id="qProg"></span></div>
+  <div class="pbar-bg"><div class="pbar" id="pBar"></div></div>
+  <div class="qtxt" id="qTxt"></div>
+  <div class="opts" id="optsWrap"></div>
+  <div id="fbWrap"></div>
+  <div class="nav">
+    <button class="btn btn-out hidden" id="btnPrev" onclick="prevQ()">← Anterior</button>
+    <button class="btn" id="btnNext" onclick="nextQ()" disabled>Siguiente →</button>
+  </div>
+</div>
+
+<!-- Pantalla de resultados -->
+<div id="secRes" class="card hidden">
+  <div class="res-wrap">
+    <h2>¡Examen Completado!</h2>
+    <div class="score-emoji" id="rEmoji"></div>
+    <div class="res-score" id="rPct"></div>
+    <div class="res-lbl">Puntuación Final</div>
+    <div class="stats">
+      <div class="stat ok"><div class="stat-v" id="rOk"></div><div class="stat-l">Correctas</div></div>
+      <div class="stat ko"><div class="stat-v" id="rKo"></div><div class="stat-l">Incorrectas</div></div>
+      <div class="stat tot"><div class="stat-v" id="rTot"></div><div class="stat-l">Total</div></div>
+    </div>
+    <button class="btn" onclick="newExam()" style="margin-top:1rem">🔄 Nuevo Examen</button>
+  </div>
+</div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+var ADMIN_EMAIL='joanmanuelbaez@gmail.com';
+var apiUrl='';
+var curUser=null;
+var allQuestions=[];
+var exam=[];
+var idx=0;
+var answers=[];
+var correct=[];
+var loadAttempt=0;
+
+// Inicializar app
+window.addEventListener('DOMContentLoaded',function(){
+  apiUrl=localStorage.getItem('ef_apiUrl')||'';
+  if(apiUrl){
+    showScreen('secLogin');
+  }else{
+    showScreen('secSetup');
+  }
+});
+
+// Guardar URL del API
+function saveUrl(){
+  var url=document.getElementById('inUrl').value.trim();
+  if(!url){
+    document.getElementById('setupErr').innerHTML='<div class="err">Ingresa la URL del API</div>';
+    return;
+  }
+  if(!url.includes('script.google.com')||!url.includes('/exec')){
+    document.getElementById('setupErr').innerHTML='<div class="err">URL inválida. Debe terminar en /exec</div>';
+    return;
+  }
+  localStorage.setItem('ef_apiUrl',url);
+  apiUrl=url;
+  showScreen('secLogin');
+}
+
+// Resetear URL
+function resetUrl(){
+  if(confirm('¿Borrar URL guardada y volver a configuración?')){
+    localStorage.removeItem('ef_apiUrl');
+    apiUrl='';
+    showScreen('secSetup');
+  }
+}
+
+// Login
+function doLogin(){
+  var name=document.getElementById('inName').value.trim();
+  var email=document.getElementById('inEmail').value.trim().toLowerCase();
+  if(!name||!email){
+    document.getElementById('loginErr').innerHTML='<div class="err">Completa ambos campos</div>';
+    return;
+  }
+  if(!email.includes('@')||!email.includes('.')){
+    document.getElementById('loginErr').innerHTML='<div class="err">Correo electrónico inválido</div>';
+    return;
+  }
+  
+  showScreen('secLoading');
+  document.getElementById('loadMsg').textContent='Verificando usuario...';
+  loadAttempt=0;
+  loadData('users',function(result){
+    if(result.error){
+      document.getElementById('errMsg').textContent='Error al cargar usuarios: '+result.message;
+      showScreen('secError');
+      return;
+    }
+    
+    var users=parseTable(result.headers,result.rows);
+    var user=null;
+    
+    // Admin siempre accede
+    if(email===ADMIN_EMAIL){
+      user={nombre:name,correo:email,estado:'Aceptado'};
+    }else{
+      // Buscar usuario en tabla
+      for(var i=0;i<users.length;i++){
+        if(users[i].correo&&users[i].correo.toLowerCase()===email){
+          user=users[i];
+          break;
+        }
+      }
+    }
+    
+    if(!user){
+      showScreen('secDenied');
+      return;
+    }
+    
+    if(user.estado&&user.estado.toLowerCase().includes('bloqueado')){
+      showScreen('secBlocked');
+      return;
+    }
+    
+    // Usuario aceptado
+    curUser={nombre:name,correo:email};
+    document.getElementById('loadMsg').textContent='Cargando preguntas...';
+    
+    loadData('questions',function(qResult){
+      if(qResult.error){
+        document.getElementById('errMsg').textContent='Error al cargar preguntas: '+qResult.message;
+        showScreen('secError');
+        return;
+      }
+      
+      allQuestions=parseTable(qResult.headers,qResult.rows);
+      
+      if(allQuestions.length===0){
+        document.getElementById('errMsg').textContent='No hay preguntas disponibles';
+        showScreen('secError');
+        return;
+      }
+      
+      // Ir a configuración
+      setupConfig();
+      showScreen('secConfig');
+    });
+  });
+}
+
+// Cargar datos via JSONP
+function loadData(type,callback){
+  loadAttempt++;
+  var callbackName='jsonp_'+type+'_'+Date.now();
+  var timeout;
+  
+  window[callbackName]=function(data){
+    clearTimeout(timeout);
+    delete window[callbackName];
+    var script=document.getElementById('script_'+callbackName);
+    if(script)script.remove();
+    callback(data);
+  };
+  
+  var script=document.createElement('script');
+  script.id='script_'+callbackName;
+  script.src=apiUrl+'?type='+type+'&callback='+callbackName;
+  script.onerror=function(){
+    clearTimeout(timeout);
+    delete window[callbackName];
+    callback({error:true,message:'No se pudo conectar al servidor. Verifica la URL del API.'});
+  };
+  
+  timeout=setTimeout(function(){
+    delete window[callbackName];
+    var s=document.getElementById('script_'+callbackName);
+    if(s)s.remove();
+    callback({error:true,message:'Tiempo de espera agotado. Intenta nuevamente.'});
+  },15000);
+  
+  document.head.appendChild(script);
+}
+
+// Reintentar carga
+function retryLoad(){
+  if(loadAttempt>3){
+    document.getElementById('errMsg').textContent='Demasiados intentos fallidos. Verifica la URL del API y tu conexión.';
+    return;
+  }
+  doLogin();
+}
+
+// Parsear tabla
+function parseTable(headers,rows){
+  var result=[];
+  for(var i=0;i<rows.length;i++){
+    var obj={};
+    var empty=true;
+    for(var j=0;j<headers.length;j++){
+      var key=headers[j].toString().toLowerCase().trim();
+      var val=(rows[i][j]||'').toString().trim();
+      if(val)empty=false;
+      obj[key]=val;
+    }
+    if(!empty)result.push(obj);
+  }
+  return result;
+}
+
+// Configurar examen
+function setupConfig(){
+  document.getElementById('cfgUser').textContent='👤 '+curUser.nombre;
+  
+  // Llenar materias
+  var materias={};
+  for(var i=0;i<allQuestions.length;i++){
+    var m=allQuestions[i].materia||'';
+    if(m)materias[m]=true;
+  }
+  var sel=document.getElementById('selMateria');
+  sel.innerHTML='<option value="">Todas las materias</option>';
+  for(var m in materias){
+    var opt=document.createElement('option');
+    opt.value=m;
+    opt.textContent=m;
+    sel.appendChild(opt);
+  }
+  
+  document.getElementById('dbInfo').textContent='Base de datos: '+allQuestions.length+' pregunta(s) disponible(s)';
+}
+
+// Iniciar examen
+function startExam(){
+  var num=+document.getElementById('inNum').value;
+  var materia=document.getElementById('selMateria').value;
+  
+  var pool=allQuestions.slice();
+  if(materia){
+    pool=pool.filter(function(q){return q.materia===materia});
+  }
+  
+  if(pool.length===0){
+    alert('No hay preguntas para la materia seleccionada');
+    return;
+  }
+  
+  // Shuffle
+  for(var i=pool.length-1;i>0;i--){
+    var j=Math.floor(Math.random()*(i+1));
+    var temp=pool[i];
+    pool[i]=pool[j];
+    pool[j]=temp;
+  }
+  
+  exam=pool.slice(0,Math.min(num,pool.length));
+  idx=0;
+  answers=new Array(exam.length).fill(null);
+  correct=new Array(exam.length).fill(false);
+  
+  showQ();
+  showScreen('secQ');
+}
+
+// Mostrar pregunta
+function showQ(){
+  var q=exam[idx];
+  document.getElementById('qNum').textContent='Pregunta '+(idx+1);
+  document.getElementById('qProg').textContent=(idx+1)+'/'+exam.length;
+  document.getElementById('pBar').style.width=((idx+1)/exam.length*100)+'%';
+  document.getElementById('qTxt').textContent=q.pregunta||'';
+  
+  var opts=(q.opciones||'').split('\n').filter(function(o){return o.trim()});
+  var wrap=document.getElementById('optsWrap');
+  wrap.innerHTML='';
+  
+  for(var i=0;i<opts.length;i++){
+    var txt=opts[i].trim();
+    var ltr=String.fromCharCode(65+i);
+    var div=document.createElement('div');
+    div.className='opt';
+    div.innerHTML='<div class="oltr">'+ltr+'</div><div>'+txt+'</div>';
+    div.dataset.ltr=ltr;
+    div.onclick=function(){selectOpt(this)};
+    wrap.appendChild(div);
+  }
+  
+  document.getElementById('fbWrap').innerHTML='';
+  document.getElementById('btnNext').disabled=answers[idx]===null;
+  document.getElementById('btnPrev').classList.toggle('hidden',idx===0);
+  
+  if(answers[idx]!==null){
+    showFeedback();
+  }
+}
+
+// Seleccionar opción
+function selectOpt(el){
+  if(answers[idx]!==null)return;
+  
+  var ltr=el.dataset.ltr;
+  var q=exam[idx];
+  var correct_ltr=(q.respuesta||'').trim().toUpperCase();
+  
+  answers[idx]=ltr;
+  correct[idx]=(ltr===correct_ltr);
+  
+  var opts=document.querySelectorAll('#optsWrap .opt');
+  for(var i=0;i<opts.length;i++){
+    opts[i].classList.add('dis');
+    if(opts[i].dataset.ltr===correct_ltr){
+      opts[i].classList.add('ok');
+    }else if(opts[i]===el&&ltr!==correct_ltr){
+      opts[i].classList.add('ko');
+    }
+  }
+  
+  showFeedback();
+  document.getElementById('btnNext').disabled=false;
+}
+
+// Mostrar feedback
+function showFeedback(){
+  var q=exam[idx];
+  var isCorrect=correct[idx];
+  var fb=document.createElement('div');
+  fb.className='fb '+(isCorrect?'ok':'ko');
+  fb.innerHTML='<div class="fb-title">'+(isCorrect?'✓ ¡Correcto!':'✗ Incorrecto')+'</div>'+
+    '<div class="fb-body"><strong>Respuesta correcta:</strong> '+q.respuesta+'<br>'+(q.saber||'')+'</div>';
+  document.getElementById('fbWrap').innerHTML='';
+  document.getElementById('fbWrap').appendChild(fb);
+}
+
+// Siguiente pregunta
+function nextQ(){
+  if(idx<exam.length-1){
+    idx++;
+    showQ();
+  }else{
+    showResults();
+  }
+}
+
+// Pregunta anterior
+function prevQ(){
+  if(idx>0){
+    idx--;
+    showQ();
+  }
+}
+
+// Mostrar resultados
+function showResults(){
+  var ok=0;
+  for(var i=0;i<correct.length;i++){
+    if(correct[i])ok++;
+  }
+  var pct=Math.round(ok/exam.length*100);
+  
+  document.getElementById('rOk').textContent=ok;
+  document.getElementById('rKo').textContent=(exam.length-ok);
+  document.getElementById('rTot').textContent=exam.length;
+  document.getElementById('rPct').textContent=pct+'%';
+  
+  var emoji='😐';
+  if(pct>=90)emoji='🏆';
+  else if(pct>=75)emoji='😄';
+  else if(pct>=60)emoji='🙂';
+  else if(pct>=50)emoji='😕';
+  else emoji='😞';
+  document.getElementById('rEmoji').textContent=emoji;
+  
+  showScreen('secRes
