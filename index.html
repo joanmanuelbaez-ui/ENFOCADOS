@@ -1,38 +1,38 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ENFOCADOS</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-<style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    :root{--Y:rgb(250,250,0);--D:#2c3e50;--V:#10b981;--R:#ef4444;--B:#e2e8f0}
-    body{font-family:'Inter',sans-serif;background:#fffef0;color:#1e293b;padding:1rem}
-    .card{background:#fff;border-radius:18px;padding:1.5rem;box-shadow:0 4px 20px rgba(0,0,0,.08);border:2px solid var(--Y);max-width:600px;margin:auto}
-    .btn{width:100%;padding:1rem;background:var(--Y);color:var(--D);border:none;border-radius:10px;font-weight:700;cursor:pointer;margin-top:1rem}
-    .opt{display:flex;align-items:center;gap:1rem;padding:1rem;border:2px solid var(--B);border-radius:11px;margin-bottom:10px;cursor:pointer;text-align:left;background:#fff;transition: 0.2s;}
-    .opt:hover{border-color: var(--D); background:#fdfdfd}
-    .opt.ok{border-color:var(--V);background:#f0fdf4}
-    .opt.ko{border-color:var(--R);background:#fef2f2}
-    .oltr{width:30px;height:30px;border-radius:50%;background:var(--B);display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0}
-    .fb{margin-top:1rem;padding:1rem;background:#f1f5f9;border-left:4px solid var(--D);font-size:0.9rem}
-    .hidden{display:none}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENFOCADOS - Oposiciones</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{--Y:rgb(250,250,0);--D:#2c3e50;--V:#10b981;--R:#ef4444;--B:#e2e8f0}
+        body{font-family:'Inter',sans-serif;background:#fffef0;color:#1e293b;padding:1.2rem}
+        .card{background:#fff;border-radius:18px;padding:2rem;box-shadow:0 4px 20px rgba(0,0,0,.08);border:2px solid var(--Y);max-width:550px;margin:auto}
+        .btn{width:100%;padding:1rem;background:var(--Y);color:var(--D);border:none;border-radius:10px;font-weight:700;cursor:pointer;margin-top:1rem;font-family:'Montserrat'}
+        .opt{display:flex;align-items:center;gap:1rem;padding:1rem;border:2px solid var(--B);border-radius:11px;margin-bottom:10px;cursor:pointer;background:#fff;transition:0.2s}
+        .opt.ok{border-color:var(--V);background:#f0fdf4}
+        .opt.ko{border-color:var(--R);background:#fef2f2}
+        .oltr{width:30px;height:30px;border-radius:50%;background:var(--B);display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0}
+        .fb{margin-top:1rem;padding:1rem;background:#f8fafc;border-left:4px solid var(--D);font-size:0.9rem}
+        .hidden{display:none}
+        input, select{width:100%;padding:.8rem;margin:10px 0;border:2px solid var(--B);border-radius:8px;font-size:1rem}
+    </style>
 </head>
 <body>
 
 <div id="secLogin" class="card">
-    <h1 style="text-align:center;font-family:Montserrat">ENFOCADOS</h1>
-    <p style="text-align:center; margin-bottom:1rem">Introduce tu email para comenzar</p>
-    <input type="email" id="inEmail" placeholder="correo@ejemplo.com" style="width:100%;padding:.8rem;border:2px solid var(--B);border-radius:8px">
+    <h1 style="text-align:center;font-family:Montserrat;margin-bottom:1.5rem">ENFOCADOS</h1>
+    <label>Correo Electrónico:</label>
+    <input type="email" id="inEmail" placeholder="ejemplo@correo.com">
     <button class="btn" onclick="doLogin()">Entrar</button>
 </div>
 
 <div id="secConfig" class="card hidden">
-    <h2 id="cfgUser">Bienvenido/a</h2>
-    <p style="margin:1rem 0">Selecciona materia para el test de 10 preguntas:</p>
-    <select id="selMateria" style="width:100%;padding:.8rem;border:2px solid var(--B);border-radius:8px"><option value="">Todas las materias</option></select>
+    <h2 id="cfgUser" style="margin-bottom:1rem"></h2>
+    <label>Materia:</label>
+    <select id="selMateria"><option value="">Todas las materias</option></select>
     <button class="btn" onclick="startExam()">Empezar Test</button>
 </div>
 
@@ -40,13 +40,13 @@
     <div id="qTxt" style="font-weight:600;margin-bottom:1.5rem;font-size:1.1rem"></div>
     <div id="optsWrap"></div>
     <div id="fbWrap"></div>
-    <button id="btnNext" class="btn" onclick="nextQ()" disabled>Continuar</button>
+    <button id="btnNext" class="btn" onclick="nextQ()" disabled>Siguiente</button>
 </div>
 
 <div id="secRes" class="card hidden" style="text-align:center">
-    <h2>Resultado Final</h2>
-    <div id="rPct" style="font-size:3.5rem;font-weight:800;margin:1rem"></div>
-    <button class="btn" onclick="location.reload()">Volver a intentar</button>
+    <h2>Resultado</h2>
+    <div id="rPct" style="font-size:4rem;font-weight:800;margin:1rem 0"></div>
+    <button class="btn" onclick="location.reload()">Reiniciar</button>
 </div>
 
 <script>
@@ -54,35 +54,49 @@ const apiUrl = 'https://script.google.com/macros/s/AKfycbxOW1CWs8n04Lek1Sm0mYZE_
 let allQs = [], exam = [], idx = 0, correct = [];
 
 function fetchJSONP(url, callback) {
-    const name = 'jsonp_' + Date.now();
+    const name = 'jsonp_' + Date.now() + Math.floor(Math.random()*1000);
     window[name] = (data) => { delete window[name]; callback(data); };
     const s = document.createElement('script');
     s.src = `${url}${url.includes('?')? '&':'?'}callback=${name}`;
     document.body.appendChild(s);
 }
 
+// LOGIN ROBUSTO (Ignora mayúsculas/minúsculas en los encabezados)
 function doLogin() {
-    const email = document.getElementById('inEmail').value.trim().toLowerCase();
+    const emailInput = document.getElementById('inEmail').value.trim().toLowerCase();
+    if(!emailInput) return;
+
     fetchJSONP(apiUrl + '?type=users', (res) => {
-        const uIdx = res.headers.findIndex(h => h.toLowerCase() === 'correo');
-        if (res.rows.some(r => r[uIdx]?.toLowerCase() === email)) {
+        const headers = res.headers.map(h => h.toLowerCase().trim());
+        const emailCol = headers.indexOf('correo');
+        
+        const userFound = res.rows.find(row => row[emailCol]?.toLowerCase().trim() === emailInput);
+
+        if (userFound) {
             fetchJSONP(apiUrl + '?type=questions', (qRes) => {
-                const h = qRes.headers.map(s => s.toLowerCase().trim());
+                const qHeaders = qRes.headers.map(h => h.toLowerCase().trim());
                 allQs = qRes.rows.map(r => {
-                    let o = {};
-                    h.forEach((name, i) => o[name] = r[i]);
-                    return o;
+                    let obj = {};
+                    qHeaders.forEach((name, i) => obj[name] = r[i]);
+                    return obj;
                 });
+                
+                // Cargar materias en el select
                 const mats = [...new Set(allQs.map(q => q.materia).filter(m => m))];
+                const sel = document.getElementById('selMateria');
                 mats.forEach(m => {
-                    const o = document.createElement('option');
-                    o.value = m; o.textContent = m;
-                    document.getElementById('selMateria').appendChild(o);
+                    const opt = document.createElement('option');
+                    opt.value = m; opt.textContent = m;
+                    sel.appendChild(opt);
                 });
+
                 document.getElementById('secLogin').classList.add('hidden');
                 document.getElementById('secConfig').classList.remove('hidden');
+                document.getElementById('cfgUser').textContent = "Bienvenido/a";
             });
-        } else { alert("Acceso denegado"); }
+        } else {
+            alert("El correo no está registrado.");
+        }
     });
 }
 
@@ -102,58 +116,27 @@ function showQ() {
     document.getElementById('fbWrap').innerHTML = "";
     document.getElementById('btnNext').disabled = true;
 
-    // --- SOLUCIÓN ESPECÍFICA PARA EL TEXTO CON "\n" ---
-    let textoOriginal = q.opciones || "";
-    
-    // Dividimos usando la secuencia literal \n
-    let opcionesArray = textoOriginal.split(/\\n/).map(t => t.trim()).filter(t => t.length > 0);
+    // --- SEPARADOR ESPECÍFICO POR \n ---
+    let rawOpts = q.opciones || "";
+    // Buscamos la secuencia literal \n
+    let optArray = rawOpts.split(/\\n/).map(t => t.trim()).filter(t => t.length > 0);
 
     const wrap = document.getElementById('optsWrap');
     wrap.innerHTML = "";
 
-    opcionesArray.forEach((txt) => {
-        // Extraemos la letra (a, b, c o d) del inicio del texto
+    optArray.forEach((txt) => {
         const letra = txt.charAt(0).toUpperCase();
-        
         const div = document.createElement('div');
         div.className = 'opt';
         div.innerHTML = `<div class="oltr">${letra}</div><div>${txt}</div>`;
         
         div.onclick = () => {
             if(!document.getElementById('btnNext').disabled) return;
-            const correcta = (q.respuesta || "").trim().charAt(0).toUpperCase();
-            const esOk = letra === correcta;
+            const resCorrecta = (q.respuesta || "").trim().charAt(0).toUpperCase();
+            const esOk = letra === resCorrecta;
             
             div.classList.add(esOk ? 'ok' : 'ko');
             correct[idx] = esOk;
 
             if(!esOk) {
-                Array.from(wrap.children).forEach(c => {
-                    if(c.querySelector('.oltr').textContent === correcta) c.classList.add('ok');
-                });
-            }
-            
-            document.getElementById('fbWrap').innerHTML = `
-                <div class="fb">
-                    <b style="color:${esOk?'#10b981':'#ef4444'}">${esOk?'¡CORRECTO!':'INCORRECTO'}</b><br>
-                    ${q.motivacion || q.saber || ''}
-                </div>`;
-            document.getElementById('btnNext').disabled = false;
-        };
-        wrap.appendChild(div);
-    });
-}
-
-function nextQ() {
-    idx++;
-    if(idx < exam.length) showQ();
-    else {
-        const ok = correct.filter(c => c).length;
-        document.getElementById('rPct').textContent = Math.round(ok/exam.length*100) + "%";
-        document.getElementById('secQ').classList.add('hidden');
-        document.getElementById('secRes').classList.remove('hidden');
-    }
-}
-</script>
-</body>
-</html>
+                Array
