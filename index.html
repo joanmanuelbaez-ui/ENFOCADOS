@@ -12,112 +12,177 @@ body{font-family:'Inter',sans-serif;background:linear-gradient(160deg,#fffef0 0%
 .wrap{max-width:860px;margin:0 auto;padding:1.8rem 1.2rem}
 header{text-align:center;margin-bottom:1.6rem}
 h1{font-family:'Montserrat',sans-serif;font-size:3rem;font-weight:800;color:var(--D);letter-spacing:-1px}
+
 .screen{display:none}.active{display:block}
+
 .login-card{max-width:420px;margin:2rem auto;background:var(--D);border-radius:28px;padding:3rem 2.5rem;color:#fff;text-align:center;box-shadow:0 25px 50px -12px rgba(0,0,0,0.25)}
 .input-group{margin-bottom:1.5rem;text-align:left}
 .input-group label{display:block;font-weight:500;margin-bottom:.6rem;color:rgba(255,255,255,0.9);font-size:.85rem;text-transform:uppercase}
-.input-group input{width:100%;padding:1.1rem;border-radius:14px;border:2px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:#fff;font-size:1rem}
-.btn-main{width:100%;background:var(--Y);color:var(--D);padding:1.1rem;border-radius:14px;border:none;font-weight:800;cursor:pointer;font-family:'Montserrat';font-size:1rem;text-transform:uppercase}
-.card{background:#fff;border-radius:24px;padding:2.2rem;box-shadow:0 20px 25px -5px rgba(0,0,0,0.1)}
-.qtxt{font-size:1.4rem;font-weight:700;margin-bottom:1.5rem;color:var(--D)}
+.input-group input{width:100%;padding:1.1rem;border-radius:14px;border:2px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:#fff;font-size:1rem;width:100%}
+
+.btn-main{width:100%;background:var(--Y);color:var(--D);padding:1.1rem;border-radius:14px;border:none;font-weight:800;cursor:pointer;font-family:'Montserrat';font-size:1rem;text-transform:uppercase;transition:0.2s}
+.btn-main:hover{background:var(--Yd);transform:translateY(-2px)}
+
+.card{background:#fff;border-radius:24px;padding:2.2rem;box-shadow:0 20px 25px -5px rgba(0,0,0,0.1);border:1px solid rgba(255,255,255,0.5)}
+.qtxt{font-size:1.4rem;font-weight:700;margin-bottom:1.8rem;color:var(--D);line-height:1.3}
+
 .opts{display:grid;gap:1rem}
-.opt{display:flex;align-items:center;padding:1.2rem;border:2px solid var(--B);border-radius:18px;cursor:pointer;background:#f8fafc;transition:0.2s}
-.oltr{width:38px;height:38px;background:var(--Y);border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;margin-right:1.2rem;flex-shrink:0}
+.opt{display:flex;align-items:center;padding:1.2rem;border:2px solid var(--B);border-radius:18px;cursor:pointer;background:#f8fafc;transition:0.2s;position:relative}
+.opt:hover{border-color:var(--Yd);background:#fff}
+.oltr{width:38px;height:38px;background:var(--Y);border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;margin-right:1.2rem;flex-shrink:0;font-size:1.1rem}
+
 .opt.ok{border-color:var(--V);background:#ecfdf5}
+.opt.ok .oltr{background:var(--V);color:#fff}
 .opt.ko{border-color:var(--R);background:#fef2f2}
-.fb{margin-top:20px;padding:1.5rem;border-radius:15px;border-left:5px solid}
-.fb.ok{background:#f0fdf4;border-color:var(--V)}
-.fb.ko{background:#fef2f2;border-color:var(--R)}
-.nav-btns{display:flex;gap:10px;margin-top:20px}
-.btn-nav{flex:1;padding:1rem;border-radius:12px;border:none;font-weight:700;cursor:pointer}
+.opt.ko .oltr{background:var(--R);color:#fff}
+
+.fb{margin-top:20px;padding:1.5rem;border-radius:18px;animation:slideUp 0.3s ease-out}
+.fb.ok{background:#f0fdf4;border:1px solid var(--V);color:#065f46}
+.fb.ko{background:#fef2f2;border:1px solid var(--R);color:#991b1b}
+.fb-title{font-weight:800;margin-bottom:0.5rem;text-transform:uppercase;font-size:0.9rem}
+
+.nav-btns{display:flex;gap:12px;margin-top:25px}
+.btn-nav{flex:1;padding:1.1rem;border-radius:14px;border:none;font-weight:700;cursor:pointer;font-size:1rem;transition:0.2s}
+#btnPrev{background:var(--B);color:var(--G)}
+#btnNext{background:var(--D);color:#fff}
 .hidden{visibility:hidden}
+
+@keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
 <body>
+
 <div class="wrap">
     <header><h1>ENFOCADOS</h1></header>
+
     <div id="secLogin" class="screen active">
         <div class="login-card">
-            <h2>Acceso Alumno</h2><br>
+            <h2 style="margin-bottom:1.8rem; font-family:Montserrat">Acceso Alumno</h2>
             <div class="input-group">
                 <label>Usuario</label>
-                <input type="text" id="userInput">
+                <input type="text" id="userInput" placeholder="Tu nombre">
             </div>
             <div class="input-group">
                 <label>Correo</label>
-                <input type="email" id="emailInput">
+                <input type="email" id="emailInput" placeholder="tu@email.com">
             </div>
-            <button class="btn-main" onclick="entrar()">Entrar al Test</button>
+            <button class="btn-main" onclick="start()">Entrar al Test</button>
         </div>
     </div>
+
     <div id="secQuiz" class="screen card">
-        <div id="qNum" style="font-weight:bold; color:var(--G)"></div>
+        <div id="qNum" style="color:var(--G); font-weight:700; margin-bottom:12px; font-size:0.9rem"></div>
         <div id="qArea"></div>
         <div id="fbWrap"></div>
         <div class="nav-btns">
-            <button id="btnPrev" class="btn-nav" style="background:var(--B)" onclick="prevQ()">Anterior</button>
-            <button id="btnNext" class="btn-nav" style="background:var(--D);color:#fff" onclick="nextQ()">Siguiente</button>
+            <button id="btnPrev" class="btn-nav" onclick="prevQ()">← Anterior</button>
+            <button id="btnNext" class="btn-nav" onclick="nextQ()">Siguiente →</button>
         </div>
     </div>
+
     <div id="secRes" class="screen card" style="text-align:center">
-        <div id="rEmoji" style="font-size:4rem"></div>
-        <h2 id="rPct" style="font-size:3rem">0%</h2>
-        <button class="btn-main" onclick="location.reload()">Reiniciar</button>
+        <div id="rEmoji" style="font-size:4.5rem; margin-bottom:1rem"></div>
+        <h2 id="rPct" style="font-size:3.5rem; font-weight:800; color:var(--D); margin-bottom:0.5rem">0%</h2>
+        <p style="color:var(--G); font-size:1.1rem; margin-bottom:2rem">
+            Has acertado <span id="rOk" style="color:var(--V); font-weight:700">0</span> de <span id="rTot">0</span> preguntas
+        </p>
+        <button class="btn-main" style="max-width:250px" onclick="location.reload()">Repetir Test</button>
     </div>
 </div>
 
 <script>
-let exam = [], answers = [], idx = 0;
-const URL_JSON = 'https://raw.githubusercontent.com/Ancland/Enfocados/main/ENFOCADOS%20FINAL.json';
+var exam=[], answers=[], correct=[], idx=0;
+var URL = "https://raw.githubusercontent.com/Ancland/Enfocados/main/ENFOCADOS%20FINAL.json";
 
-async function entrar() {
-    if(!document.getElementById('userInput').value || !document.getElementById('emailInput').value) return alert("Faltan datos");
-    try {
-        const res = await fetch(URL_JSON);
-        exam = await res.json();
-        answers = new Array(exam.length).fill(null);
-        document.getElementById('secLogin').classList.remove('active');
-        document.getElementById('secQuiz').classList.add('active');
-        showQ();
-    } catch(e) { alert("Error cargando base de datos"); }
+function showScreen(id){
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
 }
 
-function showQ() {
-    const q = exam[idx];
-    document.getElementById('qNum').innerText = `Pregunta ${idx + 1} de ${exam.length}`;
-    let h = `<div class="qtxt">${q.pregunta}</div><div class="opts">`;
-    ['a','b','c','d'].forEach(l => {
-        const txt = q['opcion_' + l];
+async function start(){
+    var u = document.getElementById('userInput').value;
+    var e = document.getElementById('emailInput').value;
+    if(!u || !e) return alert("Por favor, rellena los datos");
+    
+    try {
+        const response = await fetch(URL);
+        exam = await response.json();
+        answers = new Array(exam.length).fill(null);
+        correct = new Array(exam.length).fill(null);
+        showScreen('secQuiz');
+        showQ();
+    } catch(err) {
+        alert("Error cargando las preguntas. Verifica la conexión.");
+    }
+}
+
+function showQ(){
+    var q = exam[idx];
+    document.getElementById('qNum').textContent = "PREGUNTA " + (idx+1) + " DE " + exam.length;
+    
+    var h = '<div class="qtxt">' + q.pregunta + '</div><div class="opts">';
+    var letras = ['a','b','c','d'];
+    
+    letras.forEach(function(l){
+        var txt = q['opcion_' + l];
         if(!txt) return;
-        let cls = 'opt';
-        if(answers[idx] !== null) {
+        
+        var cls = 'opt';
+        if(answers[idx] !== null){
             if(l === q.respuesta.toLowerCase()) cls += ' ok';
             else if(answers[idx] === l) cls += ' ko';
         }
-        h += `<div class="${cls}" onclick="pick('${l}')"><div class="oltr">${l.toUpperCase()}</div><span>${txt}</span></div>`;
+        
+        h += '<div class="'+cls+'" onclick="check(\''+l+'\')">' +
+             '<div class="oltr">'+l.toUpperCase()+'</div>' +
+             '<span>'+txt+'</span></div>';
     });
+    
     document.getElementById('qArea').innerHTML = h + '</div>';
     
-    const fb = document.getElementById('fbWrap');
+    // Feedback
+    var fb = document.getElementById('fbWrap');
     fb.innerHTML = '';
-    if(answers[idx] !== null) {
-        const corr = answers[idx] === q.respuesta.toLowerCase();
-        fb.innerHTML = `<div class="fb ${corr?'ok':'ko'}"><strong>${corr?'Correcto':'Incorrecto'}</strong><br>${q.saber || ''}</div>`;
+    if(answers[idx] !== null){
+        var isCorrect = answers[idx] === q.respuesta.toLowerCase();
+        fb.innerHTML = '<div class="fb '+(isCorrect?'ok':'ko')+'">' +
+                       '<div class="fb-title">'+(isCorrect?'✓ ¡Correcto!':'✗ Incorrecto')+'</div>' +
+                       '<div>'+(q.saber || '')+'</div></div>';
     }
+    
     document.getElementById('btnPrev').classList.toggle('hidden', idx === 0);
+    document.getElementById('btnNext').textContent = (idx === exam.length - 1) ? "Finalizar" : "Siguiente →";
 }
 
-function pick(l) { if(answers[idx] === null) { answers[idx] = l; showQ(); } }
-function nextQ() { if(idx < exam.length - 1) { idx++; showQ(); } else { finish(); } }
-function prevQ() { if(idx > 0) { idx--; showQ(); } }
+function check(l){
+    if(answers[idx] !== null) return;
+    answers[idx] = l;
+    correct[idx] = (l === exam[idx].respuesta.toLowerCase());
+    showQ();
+}
 
-function finish() {
-    document.getElementById('secQuiz').classList.remove('active');
-    document.getElementById('secRes').classList.add('active');
-    const ok = exam.filter((q,i) => answers[i] === q.respuesta.toLowerCase()).length;
-    const p = Math.round((ok/exam.length)*100);
-    document.getElementById('rPct').innerText = p + '%';
-    document.getElementById('rEmoji').innerText = p >= 50 ? '🎉' : '⚠️';
+function nextQ(){
+    if(idx < exam.length - 1){ idx++; showQ(); }
+    else { finish(); }
+}
+
+function prevQ(){
+    if(idx > 0){ idx--; showQ(); }
+}
+
+function finish(){
+    var ok = correct.filter(c => c === true).length;
+    var pct = Math.round((ok/exam.length)*100);
+    document.getElementById('rOk').textContent = ok;
+    document.getElementById('rTot').textContent = exam.length;
+    document.getElementById('rPct').textContent = pct + '%';
+    
+    var em = '😐';
+    if(pct >= 80) em = '🏆';
+    else if(pct >= 50) em = '💪';
+    document.getElementById('rEmoji').textContent = em;
+    
+    showScreen('secRes');
 }
 </script>
 </body>
