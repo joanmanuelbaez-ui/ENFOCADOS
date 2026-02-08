@@ -4,186 +4,208 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ENFOCADOS</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-/* ESTILOS ORIGINALES DE TU ARCHIVO LOCAL */
+/* TUS ESTILOS ORIGINALES ÍNTEGROS */
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--Y:rgb(250,250,0);--Yd:rgb(215,215,0);--D:#2c3e50;--D2:#1a252f;--V:#10b981;--R:#ef4444;--G:#64748b;--B:#e2e8f0}
 body{font-family:'Inter',sans-serif;background:linear-gradient(160deg,#fffef0 0%,#fff9c4 100%);min-height:100vh;color:#1e293b;line-height:1.6}
 .wrap{max-width:860px;margin:0 auto;padding:1.8rem 1.2rem}
 header{text-align:center;margin-bottom:1.6rem}
+header svg{display:block;margin:0 auto .4rem}
 h1{font-family:'Montserrat',sans-serif;font-size:3rem;font-weight:800;color:var(--D);letter-spacing:-1px}
-.card{background:#fff;border-radius:18px;padding:2rem;box-shadow:0 4px 24px rgba(0,0,0,.08);border:2px solid var(--B);position:relative;margin-bottom:1.5rem}
-#loginSection{max-width:400px;margin:2rem auto;text-align:center}
-input{width:100%;padding:1rem;margin:1rem 0;border-radius:12px;border:2px solid var(--B);font-size:1rem;outline:none}
-.btn-login{width:100%;background:var(--D);color:#fff;padding:1rem;border-radius:12px;border:none;font-weight:700;cursor:pointer;font-family:'Montserrat'}
-.p-wrap{margin-bottom:2rem}
-.p-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem}
-#qNum{font-family:'Montserrat',sans-serif;font-weight:700;color:var(--D)}
-#qProg{font-weight:600;color:var(--G);font-size:.9rem;background:var(--B);padding:.2rem .8rem;border-radius:20px}
-.p-bar-bg{height:8px;background:var(--B);border-radius:4px;overflow:hidden}
-#pbar{height:100%;width:0%;background:linear-gradient(90deg, var(--Yd), var(--Y));transition:width .4s ease}
-.qtxt{font-size:1.35rem;font-weight:600;color:var(--D);margin-bottom:2rem}
-.opts{display:grid;gap:1rem}
-.opt{display:flex;align-items:center;padding:1.2rem;border:2px solid var(--B);border-radius:16px;cursor:pointer;transition:all .2s ease;background:#f8fafc}
-.opt.ok{border-color:var(--V);background:rgba(16,185,129,0.05)}
-.opt.ko{border-color:var(--R);background:rgba(239,68,68,0.05)}
-.fb{margin-top:2rem;padding:1.5rem;border-radius:16px;animation:slideUp .3s ease forwards}
-.fb.ok{background:#ecfdf5;border:1px solid var(--V);color:#065f46}
-.fb.ko{background:#fef2f2;border:1px solid var(--R);color:#991b1b}
-.nav{display:flex;justify-content:space-between;margin-top:1.5rem}
-button.nav-btn{padding:1rem 1.8rem;border-radius:14px;border:none;font-weight:700;cursor:pointer;font-family:'Montserrat'}
-.btn-p{background:var(--B);color:var(--D)}
-.btn-n{background:var(--D);color:#fff}
+.sub{color:var(--G);font-size:1.02rem;font-weight:500}
+.card{background:#fff;border-radius:18px;padding:2rem;box-shadow:0 4px 24px rgba(0,0,0,.08);border:2px solid var(--Y);margin-bottom:1.4rem}
+.field{margin-bottom:1.1rem;text-align:left}
+.field label{display:block;margin-bottom:.3rem;color:var(--D);font-weight:600;font-size:.9rem}
+.field input{width:100%;padding:.82rem 1rem;border:2px solid var(--B);border-radius:10px;font-size:1rem;font-family:inherit;transition:border-color .2s}
+.field input:focus{outline:none;border-color:var(--Y);box-shadow:0 0 0 3px rgba(250,250,0,.18)}
+.btn{width:100%;padding:.88rem 1.5rem;background:var(--Y);color:var(--D);border:none;border-radius:10px;font-size:1.05rem;font-weight:700;cursor:pointer;font-family:'Montserrat',sans-serif;transition:background .2s,transform .15s,box-shadow .2s;box-shadow:0 3px 8px rgba(250,250,0,.3)}
+.btn:hover{background:var(--Yd);transform:translateY(-1px);box-shadow:0 5px 14px rgba(250,250,0,.4)}
+.btn:disabled{background:#cbd5e1;color:#94a3b8;cursor:not-allowed;transform:none;box-shadow:none}
+
+/* Estilos de navegación y quiz */
+.screen{display:none}.active{display:block}
+.p-wrap{margin-bottom:1.8rem}.p-top{display:flex;justify-content:space-between;margin-bottom:.6rem;font-weight:700;color:var(--D)}
+.p-bar-bg{height:8px;background:var(--B);border-radius:10px;overflow:hidden}
+.p-bar{height:100%;background:var(--Y);transition:width .3s}
+.q-txt{font-size:1.35rem;font-weight:700;color:var(--D);margin-bottom:1.8rem;line-height:1.4}
+.opts{display:grid;gap:.9rem}
+.opt{display:flex;align-items:center;padding:1.1rem;background:#f8fafc;border:2px solid var(--B);border-radius:14px;cursor:pointer;transition:all .2s}
+.opt:hover{border-color:var(--Y);background:#fff}
+.opt.selected{border-color:var(--D);background:#fff}
+.opt.ok{border-color:var(--V);background:#ecfdf5}
+.opt.ko{border-color:var(--R);background:#fef2f2}
+.ltr{width:34px;height:34px;background:var(--Y);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;margin-right:1rem;flex-shrink:0}
+.fb{margin-top:1.5rem;padding:1.5rem;border-radius:14px;animation:slideUp .3s ease-out}
 @keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.fb-ok{background:#ecfdf5;border:2px solid var(--V);color:#065f46}
+.fb-ko{background:#fef2f2;border:2px solid var(--R);color:#991b1b}
+.nav{display:flex;gap:1rem;margin-top:2rem}
+.hidden{display:none}
 </style>
 </head>
 <body>
 
 <div class="wrap">
-  <header><h1>ENFOCADOS</h1></header>
+    <header>
+        <svg width="50" height="50" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="#2c3e50"/>
+            <path d="M2 17L12 22L22 17" stroke="#2c3e50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 12L12 17L22 12" stroke="#2c3e50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h1>ENFOCADOS</h1>
+        <p class="sub">Plataforma de Entrenamiento</p>
+    </header>
 
-  <div id="loginSection" class="card">
-    <h2 style="font-family:'Montserrat';margin-bottom:1rem">Acceso</h2>
-    <input type="text" id="dniInput" placeholder="Introduce tu DNI">
-    <button class="btn-login" onclick="checkLogin()">ENTRAR</button>
-    <p id="loginMsg" style="color:var(--R);margin-top:1rem;display:none">DNI no autorizado</p>
-  </div>
-
-  <div id="game" style="display:none">
-    <div class="card">
-      <div class="p-wrap">
-        <div class="p-top"><span id="qNum"></span><span id="qProg"></span></div>
-        <div class="p-bar-bg"><div id="pbar"></div></div>
-      </div>
-      <div id="qArea"></div>
-      <div id="fbWrap"></div>
-      <div class="nav">
-        <button onclick="prevQ()" id="prevBtn" class="nav-btn btn-p">Anterior</button>
-        <button onclick="nextQ()" id="nextBtn" class="nav-btn btn-n">Siguiente</button>
-      </div>
+    <div id="secLogin" class="screen active">
+        <div class="card" style="max-width:400px;margin:0 auto">
+            <div class="field">
+                <label>DNI del Alumno</label>
+                <input type="text" id="dniInput" placeholder="Introduce tu DNI">
+            </div>
+            <button class="btn" onclick="validarAcceso()">ENTRAR AL TEST</button>
+            <p id="errLog" style="color:var(--R);margin-top:1rem;font-weight:600;display:none;text-align:center">DNI no autorizado</p>
+        </div>
     </div>
-  </div>
 
-  <div id="results" class="card" style="display:none; text-align:center">
-    <div id="rEmoji" style="font-size:4.5rem;margin-bottom:1rem">🏆</div>
-    <h2 style="font-family:'Montserrat'">¡Test Finalizado!</h2>
-    <div style="font-size:3.5rem;font-weight:800;margin:1rem 0" id="rPct">0%</div>
-    <p>Correctas: <span id="rOk">0</span> | Incorrectas: <span id="rKo">0</span> de <span id="rTot">0</span></p>
-    <button onclick="location.reload()" class="nav-btn btn-n" style="margin-top:2rem">Reiniciar</button>
-  </div>
+    <div id="secQuiz" class="screen">
+        <div class="card">
+            <div class="p-wrap">
+                <div class="p-top"><span id="qIdx">Pregunta 1</span><span id="qTotal">1 de 10</span></div>
+                <div class="p-bar-bg"><div id="pBar" class="p-bar" style="width:10%"></div></div>
+            </div>
+            <div id="qArea"></div>
+            <div id="fbWrap"></div>
+            <div class="nav">
+                <button id="btnPrev" class="btn btn-out hidden" onclick="prevQ()">Anterior</button>
+                <button id="btnNext" class="btn" onclick="nextQ()" disabled>Siguiente →</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="secRes" class="screen">
+        <div class="card" style="text-align:center">
+            <div id="rEmoji" style="font-size:4rem;margin-bottom:1rem">😐</div>
+            <h2 style="font-family:'Montserrat';margin-bottom:.5rem">Resultado Final</h2>
+            <div id="rPct" style="font-size:3.5rem;font-weight:800;color:var(--D);margin:1rem 0">0%</div>
+            <p style="font-size:1.1rem;color:var(--G)">
+                Has acertado <span id="rOk" style="color:var(--V);font-weight:700">0</span> preguntas de <span id="rTot" style="font-weight:700">0</span>.
+            </p>
+            <button class="btn" style="margin-top:2rem" onclick="location.reload()">REINTENTAR TEST</button>
+        </div>
+    </div>
 </div>
 
 <script>
-// URLs de tus Google Sheets
-const URL_USUARIOS = 'https://docs.google.com/spreadsheets/d/1niLz8cxdTrNBJMAU0YDMRpiAWEmbGHt7h4HEPD6xkLA/export?format=csv&gid=353115110';
-const URL_PREGUNTAS = 'https://docs.google.com/spreadsheets/d/19mVUe0lezjxuAW4FqJTbG5UJx649ECUzA9HVwEwy0do/export?format=csv&gid=1012787791';
+// DATOS GOOGLE SHEETS
+const URL_U = 'https://docs.google.com/spreadsheets/d/1niLz8cxdTrNBJMAU0YDMRpiAWEmbGHt7h4HEPD6xkLA/export?format=csv&gid=353115110';
+const URL_P = 'https://docs.google.com/spreadsheets/d/19mVUe0lezjxuAW4FqJTbG5UJx649ECUzA9HVwEwy0do/export?format=csv&gid=1012787791';
 
-let users = [], exam = [], correct = [], idx = 0;
+let users = [], exam = [], answers = [], idx = 0;
 
-// Cargar lista de usuarios al inicio
-fetch(URL_USUARIOS).then(r => r.text()).then(csv => { users = parseCSV(csv); });
+// Carga silenciosa de usuarios
+fetch(URL_U).then(r => r.text()).then(t => { users = parseCSV(t); });
 
 function parseCSV(csv) {
-  const lines = csv.split('\n');
-  const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, '').toLowerCase());
-  return lines.slice(1).filter(l => l.trim()).map(line => {
-    const values = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-    const obj = {};
-    headers.forEach((h, i) => {
-      let v = values[i] ? values[i].trim().replace(/^"|"$/g, '') : "";
-      obj[h] = v;
+    const lines = csv.split('\n');
+    const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, '').toLowerCase());
+    return lines.slice(1).filter(l => l.trim()).map(line => {
+        const values = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+        let obj = {};
+        headers.forEach((h, i) => {
+            obj[h] = values[i] ? values[i].trim().replace(/^"|"$/g, '') : "";
+        });
+        return obj;
     });
-    return obj;
-  });
 }
 
-function checkLogin() {
-  const dni = document.getElementById('dniInput').value.trim().toUpperCase();
-  const found = users.find(u => (u.dni || u.DNI) === dni);
-  if (found) {
-    document.getElementById('loginSection').style.display = 'none';
-    loadExam();
-  } else {
-    document.getElementById('loginMsg').style.display = 'block';
-  }
-}
-
-function loadExam() {
-  fetch(URL_PREGUNTAS).then(r => r.text()).then(csv => {
-    exam = parseCSV(csv);
-    document.getElementById('game').style.display = 'block';
-    showQ();
-  });
-}
-
-function showQ() {
-  const q = exam[idx];
-  const area = document.getElementById('qArea');
-  const fbWrap = document.getElementById('fbWrap');
-  fbWrap.innerHTML = '';
-  
-  document.getElementById('qNum').textContent = 'Pregunta ' + (idx + 1);
-  document.getElementById('qProg').textContent = (idx + 1) + ' de ' + exam.length;
-  document.getElementById('pbar').style.width = ((idx + 1) / exam.length * 100) + '%';
-  document.getElementById('prevBtn').disabled = (idx === 0);
-
-  // Renderizar pregunta y dinámicamente sus opciones (sin límite de 4)
-  let html = `<div class="qtxt">${q.pregunta}</div><div class="opts">`;
-  
-  // Extraemos todas las columnas que empiecen por "opcion_"
-  const opcionesKeys = Object.keys(q).filter(k => k.startsWith('opcion_') && q[k]);
-  
-  opcionesKeys.forEach(key => {
-    const letra = key.split('_')[1].toUpperCase();
-    const texto = q[key];
-    let cls = 'opt';
-    
-    if (correct[idx] !== undefined) {
-      if (letra.toLowerCase() === q.respuesta.toLowerCase()) cls += ' ok';
-      else if (correct[idx] === letra.toLowerCase()) cls += ' ko';
+function validarAcceso() {
+    const dni = document.getElementById('dniInput').value.trim().toUpperCase();
+    if(users.some(u => (u.dni || u.DNI) === dni)) {
+        fetch(URL_P).then(r => r.text()).then(t => {
+            exam = parseCSV(t);
+            answers = new Array(exam.length).fill(null);
+            showScreen('secQuiz');
+            renderQ();
+        });
+    } else {
+        document.getElementById('errLog').style.display = 'block';
     }
-
-    html += `<div class="${cls}" onclick="selectOpt('${letra.toLowerCase()}')">
-               <div style="width:36px;height:36px;background:var(--Y);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;margin-right:1.2rem;flex-shrink:0">${letra}</div>
-               <span>${texto}</span>
-             </div>`;
-  });
-  
-  html += `</div>`;
-  area.innerHTML = html;
-
-  if (correct[idx] !== undefined) showFeedback();
 }
 
-function selectOpt(letra) {
-  if (correct[idx] !== undefined) return;
-  correct[idx] = letra;
-  showQ();
+function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
 }
 
-function showFeedback() {
-  const q = exam[idx];
-  const esCorrecta = (correct[idx] === q.respuesta.toLowerCase());
-  const fb = document.createElement('div');
-  fb.className = 'fb ' + (esCorrecta ? 'ok' : 'ko');
-  fb.innerHTML = `
-    <div style="font-weight:800;margin-bottom:0.5rem">${esCorrecta ? '✓ ¡Correcto!' : '✗ Incorrecto'}</div>
-    <div><strong>Respuesta correcta:</strong> ${q.respuesta.toUpperCase()}<br><br>
-    <strong>Motivación:</strong> ${q.saber || 'No disponible'}</div>
-  `;
-  document.getElementById('fbWrap').appendChild(fb);
+function renderQ() {
+    const q = exam[idx];
+    document.getElementById('qIdx').textContent = `Pregunta ${idx + 1}`;
+    document.getElementById('qTotal').textContent = `${idx + 1} de ${exam.length}`;
+    document.getElementById('pBar').style.width = `${((idx+1)/exam.length)*100}%`;
+    
+    let html = `<div class="q-txt">${q.pregunta}</div><div class="opts">`;
+    ['a','b','c','d'].forEach(l => {
+        const txt = q['opcion_'+l];
+        if(!txt) return;
+        let cls = 'opt';
+        if(answers[idx] === l) {
+            cls += (l === q.respuesta.toLowerCase()) ? ' ok' : ' ko';
+        } else if(answers[idx] !== null && l === q.respuesta.toLowerCase()) {
+            cls += ' ok';
+        }
+        html += `<div class="${cls}" onclick="marcar('${l}')"><div class="ltr">${l.toUpperCase()}</div><span>${txt}</span></div>`;
+    });
+    document.getElementById('qArea').innerHTML = html + '</div>';
+    
+    const fb = document.getElementById('fbWrap');
+    fb.innerHTML = '';
+    if(answers[idx]) {
+        const isOk = answers[idx] === q.respuesta.toLowerCase();
+        fb.innerHTML = `<div class="fb ${isOk?'fb-ok':'fb-ko'}">
+            <strong>${isOk?'✓ ¡Correcto!':'✗ Incorrecto'}</strong><br>
+            <small>${q.saber || ''}</small>
+        </div>`;
+    }
+    
+    document.getElementById('btnPrev').classList.toggle('hidden', idx === 0);
+    const btnN = document.getElementById('btnNext');
+    btnN.disabled = !answers[idx];
+    btnN.textContent = (idx === exam.length - 1) ? 'FINALIZAR' : 'Siguiente →';
+}
+
+function marcar(l) {
+    if(answers[idx]) return;
+    answers[idx] = l;
+    renderQ();
 }
 
 function nextQ() {
-  if (idx < exam.length - 1) { idx++; showQ(); } 
-  else { showResults(); }
+    if(idx < exam.length - 1) { idx++; renderQ(); }
+    else { showRes(); }
 }
 
-function prevQ() { if (idx > 0) { idx--; showQ(); } }
+function prevQ() { if(idx > 0) { idx--; renderQ(); } }
 
-function showResults() {
-  document.getElementById('game').style.display = 'none';
-  document.getElementById('results').style.display = 'block';
-  let ok = 0;
-  exam.forEach((q
+function showRes() {
+    showScreen('secRes');
+    const ok = exam.filter((q, i) => answers[i] === q.respuesta.toLowerCase()).length;
+    const pct = Math.round((ok/exam.length)*100);
+    document.getElementById('rOk').textContent = ok;
+    document.getElementById('rTot').textContent = exam.length;
+    document.getElementById('rPct').textContent = pct + '%';
+    
+    // TUS EMOTICONOS ORIGINALES
+    let emo = '😐';
+    if(pct >= 90) emo = '🏆';
+    else if(pct >= 75) emo = '😄';
+    else if(pct >= 60) emo = '🙂';
+    else if(pct >= 50) emo = '😕';
+    else emo = '😞';
+    document.getElementById('rEmoji').textContent = emo;
+}
+</script>
+</body>
+</html>
