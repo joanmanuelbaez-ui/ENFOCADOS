@@ -3,147 +3,168 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ENFOCADOS - Test Profesional</title>
+<title>ENFOCADOS - Acceso Privado</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  /* Mantenemos tu diseño profesional intacto */
+  /* --- Estilos Profesionales --- */
   *{margin:0;padding:0;box-sizing:border-box}
-  :root{--Y:rgb(250,250,0);--Yd:rgb(215,215,0);--D:#2c3e50;--D2:#1a252f;--V:#10b981;--R:#ef4444;--G:#64748b;--B:#e2e8f0}
-  body{font-family:'Inter',sans-serif;background:linear-gradient(160deg,#fffef0 0%,#fff9c4 100%);min-height:100vh;color:#1e293b;line-height:1.6}
-  .wrap{max-width:860px;margin:0 auto;padding:1.8rem 1.2rem}
-  header{text-align:center;margin-bottom:1.6rem}
-  h1{font-family:'Montserrat',sans-serif;font-size:2.2rem;font-weight:800;color:var(--D);letter-spacing:-1px;text-transform:uppercase}
-  .card{background:#fff;border-radius:24px;padding:2.2rem;box-shadow:0 20px 25px -5px rgba(0,0,0,0.1);border:1px solid rgba(255,255,255,0.7);position:relative;margin-bottom:1.5rem}
+  :root{--Y:rgb(250,250,0);--Yd:rgb(215,215,0);--D:#2c3e50;--V:#10b981;--R:#ef4444;--G:#64748b;--B:#e2e8f0}
+  body{font-family:'Inter',sans-serif;background:linear-gradient(160deg,#fffef0 0%,#fff9c4 100%);min-height:100vh;color:#1e293b;display:flex;align-items:center;justify-content:center}
+  .wrap{width:100%;max-width:860px;padding:1.8rem 1.2rem}
+  .card{background:#fff;border-radius:24px;padding:2.2rem;box-shadow:0 20px 25px -5px rgba(0,0,0,0.1);border:1px solid rgba(255,255,255,0.7)}
+  h1{font-family:'Montserrat',sans-serif;text-align:center;margin-bottom:2rem;color:var(--D);text-transform:uppercase;letter-spacing:-1px}
+  
+  /* Login */
+  #login-area{max-width:400px;margin:0 auto;text-align:center}
+  input{width:100%;padding:1rem;margin-bottom:1rem;border-radius:12px;border:2px solid var(--B);font-size:1rem;outline:none}
+  input:focus{border-color:var(--Yd)}
+  
+  /* Quiz Area (Oculto al inicio) */
+  #quiz-area{display:none}
   .p-wrap{margin-bottom:2rem}
-  .p-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem}
-  #qNum{font-family:'Montserrat',sans-serif;font-weight:700;color:var(--D)}
-  #qProg{font-weight:600;color:var(--G);font-size:.9rem;background:var(--B);padding:.2rem .8rem;border-radius:20px}
+  .p-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem;font-weight:700}
   .p-bar-bg{height:8px;background:var(--B);border-radius:4px;overflow:hidden}
-  #pbar{height:100%;width:0%;background:linear-gradient(90deg, var(--Yd), var(--Y));transition:width .4s ease}
-  .qtxt{font-size:1.35rem;font-weight:600;color:var(--D);margin-bottom:2rem}
+  #pbar{height:100%;width:0%;background:linear-gradient(90deg, var(--Yd), var(--Y));transition:width .4s}
+  .qtxt{font-size:1.3rem;font-weight:600;margin-bottom:2rem}
   .opts{display:grid;gap:1rem}
-  .opt{display:flex;align-items:center;padding:1.2rem;border:2px solid var(--B);border-radius:16px;cursor:pointer;transition:all .2s ease;background:#f8fafc}
-  .opt:hover:not(.dis){border-color:var(--Y);transform:translateX(4px);background:#fff}
-  .oltr{width:36px;height:36px;background:var(--Y);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;margin-right:1.2rem;flex-shrink:0}
-  .opt.ok{border-color:var(--V);background:rgba(16,185,129,0.05)}
-  .opt.ok .oltr{background:var(--V);color:#fff}
-  .opt.ko{border-color:var(--R);background:rgba(239,68,68,0.05)}
-  .opt.ko .oltr{background:var(--R);color:#fff}
-  .opt.dis{cursor:default;opacity:0.8}
-  .fb{margin-top:2rem;padding:1.5rem;border-radius:16px;animation:slideUp .3s ease forwards}
-  .fb.ok{background:#ecfdf5;border:1px solid var(--V);color:#065f46}
-  .fb.ko{background:#fef2f2;border:1px solid var(--R);color:#991b1b}
-  .fb-title{font-weight:700;margin-bottom:.4rem}
-  .nav{display:flex;justify-content:space-between;margin-top:1.5rem}
-  button{padding:1rem 1.8rem;border-radius:14px;border:none;font-weight:700;cursor:pointer;font-family:'Montserrat'}
-  .btn-p{background:var(--B);color:var(--D)}
-  .btn-n{background:var(--D);color:#fff}
+  .opt{display:flex;align-items:center;padding:1.1rem;border:2px solid var(--B);border-radius:16px;cursor:pointer;transition:all .2s;background:#f8fafc}
+  .opt:hover:not(.dis){border-color:var(--Y);transform:translateX(5px)}
+  .oltr{width:35px;height:35px;background:var(--Y);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;margin-right:1rem}
+  .opt.ok{border-color:var(--V);background:#ecfdf5}
+  .opt.ko{border-color:var(--R);background:#fef2f2}
+  .fb{margin-top:1.5rem;padding:1.2rem;border-radius:12px;font-size:0.95rem}
+  .fb.ok{background:#d1fae5;color:#065f46;border-left:5px solid var(--V)}
+  .fb.ko{background:#fee2e2;color:#991b1b;border-left:5px solid var(--R)}
+  
+  button{width:100%;padding:1rem;border-radius:12px;border:none;font-weight:700;cursor:pointer;font-family:'Montserrat';transition:opacity .2s}
+  .btn-main{background:var(--D);color:#fff}
+  .nav{display:flex;gap:1rem;margin-top:1.5rem}
   #results{display:none;text-align:center}
-  @keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
 <body>
 
 <div class="wrap">
-  <header><h1>ENFOCADOS</h1></header>
+  <div id="login-area" class="card">
+    <h1>ENFOCADOS</h1>
+    <p style="margin-bottom:1.5rem;color:var(--G)">Introduce tu DNI para comenzar</p>
+    <input type="text" id="userDni" placeholder="DNI (ej: 12345678X)">
+    <button class="btn-main" onclick="validarUsuario()">ENTRAR AL TEST</button>
+    <p id="loginError" style="color:var(--R);margin-top:1rem;display:none;font-size:0.9rem">DNI no autorizado</p>
+  </div>
 
-  <div id="quiz">
+  <div id="quiz-area">
     <div class="card">
       <div class="p-wrap">
-        <div class="p-top"><span id="qNum">Cargando preguntas...</span><span id="qProg"></span></div>
+        <div class="p-top"><span id="qNum">Pregunta 1</span><span id="qProg" style="color:var(--G)"></span></div>
         <div class="p-bar-bg"><div id="pbar"></div></div>
       </div>
       <div id="qContainer"></div>
       <div id="fbWrap"></div>
       <div class="nav">
-        <button onclick="prevQ()" id="prevBtn" class="btn-p">Anterior</button>
-        <button onclick="nextQ()" id="nextBtn" class="btn-n">Siguiente</button>
+        <button onclick="prevQ()" id="prevBtn" style="background:var(--B)">Anterior</button>
+        <button onclick="nextQ()" id="nextBtn" class="btn-main">Siguiente</button>
       </div>
     </div>
   </div>
 
   <div id="results" class="card">
-    <div id="rEmoji" style="font-size:4.5rem;margin-bottom:1rem">🏆</div>
-    <h2 style="font-family:'Montserrat';margin-bottom:1rem">¡Test Finalizado!</h2>
-    <div style="font-size:3.5rem;font-weight:800;margin-bottom:1rem" id="rPct">0%</div>
-    <p>Correctas: <span id="rOk">0</span> | Incorrectas: <span id="rKo">0</span></p>
-    <button onclick="location.reload()" class="btn-n" style="margin-top:2rem">Reiniciar Test</button>
+    <div id="rEmoji" style="font-size:4rem">🏆</div>
+    <h2 style="margin:1rem 0">¡Resultado Final!</h2>
+    <div id="rPct" style="font-size:3rem;font-weight:800;color:var(--D)">0%</div>
+    <p style="margin-bottom:2rem">Correctas: <span id="rOk">0</span> | Fallidas: <span id="rKo">0</span></p>
+    <button class="btn-main" onclick="location.reload()">REINTENTAR</button>
   </div>
 </div>
 
 <script>
-// URL de exportación CSV de tu Google Sheet (BD GLOBAL)
-const SHEET_URL = 'https://docs.google.com/spreadsheets/d/19mVUe0lezjxuAW4FqJTbG5UJx649ECUzA9HVwEwy0do/export?format=csv&gid=1012787791';
+// --- CONFIGURACIÓN DE TUS GOOGLE SHEETS ---
+const URL_USUARIOS = 'https://docs.google.com/spreadsheets/d/1niLz8cxdTrNBJMAU0YDMRpiAWEmbGHt7h4HEPD6xkLA/export?format=csv';
+const URL_PREGUNTAS = 'https://docs.google.com/spreadsheets/d/19mVUe0lezjxuAW4FqJTbG5UJx649ECUzA9HVwEwy0do/export?format=csv&gid=1012787791';
 
 let exam = [];
 let idx = 0;
 let answered = [];
 let correct = [];
 
-// Cargador de datos
-fetch(SHEET_URL)
-  .then(res => res.text())
-  .then(csv => {
-    exam = parseCSV(csv);
-    showQ();
-  })
-  .catch(err => {
-    document.getElementById('qNum').textContent = "Error al conectar con la base de datos";
-    console.error(err);
-  });
+// 1. VALIDACIÓN DE LOGIN
+async function validarUsuario() {
+  const dniIngresado = document.getElementById('userDni').value.trim().toUpperCase();
+  if(!dniIngresado) return;
 
+  try {
+    const res = await fetch(URL_USUARIOS);
+    const csv = await res.text();
+    const usuarios = parseCSV(csv);
+    
+    // Asumiendo que tu columna de DNI en el Excel se llama 'dni' o 'DNI'
+    const userFound = usuarios.find(u => (u.dni || u.DNI) === dniIngresado);
+
+    if(userFound) {
+      document.getElementById('login-area').style.display = 'none';
+      cargarPreguntas();
+    } else {
+      document.getElementById('loginError').style.display = 'block';
+    }
+  } catch (e) {
+    alert("Error conectando con la lista de usuarios");
+  }
+}
+
+// 2. CARGA DE PREGUNTAS
+async function cargarPreguntas() {
+  try {
+    const res = await fetch(URL_PREGUNTAS);
+    const csv = await res.text();
+    exam = parseCSV(csv);
+    document.getElementById('quiz-area').style.display = 'block';
+    showQ();
+  } catch (e) {
+    alert("Error cargando la base de datos de preguntas");
+  }
+}
+
+// 3. LÓGICA DEL TEST
 function parseCSV(csv) {
   const lines = csv.split('\n');
   const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
-  const data = [];
-
-  for (let i = 1; i < lines.length; i++) {
-    if (!lines[i].trim()) continue;
-    // Manejo básico de comas dentro de celdas (si las hay)
-    const currentLine = lines[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+  return lines.slice(1).filter(l => l.trim()).map(line => {
+    const values = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
     const obj = {};
-    headers.forEach((header, index) => {
-      let val = currentLine[index] ? currentLine[index].trim() : "";
-      obj[header] = val.replace(/^"|"$/g, ''); // Quitar comillas
+    headers.forEach((h, i) => {
+      let v = values[i] ? values[i].trim() : "";
+      obj[h] = v.replace(/^"|"$/g, '');
     });
-    data.push(obj);
-  }
-  return data;
+    return obj;
+  });
 }
 
 function showQ() {
-  if (!exam.length) return;
   const q = exam[idx];
   const container = document.getElementById('qContainer');
   const fbWrap = document.getElementById('fbWrap');
   
-  container.innerHTML = '';
   fbWrap.innerHTML = '';
-  
-  document.getElementById('qNum').textContent = 'Pregunta ' + (idx + 1);
-  document.getElementById('qProg').textContent = (idx + 1) + ' de ' + exam.length;
-  document.getElementById('pbar').style.width = ((idx + 1) / exam.length * 100) + '%';
-  document.getElementById('prevBtn').disabled = (idx === 0);
+  document.getElementById('qNum').textContent = `Pregunta ${idx + 1}`;
+  document.getElementById('qProg').textContent = `${idx + 1} / ${exam.length}`;
+  document.getElementById('pbar').style.width = `${((idx + 1) / exam.length) * 100}%`;
+  document.getElementById('prevBtn').style.visibility = idx === 0 ? 'hidden' : 'visible';
 
-  const qText = document.createElement('div');
-  qText.className = 'qtxt';
-  qText.textContent = q.pregunta || q.Pregunta; // Soporta mayúsculas/minúsculas
-  container.appendChild(qText);
-
+  container.innerHTML = `<div class="qtxt">${q.pregunta || q.Pregunta}</div>`;
   const optsDiv = document.createElement('div');
   optsDiv.className = 'opts';
 
   ['a', 'b', 'c', 'd'].forEach(l => {
-    const val = q['opcion_' + l] || q['Opcion_' + l];
-    if (val) {
+    const val = q['opcion_'+l] || q['Opcion_'+l];
+    if(val) {
+      const isRes = answered[idx] !== undefined;
       const opt = document.createElement('div');
-      const isRes = (answered[idx] !== undefined);
       opt.className = 'opt' + (isRes ? ' dis' : '');
       
       const correctAns = (q.respuesta || q.Respuesta).toLowerCase();
-      if (isRes) {
-        if (l === correctAns) opt.classList.add('ok');
-        else if (l === answered[idx]) opt.classList.add('ko');
+      if(isRes) {
+        if(l === correctAns) opt.classList.add('ok');
+        else if(l === answered[idx]) opt.classList.add('ko');
       }
 
       opt.innerHTML = `<div class="oltr">${l.toUpperCase()}</div><span>${val}</span>`;
@@ -152,12 +173,11 @@ function showQ() {
     }
   });
   container.appendChild(optsDiv);
-
-  if (answered[idx] !== undefined) showFeedback(q);
+  if(answered[idx] !== undefined) showFeedback(q);
 }
 
-function checkAnswer(selected) {
-  answered[idx] = selected.toLowerCase();
+function checkAnswer(l) {
+  answered[idx] = l.toLowerCase();
   const correctAns = (exam[idx].respuesta || exam[idx].Respuesta).toLowerCase();
   correct[idx] = (answered[idx] === correctAns);
   showQ();
@@ -165,40 +185,27 @@ function checkAnswer(selected) {
 
 function showFeedback(q) {
   const isCorrect = correct[idx];
-  const correctAns = (q.respuesta || q.Respuesta).toUpperCase();
-  const msg = q.saber || q.Saber || "¡Sigue adelante con tu formación!";
-  
   const fb = document.createElement('div');
-  fb.className = 'fb ' + (isCorrect ? 'ok' : 'ko');
-  fb.innerHTML = `
-    <div class="fb-title">${isCorrect ? '✓ ¡Correcto!' : '✗ Incorrecto'}</div>
-    <div><strong>Respuesta: ${correctAns}</strong></div>
-    <div style="margin-top:5px; font-size:0.9rem">${msg}</div>
-  `;
+  fb.className = `fb ${isCorrect ? 'ok' : 'ko'}`;
+  fb.innerHTML = `<strong>${isCorrect ? '✓ Correcto' : '✗ Incorrecto'}</strong><br>${q.saber || q.Saber || ''}`;
   document.getElementById('fbWrap').appendChild(fb);
 }
 
 function nextQ() {
-  if (idx < exam.length - 1) { idx++; showQ(); } 
+  if(idx < exam.length - 1) { idx++; showQ(); } 
   else { showResults(); }
 }
 
-function prevQ() { if (idx > 0) { idx--; showQ(); } }
+function prevQ() { if(idx > 0) { idx--; showQ(); } }
 
 function showResults() {
-  document.getElementById('quiz').style.display = 'none';
+  document.getElementById('quiz-area').style.display = 'none';
   document.getElementById('results').style.display = 'block';
-  const okCount = correct.filter(c => c).length;
-  const pct = Math.round((okCount / exam.length) * 100);
-  document.getElementById('rOk').textContent = okCount;
-  document.getElementById('rKo').textContent = exam.length - okCount;
+  const ok = correct.filter(c => c).length;
+  const pct = Math.round((ok / exam.length) * 100);
+  document.getElementById('rOk').textContent = ok;
+  document.getElementById('rKo').textContent = exam.length - ok;
   document.getElementById('rPct').textContent = pct + '%';
-  
-  let emoji = '😞';
-  if(pct >= 90) emoji = '🏆';
-  else if(pct >= 70) emoji = '😄';
-  else if(pct >= 50) emoji = '🙂';
-  document.getElementById('rEmoji').textContent = emoji;
 }
 </script>
 </body>
