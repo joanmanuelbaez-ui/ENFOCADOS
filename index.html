@@ -181,7 +181,7 @@ function showQ() {
     document.getElementById('pBar').style.width = ((idx + 1) / exam.length * 100) + "%";
     document.getElementById('qTxt').textContent = q.pregunta;
     
-    // --- LÓGICA DE SALTO DE LÍNEA Y OPCIONES ---
+    // --- LÓGICA DE SALTO DE LÍNEA Y OPCIONES (RESTAURADA) ---
     const rawOptions = (q.opciones || "").replace(/\\n/g, '\n');
     const opts = rawOptions.split('\n').map(o => o.trim()).filter(o => o.length > 0);
     
@@ -191,7 +191,6 @@ function showQ() {
     document.getElementById('btnNext').disabled = true;
 
     opts.forEach(optTxt => {
-        // Obtenemos la letra (A, B, C o D) del texto generado por NotebookLM
         const letter = optTxt.charAt(0).toUpperCase(); 
 
         const div = document.createElement('div');
@@ -207,14 +206,12 @@ function showQ() {
             div.classList.add(isOk ? 'ok' : 'ko');
             correct[idx] = isOk;
 
-            // Si falla, mostramos cuál era la correcta
             if(!isOk) {
                 Array.from(wrap.children).forEach(c => {
                     if(c.querySelector('.oltr').textContent === respCorrecta) c.classList.add('ok');
                 });
             }
             
-            // SIEMPRE mostramos la explicación (motivación)
             document.getElementById('fbWrap').innerHTML = `
                 <div class="fb">
                     <div class="fb-t">${isOk ? 'Respuesta Correcta' : 'Respuesta Incorrecta'}</div>
