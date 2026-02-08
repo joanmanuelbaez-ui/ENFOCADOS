@@ -6,7 +6,7 @@
     <title>ENFOCADOS PREMIUM</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        /* DISEÑO PROFESIONAL */
+        /* ESTILOS PROFESIONALES */
         *{margin:0;padding:0;box-sizing:border-box}
         :root{--Y:rgb(250,250,0);--Yd:rgb(215,215,0);--D:#2c3e50;--D2:#1a252f;--V:#10b981;--R:#ef4444;--G:#64748b;--B:#e2e8f0}
         body{font-family:'Inter',sans-serif;background:linear-gradient(160deg,#fffef0 0%,#fff9c4 100%);min-height:100vh;color:#1e293b;line-height:1.6}
@@ -16,16 +16,12 @@
         .card{background:#fff;border-radius:24px;padding:1.8rem;box-shadow:0 12px 30px -10px rgba(0,0,0,0.12);border:1px solid rgba(255,255,255,0.7);margin-bottom:1.5rem}
         
         /* LOGIN */
-        input{width:100%;padding:1rem;margin-bottom:1rem;border:2px solid var(--B);border-radius:12px;font-size:1rem;outline:none}
-        input:focus{border-color:var(--Yd)}
-        
-        /* BOTONES */
+        input{width:100%;padding:1rem;margin-bottom:1rem;border:2px solid var(--B);border-radius:12px;font-size:1rem;outline:none;font-family:inherit}
         .btn{width:100%;padding:1rem;border-radius:14px;border:none;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.5rem;transition:0.3s;font-size:1rem}
         .btn-y{background:var(--Y);color:var(--D2);box-shadow:0 4px 0 var(--Yd)}
-        .btn-y:disabled{opacity:0.5;cursor:not-allowed}
 
-        /* PREGUNTAS Y FEEDBACK */
-        .opt{display:block;width:100%;padding:1.1rem;margin-bottom:0.9rem;border:2px solid var(--B);border-radius:14px;text-align:left;background:#fff;cursor:pointer;font-size:1rem;transition:0.2s}
+        /* QUIZ */
+        .opt{display:block;width:100%;padding:1.1rem;margin-bottom:0.9rem;border:2px solid var(--B);border-radius:14px;text-align:left;background:#fff;cursor:pointer;font-size:1rem}
         .opt.ok{border-color:var(--V);background:#ecfdf5;color:#065f46;font-weight:600}
         .opt.ko{border-color:var(--R);background:#fef2f2;color:#991b1b}
         .fb{margin-top:1.5rem;padding:1.2rem;border-radius:16px;animation:slideUp 0.3s ease-out}
@@ -33,7 +29,7 @@
         .fb.ko{background:#fef2f2;border:1px solid var(--R);color:#991b1b}
         .saber-box{margin-top:0.8rem;padding-top:0.8rem;border-top:1px solid rgba(0,0,0,0.08);font-size:0.95rem}
         
-        .hidden{display:none}
+        .hidden{display:none !important}
         @keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
     </style>
 </head>
@@ -63,69 +59,62 @@
             <div id="fbWrap"></div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
-            <button id="btnPrev" class="btn" onclick="prevQ()" style="background:var(--G);color:white">⬅️ Anterior</button>
-            <button id="btnNext" class="btn btn-y" onclick="nextQ()" disabled>Siguiente ➡️</button>
+            <button id="btnPrev" class="btn" onclick="prevQ()" style="background:var(--G);color:white">Anterior</button>
+            <button id="btnNext" class="btn btn-y" onclick="nextQ()" disabled>Siguiente</button>
         </div>
     </div>
 </div>
 
 <script>
-    // Configuración (Reemplaza con tus URLs de CSV)
-    const URL_USUARIOS = "TU_URL_CSV_USUARIOS"; 
-    const URL_PREGUNTAS = "TU_URL_CSV_PREGUNTAS";
+    // Configura tus URLs aquí
+    const URL_PREGUNTAS = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT1X_9P0WzXN5O6A3P3Iu7y6X_S_K_L_M/pub?output=csv";
 
     var exam = [];
     var idx = 0;
     var answered = [];
 
-    // SISTEMA DE LOGIN RESTAURADO
-    async function login() {
+    function login() {
         const nom = document.getElementById('inNombre').value.trim().toUpperCase();
-        const mail = document.getElementById('inMail').value.trim().toLowerCase();
+        const mail = document.getElementById('inMail').value.trim();
 
         if(!nom || !mail) {
-            alert("Por favor, cubre todos los campos");
+            alert("Cubre todos los campos");
             return;
         }
-
-        // Acceso administrador hardcoded o validación por CSV
-        if(nom === "JOAN BAEZ" || nom === "JOAN MANUEL BAEZ") {
-            startQuiz();
-        } else {
-            // Aquí iría tu lógica de validación contra el CSV de usuarios
-            startQuiz(); 
-        }
+        // Llamamos a cargar datos
+        startApp();
     }
 
-    async function startQuiz() {
+    async function startApp() {
         try {
             const res = await fetch(URL_PREGUNTAS);
-            const data = await res.text();
+            const csv = await res.text();
             
-            // Procesar CSV a objeto
-            const filas = data.split('\n').slice(1);
+            // Procesar líneas del CSV
+            const filas = csv.split('\n').slice(1);
             exam = filas.map(f => {
-                const c = f.split(','); // Ajustar separador si es necesario
+                // Suponiendo que el CSV usa comas. Si usas tabuladores cámbialo a '\t'
+                const c = f.split(','); 
                 return {
-                    pregunta: c[0],
-                    opciones: c[1], // Columna única
-                    respuesta: c[2],
-                    saber: c[3]
+                    pregunta: c[0] ? c[0].trim() : '',
+                    opciones: c[1] ? c[1].trim() : '',
+                    respuesta: c[2] ? c[2].trim().toUpperCase() : '',
+                    saber: c[3] ? c[3].trim() : ''
                 };
-            }).filter(q => q.pregunta);
+            }).filter(q => q.pregunta !== '');
 
+            // CAMBIO DE PANTALLA
             document.getElementById('secLogin').classList.add('hidden');
             document.getElementById('secQuiz').classList.remove('hidden');
             showQ();
         } catch(e) {
-            alert("Error cargando preguntas. Revisa la conexión.");
+            alert("Error conectando con la base de datos");
         }
     }
 
-    // LÓGICA DE PREGUNTAS CORREGIDA (4 OPCIONES Y MOTIVACIÓN)
     function showQ() {
         var q = exam[idx];
-        document.getElementById('qNum').textContent = '📝 Pregunta ' + (idx + 1) + ' de ' + exam.length;
+        document.getElementById('qNum').textContent = 'PREGUNTA ' + (idx + 1) + ' DE ' + exam.length;
         document.getElementById('qTxt').textContent = q.pregunta;
         
         var divOpts = document.getElementById('opts');
@@ -133,7 +122,7 @@
         document.getElementById('fbWrap').innerHTML = ''; 
         document.getElementById('btnNext').disabled = true;
 
-        // AJUSTE: Split por salto de línea
+        // --- TU CORRECCIÓN DE OPCIONES ---
         var opts = (q.opciones || '').split('\n').filter(function(o){return o.trim()});
         var letras = ['A', 'B', 'C', 'D'];
 
@@ -141,7 +130,7 @@
             if (i < 4) {
                 var btn = document.createElement('button');
                 btn.className = 'opt';
-                btn.innerHTML = '<strong>' + letras[i] + '</strong> ' + texto.trim();
+                btn.innerHTML = '<strong>' + letras[i] + '</strong> ' + texto;
                 btn.onclick = function() { checkAns(letras[i], btn); };
                 divOpts.appendChild(btn);
             }
@@ -153,26 +142,23 @@
         answered[idx] = true;
         
         var q = exam[idx];
-        var respCorrecta = (q.respuesta || '').toString().trim().toUpperCase();
-        var isCorrect = (userAns === respCorrecta);
+        var isCorrect = (userAns === q.respuesta);
         
         document.querySelectorAll('.opt').forEach(b => {
-            if (b.innerHTML.includes('<strong>' + respCorrecta + '</strong>')) b.classList.add('ok');
+            if (b.innerHTML.includes('<strong>' + q.respuesta + '</strong>')) b.classList.add('ok');
             else if (b === btn && !isCorrect) b.classList.add('ko');
         });
 
-        // AJUSTE: Motivación exacta
+        // --- TU CORRECCIÓN DE MOTIVACIÓN ---
         var motivacion = q.saber || '¡Sigue adelante! 💪';
         
-        var fbWrap = document.getElementById('fbWrap');
         var fb = document.createElement('div');
         fb.className = 'fb ' + (isCorrect ? 'ok' : 'ko');
         fb.innerHTML = `
             <div class="fb-title">${isCorrect ? '🌟 ¡Correcto!' : '💡 Ánimo'}</div>
             <div class="saber-box"><strong>Motivación:</strong> ${motivacion}</div>
         `;
-        
-        fbWrap.appendChild(fb);
+        document.getElementById('fbWrap').appendChild(fb);
         document.getElementById('btnNext').disabled = false;
     }
 
