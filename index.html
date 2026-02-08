@@ -58,7 +58,7 @@
         <h2 style="text-align:center;margin-bottom:1.5rem;font-family:'Montserrat'">Panel de Acceso</h2>
         <div class="field">
             <label>Correo Electrónico Autorizado</label>
-            <input type="email" id="inEmail" placeholder="ejemplo@correo.com" autocomplete="email">
+            <input type="email" id="inEmail" placeholder="ejemplo@correo.com">
         </div>
         <button class="btn" onclick="doLogin()">Entrar</button>
     </div>
@@ -141,18 +141,15 @@ function parseTable(headers, rows) {
 }
 
 function doLogin() {
-    const rawEmail = document.getElementById('inEmail').value;
-    const emailInput = rawEmail.trim().toLowerCase();
+    const emailInput = document.getElementById('inEmail').value.trim().toLowerCase();
     if(!emailInput) return;
     
     showScreen('secLoading');
-    
-    // Cache buster para forzar datos frescos de Google
     const cb = "&t=" + new Date().getTime();
     
     fetchJSONP(apiUrl + '?type=users' + cb, function(res) {
         if (!res || !res.rows) {
-            alert("Error al conectar. Reintenta en unos segundos.");
+            alert("Error de conexión.");
             showScreen('secLogin');
             return;
         }
@@ -167,7 +164,7 @@ function doLogin() {
                 showScreen('secConfig');
             });
         } else {
-            alert("Acceso denegado. El correo no está autorizado.");
+            alert("Acceso denegado.");
             showScreen('secLogin');
         }
     });
@@ -190,12 +187,7 @@ function startExam() {
     let num = parseInt(numInput.value);
     const mat = document.getElementById('selMateria').value;
     const pool = mat ? allQuestions.filter(q => q.materia === mat) : allQuestions;
-    
-    if (pool.length === 0) {
-        alert("No hay preguntas disponibles.");
-        return;
-    }
-    
+    if (pool.length === 0) return;
     if (num > pool.length) num = pool.length;
     
     exam = pool.sort(() => 0.5 - Math.random()).slice(0, num);
@@ -211,16 +203,17 @@ function showQ() {
     document.getElementById('pBar').style.width = ((idx + 1) / exam.length * 100) + "%";
     document.getElementById('qTxt').textContent = q.pregunta;
     
-    const optsStr = (q.opciones || "").toString();
-    const opts = optsStr.split(/\r?\n/).map(o => o.trim()).filter(o => o.length > 0);
+    // LÓGICA DE SALTO DE LÍNEA CLAUDE: Separar opciones por líneas
+    const optsRaw = (q.opciones || "").toString().split(/\r?\n/).filter(o => o.trim() !== "");
     
     const wrap = document.getElementById('optsWrap');
     wrap.innerHTML = "";
     document.getElementById('fbWrap').innerHTML = "";
     document.getElementById('btnNext').disabled = true;
 
-    opts.forEach(optTxt => {
-        const letter = optTxt.substring(0, 1).toUpperCase();
+    optsRaw.forEach(optTxt => {
+        // Detectamos la letra (A, B, C, D) al inicio de la opción
+        const letter = optTxt.trim().substring(0, 1).toUpperCase();
         const div = document.createElement('div');
         div.className = 'opt';
         div.dataset.letter = letter;
@@ -229,7 +222,7 @@ function showQ() {
         div.onclick = () => {
             if(!document.getElementById('btnNext').disabled) return;
             
-            const respCorrecta = (q.respuesta || "").toString().trim().charAt(0).toUpperCase();
+            const respCorrecta = (q.respuesta || "").toString().trim().toUpperCase();
             const isOk = letter === respCorrecta;
             answers[idx] = letter;
             correct[idx] = isOk;
@@ -241,14 +234,13 @@ function showQ() {
             
             if(!isOk) div.classList.add('ko');
             
-            const explicacion = q.saber || q.motivacion || '¡Excelente trabajo!';
-            
+            // FEEDBACK: Usamos el campo "saber" para la explicación
+            const explicacion = q.saber || "¡Buen trabajo!";
             document.getElementById('fbWrap').innerHTML = `
                 <div class="fb ${isOk ? 'ok' : 'ko'}">
-                    <div class="fb-t">${isOk ? '✓ ¡Correcto!' : '✗ Incorrecto'}</div>
-                    <div class="fb-body"><strong>Respuesta:</strong> ${respCorrecta}<br><br><strong>💡 Explicación:</strong> ${explicacion}</div>
+                    <div class="fb-t">${isOk ? '✓ Correcto' : '✗ Incorrecto'}</div>
+                    <div class="fb-body"><strong>Respuesta correcta:</strong> ${respCorrecta}<br><br><strong>💡 Explicación:</strong> ${explicacion}</div>
                 </div>`;
-            
             document.getElementById('btnNext').disabled = false;
         };
         wrap.appendChild(div);
