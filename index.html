@@ -6,7 +6,7 @@
 <title>ENFOCADOS</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-/* DISEÑO ORIGINAL RESTABLECIDO */
+/* --- ESTILOS ORIGINALES --- */
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--Y:rgb(250,250,0);--Yd:rgb(215,215,0);--D:#2c3e50;--D2:#1a252f;--V:#10b981;--R:#ef4444;--G:#64748b;--B:#e2e8f0}
 body{font-family:'Inter',sans-serif;background:linear-gradient(160deg,#fffef0 0%,#fff9c4 100%);min-height:100vh;color:#1e293b;line-height:1.6}
@@ -15,252 +15,256 @@ header{text-align:center;margin-bottom:1.6rem}
 header svg{display:block;margin:0 auto .4rem}
 h1{font-family:'Montserrat',sans-serif;font-size:3rem;font-weight:800;color:var(--D);letter-spacing:-1px}
 .sub{color:var(--G);font-size:1.02rem;font-weight:500}
-
-/* TARJETAS CON BORDE AMARILLO */
 .card{background:#fff;border-radius:18px;padding:2rem;box-shadow:0 4px 24px rgba(0,0,0,.08);border:2px solid var(--Y);margin-bottom:1.4rem}
-
 .field{margin-bottom:1.1rem;text-align:left}
 .field label{display:block;margin-bottom:.3rem;color:var(--D);font-weight:600;font-size:.9rem}
-.field input{width:100%;padding:.82rem 1rem;border:2px solid var(--B);border-radius:10px;font-size:1rem;font-family:inherit;transition:border-color .2s}
+.field input, .field select{width:100%;padding:.82rem 1rem;border:2px solid var(--B);border-radius:10px;font-size:1rem;font-family:inherit;transition:border-color .2s}
 .field input:focus{outline:none;border-color:var(--Y);box-shadow:0 0 0 3px rgba(250,250,0,.18)}
-
-.btn{width:100%;padding:.88rem 1.5rem;background:var(--Y);color:var(--D);border:none;border-radius:10px;font-size:1.05rem;font-weight:700;cursor:pointer;font-family:'Montserrat',sans-serif;transition:background .2s,transform .15s,box-shadow .2s;box-shadow:0 3px 8px rgba(250,250,0,.3)}
-.btn:hover{background:var(--Yd);transform:translateY(-1px);box-shadow:0 5px 14px rgba(250,250,0,.4)}
+.btn{width:100%;padding:.88rem 1.5rem;background:var(--Y);color:var(--D);border:none;border-radius:10px;font-size:1.05rem;font-weight:700;cursor:pointer;font-family:'Montserrat',sans-serif;transition:all .2s;box-shadow:0 3px 8px rgba(250,250,0,0.3)}
+.btn:hover{background:var(--Yd);transform:translateY(-1px);box-shadow:0 5px 14px rgba(250,250,0,0.4)}
 .btn:disabled{background:#cbd5e1;color:#94a3b8;cursor:not-allowed;transform:none;box-shadow:none}
-
 .btn-out{background:#fff;color:var(--D);border:2px solid var(--D);box-shadow:none}
 .btn-out:hover{background:var(--D);color:#fff}
-.btn-sm{width:auto;display:inline-block;padding:.6rem 1.3rem;font-size:.92rem}
-
-.ubar{background:linear-gradient(135deg,var(--Y),rgb(255,255,100));padding:.78rem 1.1rem;border-radius:10px;display:flex;justify-content:space-between;align-items:center;margin-bottom:1.4rem;flex-wrap:wrap;gap:.5rem}
-.ubar span{color:var(--D);font-weight:600;font-size:.93rem}
-.btn-logout{background:var(--D);color:#fff;border:none;padding:.4rem 1rem;border-radius:7px;cursor:pointer;font-weight:600;font-size:.85rem}
-
+.ubar{background:linear-gradient(135deg,var(--Y),rgb(255,255,100));padding:.78rem 1.1rem;border-radius:10px;display:flex;justify-content:space-between;align-items:center;margin-bottom:1.4rem}
 .spin-wrap{text-align:center;padding:2.8rem 0;color:var(--G)}
 .spin{border:3px solid #eee;border-top:3px solid var(--Y);border-radius:50%;width:40px;height:40px;animation:sp .9s linear infinite;margin:0 auto .9rem}
 @keyframes sp{to{transform:rotate(360deg)}}
-
-.cbox{max-width:540px;margin:0 auto;text-align:center}
-.cbox h2{font-family:'Montserrat',sans-serif;color:var(--D);margin-bottom:.35rem;font-size:1.3rem}
-.contact-box{background:#f0f4ff;border:2px solid #c7d8ff;border-radius:14px;padding:1.1rem 1.4rem;margin:1rem auto;max-width:420px;text-align:left}
-
-.qhdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;padding-bottom:.6rem;border-bottom:2px solid var(--Y)}
-.qnum{font-family:'Montserrat',sans-serif;font-size:1.15rem;color:var(--D);font-weight:700}
+.qhdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;border-bottom:2px solid var(--Y);padding-bottom:5px}
 .pbar-bg{background:var(--B);border-radius:4px;height:6px;margin-bottom:1.2rem;overflow:hidden}
-.pbar{background:var(--Y);height:100%;border-radius:4px;transition:width .4s ease}
-
-.opts{display:flex;flex-direction:column;gap:.7rem}
-.opt{display:flex;align-items:center;gap:.85rem;padding:1rem 1.1rem;border:2px solid var(--B);border-radius:11px;cursor:pointer;background:#fff;transition:all .2s}
-.opt:hover:not(.dis){border-color:var(--Y);background:#fffef0;transform:translateX(3px)}
+.pbar{background:var(--Y);height:100%;transition:width .4s ease}
+.opt{display:flex;align-items:center;gap:.85rem;padding:1rem;border:2px solid var(--B);border-radius:11px;cursor:pointer;background:#fff;margin-bottom:10px;transition:0.2s}
+.opt:hover{border-color:var(--Y);background:#fffef0}
 .opt.ok{border-color:var(--V);background:#f0fdf4}
 .opt.ko{border-color:var(--R);background:#fef2f2}
-.oltr{width:34px;height:34px;border-radius:50%;background:var(--B);display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0}
-
-.fb{margin-top:1.3rem;padding:1.1rem 1.2rem;border-radius:10px}
+.oltr{width:30px;height:30px;border-radius:50%;background:var(--B);display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0}
+.fb{margin-top:1.3rem;padding:1.1rem;border-radius:10px}
 .fb.ok{background:#f0fdf4;border-left:4px solid var(--V)}
 .fb.ko{background:#fef2f2;border-left:4px solid var(--R)}
-
 .hidden{display:none!important}
-@media(max-width:600px){h1{font-size:2.2rem}.card{padding:1.3rem}}
 </style>
 </head>
 <body>
+
 <div class="wrap">
-<header>
-  <svg width="68" height="68" viewBox="0 0 68 68" fill="none">
-    <circle cx="34" cy="34" r="32" fill="rgb(250,250,0)" stroke="#2c3e50" stroke-width="3"/>
-    <path d="M22 34L30 42L46 26" stroke="#2c3e50" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-  </svg>
-  <h1>ENFOCADOS</h1>
-  <div class="sub">Plataforma de Preparación para Oposiciones</div>
-</header>
+    <header>
+        <svg width="68" height="68" viewBox="0 0 68 68" fill="none">
+            <circle cx="34" cy="34" r="32" fill="rgb(250,250,0)" stroke="#2c3e50" stroke-width="3"/>
+            <path d="M22 34L30 42L46 26" stroke="#2c3e50" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h1>ENFOCADOS</h1>
+        <div class="sub">Plataforma de Preparación para Oposiciones</div>
+    </header>
 
-<div id="secLogin" class="card">
-  <h2 style="font-family:'Montserrat',sans-serif;text-align:center;margin-bottom:1.2rem;color:var(--D)">Iniciar Sesión</h2>
-  <div class="field">
-    <label>Nombre Completo</label>
-    <input type="text" id="inName" placeholder="Tu nombre...">
-  </div>
-  <div class="field">
-    <label>Correo Electrónico</label>
-    <input type="email" id="inEmail" placeholder="Tu email...">
-  </div>
-  <div id="loginErr"></div>
-  <button class="btn" onclick="doLogin()">Acceder →</button>
-</div>
-
-<div id="secLoading" class="card hidden">
-  <div class="spin-wrap">
-    <div class="spin"></div>
-    <p id="loadMsg">Cargando datos...</p>
-  </div>
-</div>
-
-<div id="secConfig" class="card hidden">
-  <div class="ubar"><span id="cfgUser"></span><button class="btn-logout" onclick="location.reload()">Cerrar Sesión</button></div>
-  <h3 style="font-family:'Montserrat',sans-serif;color:var(--D);margin-bottom:1rem">Configura tu Examen</h3>
-  <div class="field">
-    <label>Número de preguntas</label>
-    <input type="number" id="inNum" min="1" max="100" value="10">
-  </div>
-  <div class="field">
-    <label>Materia</label>
-    <select id="selMateria" style="width:100%; padding:0.8rem; border-radius:10px; border:2px solid var(--B)"></select>
-  </div>
-  <button class="btn" onclick="startExam()">🎯 Comenzar Examen</button>
-</div>
-
-<div id="secQ" class="card hidden">
-  <div class="qhdr"><span class="qnum" id="qNum"></span><span id="qProg"></span></div>
-  <div class="pbar-bg"><div class="pbar" id="pBar"></div></div>
-  <div id="qTxt" class="qtxt" style="font-weight:600; margin-bottom:1rem"></div>
-  <div class="opts" id="optsWrap"></div>
-  <div id="fbWrap"></div>
-  <div class="btnrow" style="display:flex; gap:10px; margin-top:20px">
-    <button class="btn btn-out hidden" id="btnPrev" onclick="prevQ()">Anterior</button>
-    <button class="btn" id="btnNext" onclick="nextQ()" disabled>Siguiente</button>
-  </div>
-</div>
-
-<div id="secRes" class="card hidden" style="text-align:center">
-    <h2 id="rEmoji" style="font-size:3rem"></h2>
-    <div id="rPct" style="font-size:4rem; font-weight:800; color:var(--D)"></div>
-    <p>¡Examen Finalizado!</p>
-    <div style="display:flex; justify-content:space-around; margin:20px 0">
-        <div><b id="rOk" style="color:var(--V); font-size:2rem"></b><br>Correctas</div>
-        <div><b id="rKo" style="color:var(--R); font-size:2rem"></b><br>Fallos</div>
+    <div id="secLogin" class="card">
+        <h2 style="text-align:center;margin-bottom:1.2rem;font-family:'Montserrat'">Acceso</h2>
+        <div class="field">
+            <label>Nombre Completo</label>
+            <input type="text" id="inName">
+        </div>
+        <div class="field">
+            <label>Correo Electrónico</label>
+            <input type="email" id="inEmail">
+        </div>
+        <button class="btn" onclick="doLogin()">Entrar →</button>
+        <div id="loginErr"></div>
     </div>
-    <button class="btn" onclick="location.reload()">Reintentar</button>
-</div>
 
-<div id="secDenied" class="card hidden">
-    <div class="cbox"><h2>Acceso Denegado</h2><p>Tu correo no está registrado.</p></div>
-</div>
+    <div id="secLoading" class="card hidden">
+        <div class="spin-wrap">
+            <div class="spin"></div>
+            <p id="loadMsg">Conectando con la base de datos...</p>
+        </div>
+    </div>
 
+    <div id="secConfig" class="card hidden">
+        <div class="ubar"><span id="cfgUser"></span><button onclick="location.reload()" style="background:var(--D);color:#fff;border:none;padding:5px 10px;border-radius:5px;cursor:pointer">Salir</button></div>
+        <h3 style="margin-bottom:1rem">Configura tu examen</h3>
+        <div class="field">
+            <label>Número de preguntas (Máx 100)</label>
+            <input type="number" id="inNum" value="10" min="1" max="100">
+        </div>
+        <div class="field">
+            <label>Materia</label>
+            <select id="selMateria"><option value="">Todas</option></select>
+        </div>
+        <button class="btn" onclick="startExam()">Comenzar 🎯</button>
+    </div>
+
+    <div id="secQ" class="card hidden">
+        <div class="qhdr"><span id="qNum" style="font-weight:800"></span><span id="qProg"></span></div>
+        <div class="pbar-bg"><div id="pBar" class="pbar" style="width:0%"></div></div>
+        <div id="qTxt" style="font-size:1.1rem; font-weight:600; margin-bottom:1.5rem"></div>
+        <div id="optsWrap"></div>
+        <div id="fbWrap"></div>
+        <div style="display:flex; gap:10px; margin-top:1.5rem">
+            <button id="btnPrev" class="btn btn-out hidden" onclick="prevQ()">Anterior</button>
+            <button id="btnNext" class="btn" onclick="nextQ()" disabled>Siguiente</button>
+        </div>
+    </div>
+
+    <div id="secRes" class="card hidden" style="text-align:center">
+        <h2 style="font-size:2.5rem" id="rEmoji"></h2>
+        <div id="rPct" style="font-size:4rem; font-weight:800; color:var(--D)"></div>
+        <p style="margin-bottom:1.5rem">Resultado Final</p>
+        <div style="display:flex; justify-content:space-around; margin-bottom:2rem">
+            <div><b id="rOk" style="color:var(--V);font-size:1.5rem"></b><br>Correctas</div>
+            <div><b id="rKo" style="color:var(--R);font-size:1.5rem"></b><br>Errores</div>
+        </div>
+        <button class="btn" onclick="location.reload()">Nuevo Intento</button>
+    </div>
 </div>
 
 <script>
-// URL ACTUALIZADA SEGÚN TU PETICIÓN
-var apiUrl='https://script.google.com/macros/s/AKfycbxOW1CWs8n04Lek1Sm0mYZE_F6N0epkbvr0czCt_QzY7qdn65X3g1oya0Br2BtwXQBS/exec';
-var allQuestions=[], exam=[], idx=0, answers=[], correct=[], curUser=null;
+// URL NUEVA SUMINISTRADA
+var apiUrl = 'https://script.google.com/macros/s/AKfycbxOW1CWs8n04Lek1Sm0mYZE_F6N0epkbvr0czCt_QzY7qdn65X3g1oya0Br2BtwXQBS/exec';
 
-function showScreen(id){
-  ['secLogin','secLoading','secConfig','secQ','secRes','secDenied'].forEach(s => {
-    document.getElementById(s).classList.add('hidden');
-  });
-  document.getElementById(id).classList.remove('hidden');
+var allQuestions = [], exam = [], idx = 0, answers = [], correct = [], curUser = null;
+
+function showScreen(id) {
+    document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
+    document.getElementById(id).classList.remove('hidden');
 }
 
-function doLogin(){
-  var name=document.getElementById('inName').value;
-  var email=document.getElementById('inEmail').value.toLowerCase().trim();
-  if(!name || !email) return alert("Rellena los campos");
-  
-  showScreen('secLoading');
-  loadData('users', function(res){
-    var users = parseTable(res.headers, res.rows);
-    var user = users.find(u => u.correo && u.correo.toLowerCase() === email);
+function doLogin() {
+    var name = document.getElementById('inName').value.trim();
+    var email = document.getElementById('inEmail').value.trim().toLowerCase();
     
-    if(!user && email !== 'joanmanuelbaez@gmail.com') return showScreen('secDenied');
+    if(!name || !email) return alert("Por favor, rellena todos los campos.");
     
-    curUser = {nombre: name};
-    loadData('questions', function(qRes){
-        allQuestions = parseTable(qRes.headers, qRes.rows);
-        setupConfig();
-        showScreen('secConfig');
+    showScreen('secLoading');
+    
+    // CARGAR USUARIOS
+    fetchJSONP(apiUrl + '?type=users', function(res) {
+        if(!res || !res.rows) {
+            alert("Error: No se pudieron recibir datos. Revisa si el script de Google tiene acceso 'Anyonmous'.");
+            showScreen('secLogin');
+            return;
+        }
+
+        var users = parseTable(res.headers, res.rows);
+        var user = users.find(u => u.correo && u.correo.toLowerCase() === email);
+
+        // Bypass admin o validación
+        if(email === 'joanmanuelbaez@gmail.com' || user) {
+            curUser = { nombre: name, email: email };
+            document.getElementById('loadMsg').textContent = "Cargando banco de preguntas...";
+            
+            // CARGAR PREGUNTAS
+            fetchJSONP(apiUrl + '?type=questions', function(qRes) {
+                allQuestions = parseTable(qRes.headers, qRes.rows);
+                setupConfig();
+                showScreen('secConfig');
+            });
+        } else {
+            alert("Usuario no autorizado. Contacta con soporte.");
+            showScreen('secLogin');
+        }
     });
-  });
 }
 
-function loadData(type, cb){
-  var callbackName = 'jsonp_' + Date.now();
-  window[callbackName] = function(data){
-    delete window[callbackName];
-    cb(data);
-  };
-  var script = document.createElement('script');
-  script.src = apiUrl + '?type=' + type + '&callback=' + callbackName;
-  document.head.appendChild(script);
+function fetchJSONP(url, callback) {
+    var callbackName = 'jsonp_' + Math.round(100000 * Math.random());
+    window[callbackName] = function(data) {
+        delete window[callbackName];
+        document.body.removeChild(script);
+        callback(data);
+    };
+    var script = document.createElement('script');
+    script.src = url + (url.indexOf('?') >= 0 ? '&' : '?') + 'callback=' + callbackName;
+    document.body.appendChild(script);
 }
 
-function parseTable(headers, rows){
-  return rows.map(row => {
-    var obj = {};
-    headers.forEach((h, i) => obj[h.toLowerCase().trim()] = row[i]);
-    return obj;
-  });
+function parseTable(headers, rows) {
+    return rows.map(row => {
+        var obj = {};
+        headers.forEach((h, i) => obj[h.toLowerCase().trim()] = row[i]);
+        return obj;
+    });
 }
 
-function setupConfig(){
-  document.getElementById('cfgUser').textContent = '👤 ' + curUser.nombre;
-  var materias = [...new Set(allQuestions.map(q => q.materia))];
-  var sel = document.getElementById('selMateria');
-  sel.innerHTML = '<option value="">Todas las materias</option>';
-  materias.forEach(m => { if(m) sel.innerHTML += `<option value="${m}">${m}</option>`; });
+function setupConfig() {
+    document.getElementById('cfgUser').textContent = "Hola, " + curUser.nombre;
+    var materias = [...new Set(allQuestions.map(q => q.materia).filter(m => m))];
+    var sel = document.getElementById('selMateria');
+    sel.innerHTML = '<option value="">Todas las materias</option>';
+    materias.forEach(m => sel.innerHTML += `<option value="${m}">${m}</option>`);
 }
 
-function startExam(){
-  var num = +document.getElementById('inNum').value;
-  var mat = document.getElementById('selMateria').value;
-  var pool = mat ? allQuestions.filter(q => q.materia === mat) : allQuestions;
-  exam = pool.sort(() => 0.5 - Math.random()).slice(0, num);
-  idx = 0; answers = new Array(exam.length).fill(null);
-  showQ();
-  showScreen('secQ');
+function startExam() {
+    var num = parseInt(document.getElementById('inNum').value);
+    var mat = document.getElementById('selMateria').value;
+    var pool = mat ? allQuestions.filter(q => q.materia === mat) : allQuestions;
+    
+    if(pool.length === 0) return alert("No hay preguntas en esta categoría.");
+    
+    exam = pool.sort(() => 0.5 - Math.random()).slice(0, num);
+    idx = 0; answers = new Array(exam.length).fill(null);
+    correct = new Array(exam.length).fill(null);
+    showQ();
+    showScreen('secQ');
 }
 
-function showQ(){
-  var q = exam[idx];
-  document.getElementById('qNum').textContent = 'Pregunta ' + (idx+1);
-  document.getElementById('qProg').textContent = (idx+1) + '/' + exam.length;
-  document.getElementById('pBar').style.width = ((idx+1)/exam.length*100) + '%';
-  document.getElementById('qTxt').textContent = q.pregunta;
-  
-  var opts = (q.opciones || '').split('\n').filter(o => o.trim());
-  var wrap = document.getElementById('optsWrap');
-  wrap.innerHTML = '';
-  
-  opts.forEach((txt, i) => {
-    var ltr = String.fromCharCode(65+i);
-    var div = document.createElement('div');
-    div.className = 'opt' + (answers[idx] === ltr ? (correct[idx] ? ' ok':' ko') : '');
-    div.innerHTML = `<div class="oltr">${ltr}</div><div>${txt}</div>`;
-    div.onclick = function(){ selectOpt(ltr, q.respuesta.trim().toUpperCase()); };
-    wrap.appendChild(div);
-  });
-  
-  document.getElementById('fbWrap').innerHTML = answers[idx] ? renderFb(q) : '';
-  document.getElementById('btnNext').disabled = answers[idx] === null;
-  document.getElementById('btnPrev').classList.toggle('hidden', idx === 0);
+function showQ() {
+    var q = exam[idx];
+    document.getElementById('qNum').textContent = "Pregunta " + (idx + 1);
+    document.getElementById('qProg').textContent = (idx + 1) + "/" + exam.length;
+    document.getElementById('pBar').style.width = ((idx + 1) / exam.length * 100) + "%";
+    document.getElementById('qTxt').textContent = q.pregunta;
+    
+    var opts = (q.opciones || "").split("\n").filter(o => o.trim());
+    var wrap = document.getElementById('optsWrap');
+    wrap.innerHTML = "";
+    
+    opts.forEach((txt, i) => {
+        var ltr = String.fromCharCode(65 + i);
+        var div = document.createElement('div');
+        div.className = 'opt';
+        if(answers[idx] === ltr) {
+            div.classList.add(correct[idx] ? 'ok' : 'ko');
+        }
+        div.innerHTML = `<div class="oltr">${ltr}</div><div>${txt}</div>`;
+        div.onclick = function() { selectOpt(ltr, q.respuesta.trim().toUpperCase()); };
+        wrap.appendChild(div);
+    });
+
+    document.getElementById('fbWrap').innerHTML = answers[idx] ? renderFb(q) : "";
+    document.getElementById('btnNext').disabled = answers[idx] === null;
+    document.getElementById('btnPrev').classList.toggle('hidden', idx === 0);
+    if(idx === exam.length -1) document.getElementById('btnNext').textContent = "Finalizar";
+    else document.getElementById('btnNext').textContent = "Siguiente";
 }
 
-function selectOpt(ltr, correctLtr){
-  if(answers[idx] !== null) return;
-  answers[idx] = ltr;
-  correct[idx] = (ltr === correctLtr);
-  showQ();
+function selectOpt(ltr, correctLtr) {
+    if(answers[idx] !== null) return;
+    answers[idx] = ltr;
+    correct[idx] = (ltr === correctLtr);
+    showQ();
 }
 
-function renderFb(q){
-  var isOk = correct[idx];
-  return `<div class="fb ${isOk?'ok':'ko'}"><b>${isOk?'✓ Correcto':'✗ Incorrecto'}</b><br>${q.saber || ''}</div>`;
+function renderFb(q) {
+    var isOk = correct[idx];
+    return `<div class="fb ${isOk?'ok':'ko'}">
+        <b>${isOk?'✓ ¡Correcto!':'✗ Incorrecto'}</b><br>
+        <small>Respuesta: ${q.respuesta}</small><br><br>
+        ${q.saber || ''}
+    </div>`;
 }
 
-function nextQ(){
-  if(idx < exam.length - 1){ idx++; showQ(); }
-  else { showResults(); }
+function nextQ() {
+    if(idx < exam.length - 1) { idx++; showQ(); }
+    else showResults();
 }
 
-function prevQ(){ if(idx > 0){ idx--; showQ(); } }
+function prevQ() { if(idx > 0) { idx--; showQ(); } }
 
-function showResults(){
-  var ok = correct.filter(c => c).length;
-  var pct = Math.round(ok/exam.length*100);
-  document.getElementById('rOk').textContent = ok;
-  document.getElementById('rKo').textContent = exam.length - ok;
-  document.getElementById('rPct').textContent = pct + '%';
-  document.getElementById('rEmoji').textContent = pct >= 50 ? '🏆' : '📚';
-  showScreen('secRes');
+function showResults() {
+    var ok = correct.filter(c => c === true).length;
+    var pct = Math.round((ok / exam.length) * 100);
+    document.getElementById('rOk').textContent = ok;
+    document.getElementById('rKo').textContent = exam.length - ok;
+    document.getElementById('rPct').textContent = pct + "%";
+    document.getElementById('rEmoji').textContent = pct >= 50 ? "🎉" : "📚";
+    showScreen('secRes');
 }
 </script>
 </body>
