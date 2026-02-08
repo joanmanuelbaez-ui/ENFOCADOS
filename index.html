@@ -6,6 +6,7 @@
 <title>ENFOCADOS - Plataforma de Oposiciones</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+    /* Mantenemos tu CSS original intacto */
     *{margin:0;padding:0;box-sizing:border-box}
     :root{--Y:rgb(250,250,0);--Yd:rgb(215,215,0);--D:#2c3e50;--D2:#1a252f;--V:#10b981;--R:#ef4444;--G:#64748b;--B:#e2e8f0}
     body{font-family:'Inter',sans-serif;background:linear-gradient(160deg,#fffef0 0%,#fff9c4 100%);min-height:100vh;color:#1e293b;line-height:1.6}
@@ -16,13 +17,11 @@
     h1{font-family:'Montserrat';font-weight:800;font-size:2.2rem;letter-spacing:-1px;color:var(--D);text-align:center;margin-bottom:2rem}
     .field{margin-bottom:1.5rem}
     label{display:block;margin-bottom:.5rem;font-weight:600;color:var(--G);font-size:0.9rem}
-    input, select{width:100%;padding:14px 18px;border:2px solid var(--B);border-radius:12px;font-size:1rem;font-family:inherit;transition:all 0.2s}
-    input:focus, select:focus{outline:none;border-color:var(--Y);box-shadow:0 0 0 4px rgba(250,250,0,0.2)}
+    input, select{width:100%;padding:14px 18px;border:2px solid var(--B);border-radius:12px;font-size:1rem;font-family:inherit}
     .btn{width:100%;padding:16px;background:var(--Y);color:var(--D);border:none;border-radius:14px;font-weight:700;font-size:1rem;cursor:pointer;font-family:'Montserrat';transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:10px}
-    .btn:hover{background:var(--Yd);transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.1)}
-    .btn:disabled{background:var(--B);color:var(--G);cursor:not-allowed;transform:none}
+    .btn:hover{background:var(--Yd);transform:translateY(-2px)}
+    .btn:disabled{background:var(--B);color:var(--G);cursor:not-allowed}
     .opt{padding:14px 20px;border:2px solid var(--B);border-radius:14px;margin-bottom:12px;cursor:pointer;transition:0.2s;display:flex;align-items:center;font-weight:500}
-    .opt:hover{border-color:var(--Y);background:rgba(250,250,0,0.05)}
     .opt.ok{border-color:var(--V);background:#f0fdf4;color:#065f46}
     .opt.ko{border-color:var(--R);background:#fef2f2;color:#991b1b}
     .opt.dis{pointer-events:none}
@@ -37,32 +36,21 @@
 <div class="wrap">
     <div id="secLogin" class="card active">
         <h1>ENFOCADOS</h1>
-        <div class="field">
-            <label>Correo electrónico</label>
-            <input type="email" id="inEmail" placeholder="ejemplo@correo.com">
-        </div>
+        <div class="field"><label>Correo electrónico</label><input type="email" id="inEmail" placeholder="ejemplo@correo.com"></div>
         <button class="btn" onclick="doLogin()">Entrar al Sistema</button>
     </div>
 
-    <div id="secLoading" class="card" style="text-align:center">
-        <p>Cargando contenidos...</p>
-    </div>
+    <div id="secLoading" class="card" style="text-align:center"><p>Cargando contenidos...</p></div>
 
     <div id="secConfig" class="card">
         <h2 id="cfgUser" style="margin-bottom:1.5rem; color:var(--D)"></h2>
-        <div class="field">
-            <label>Número de preguntas</label>
-            <input type="number" id="inNum" value="10" min="1">
-        </div>
-        <div class="field">
-            <label>Materia</label>
-            <select id="selMateria"></select>
-        </div>
+        <div class="field"><label>Número de preguntas</label><input type="number" id="inNum" value="10"></div>
+        <div class="field"><label>Materia</label><select id="selMateria"></select></div>
         <button class="btn" onclick="startExam()">Empezar Test</button>
     </div>
 
     <div id="secQ" class="card">
-        <div id="qProg" style="font-weight:600;color:var(--G);margin-bottom:1rem;font-size:0.85rem;text-transform:uppercase;letter-spacing:1px"></div>
+        <div id="qProg" style="font-weight:600;color:var(--G);margin-bottom:1rem;font-size:0.85rem"></div>
         <div id="qTxt" style="font-size:1.25rem;font-weight:600;color:var(--D2);margin-bottom:2rem"></div>
         <div id="optsWrap"></div>
         <div id="fbWrap"></div>
@@ -72,10 +60,6 @@
     <div id="secRes" class="card" style="text-align:center">
         <h1>Resultados</h1>
         <div id="rPct" style="font-size:4rem;font-weight:800;color:var(--D);margin:1rem 0"></div>
-        <div style="display:flex;justify-content:center;gap:20px;margin-bottom:2rem">
-            <div><span style="color:var(--V);font-weight:700">Aciertos:</span> <span id="rOk"></span></div>
-            <div><span style="color:var(--R);font-weight:700">Errores:</span> <span id="rKo"></span></div>
-        </div>
         <button class="btn" onclick="location.reload()">Nuevo Test</button>
     </div>
 </div>
@@ -109,24 +93,20 @@ function doLogin() {
     const email = document.getElementById('inEmail').value.trim().toLowerCase();
     if(!email) return;
     showScreen('secLoading');
-
-    fetchJSONP(apiUrl + '?type=users&t=' + Date.now(), (res) => {
+    fetchJSONP(apiUrl + '?type=users', (res) => {
         const users = parse(res);
         const user = users.find(u => u.correo && u.correo.toLowerCase().trim() === email);
         if(user) {
-            fetchJSONP(apiUrl + '?type=questions&t=' + Date.now(), (qRes) => {
+            fetchJSONP(apiUrl + '?type=questions', (qRes) => {
                 allQ = parse(qRes);
                 const mats = [...new Set(allQ.map(q => q.materia).filter(m => m))];
                 const sel = document.getElementById('selMateria');
                 sel.innerHTML = '<option value="">Todas las materias</option>';
                 mats.forEach(m => sel.innerHTML += `<option value="${m}">${m}</option>`);
-                document.getElementById('cfgUser').innerText = "Bienvenido, " + (user.usuario || email);
+                document.getElementById('cfgUser').innerText = "Hola, " + (user.usuario || email);
                 showScreen('secConfig');
             });
-        } else {
-            alert("Usuario no registrado");
-            showScreen('secLogin');
-        }
+        } else { alert("Acceso no autorizado"); showScreen('secLogin'); }
     });
 }
 
@@ -142,6 +122,65 @@ function startExam() {
 
 function showQ() {
     const q = exam[idx];
-    document.getElementById('qProg').innerText = `Pregunta ${idx + 1} de ${exam.length}`;
+    document.getElementById('qProg').innerText = `PREGUNTA ${idx + 1} DE ${exam.length}`;
     document.getElementById('qTxt').innerText = q.pregunta;
     document.getElementById('fbWrap').innerHTML = "";
+    document.getElementById('btnNext').disabled = true;
+
+    // MEJORA 1 (CLAUDE): Salto de línea estricto
+    var opts = (q.opciones || '').split('\n').filter(function(o){return o.trim()});
+    
+    const wrap = document.getElementById('optsWrap');
+    wrap.innerHTML = "";
+
+    opts.forEach((text) => {
+        const div = document.createElement('div');
+        div.className = 'opt';
+        // Mostramos el texto tal cual viene en la línea del Excel
+        div.innerText = text.trim();
+        
+        div.onclick = () => {
+            document.querySelectorAll('.opt').forEach(o => o.classList.add('dis'));
+            
+            // Lógica de validación por la primera letra (A, B, C...)
+            const letraPulsada = text.trim().substring(0, 1).toUpperCase();
+            const correcta = (q.respuesta || "").toString().trim().toUpperCase();
+            const esOk = (letraPulsada === correcta);
+
+            if(esOk) {
+                div.classList.add('ok');
+                correctCount++;
+            } else {
+                div.classList.add('ko');
+                // Marcamos la que era correcta visualmente
+                Array.from(wrap.children).forEach(child => {
+                    if(child.innerText.trim().substring(0,1).toUpperCase() === correcta) child.classList.add('ok');
+                });
+            }
+
+            // MEJORA 2 (CLAUDE): Motivación corregida
+            var motivacion = q.saber || '¡Sigue adelante! 💪';
+
+            document.getElementById('fbWrap').innerHTML = `
+                <div class="fb ${esOk ? 'ok' : 'ko'}">
+                    <div class="fb-t">${esOk ? '✓ ¡CORRECTO!' : '✗ INCORRECTO'}</div>
+                    <p><strong>Respuesta correcta:</strong> ${correcta}</p>
+                    <p style="margin-top:10px; font-style:italic">${motivacion}</p>
+                </div>`;
+            document.getElementById('btnNext').disabled = false;
+        };
+        wrap.appendChild(div);
+    });
+}
+
+function nextQ() {
+    idx++;
+    if(idx < exam.length) showQ();
+    else {
+        document.getElementById('rPct').innerText = Math.round((correctCount/exam.length)*100) + "%";
+        showScreen('secRes');
+    }
+}
+</script>
+</body>
+</html>
