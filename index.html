@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -53,13 +54,20 @@ h1{font-family:'Montserrat',sans-serif;font-size:3rem;font-weight:800;color:var(
 .qprog{color:var(--G);font-weight:600;font-size:.85rem}
 .pbar-bg{background:var(--B);border-radius:4px;height:6px;margin-bottom:1.2rem;overflow:hidden}
 .pbar{background:var(--Y);height:100%;border-radius:4px;transition:width .4s ease}
-.qtxt{font-size:1.12rem;font-weight:500;margin-bottom:1.3rem;line-height:1.65}
+
+/* AJUSTE PARA EL TEXTO DE PREGUNTA */
+.qtxt{font-size:1.12rem;font-weight:500;margin-bottom:1.3rem;line-height:1.65; white-space: pre-line;}
+
 .opts{display:flex;flex-direction:column;gap:.7rem}
 .opt{display:flex;align-items:center;gap:.85rem;padding:1rem 1.1rem;border:2px solid var(--B);border-radius:11px;cursor:pointer;background:#fff;transition:border-color .2s,background .2s,transform .15s}
 .opt:hover:not(.dis){border-color:var(--Y);background:#fffef0;transform:translateX(3px)}
 .opt.dis{cursor:not-allowed;opacity:.85}
 .opt.ok{border-color:var(--V);background:#f0fdf4}
 .opt.ko{border-color:var(--R);background:#fef2f2}
+
+/* AJUSTE PARA LAS OPCIONES CON \n */
+.opt-text { white-space: pre-line; flex: 1; }
+
 .oltr{width:34px;height:34px;border-radius:50%;background:var(--B);display:flex;align-items:center;justify-content:center;font-weight:700;font-family:'Montserrat',sans-serif;flex-shrink:0;font-size:.9rem;color:#1e293b;transition:background .2s,color .2s}
 .opt.ok .oltr{background:var(--V);color:#fff}
 .opt.ko .oltr{background:var(--R);color:#fff}
@@ -69,7 +77,7 @@ h1{font-family:'Montserrat',sans-serif;font-size:3rem;font-weight:800;color:var(
 .fb-title{font-weight:700;font-size:.95rem;margin-bottom:.4rem}
 .fb.ok .fb-title{color:var(--V)}
 .fb.ko .fb-title{color:var(--R)}
-.fb-body{font-size:.9rem;line-height:1.55;color:#1e293b}
+.fb-body{font-size:.9rem;line-height:1.55;color:#1e293b; white-space: pre-line;}
 .fb-body strong{color:var(--D)}
 .nav{display:flex;gap:.7rem;margin-top:1.5rem}
 .nav .btn{flex:1}
@@ -384,21 +392,26 @@ function startExam(){
   showScreen('secQ');
 }
 
+/* FUNCIÓN ACTUALIZADA PARA MANEJAR \n EN OPCIONES */
 function showQ(){
   var q=exam[idx];
   document.getElementById('qNum').textContent='Pregunta '+(idx+1);
   document.getElementById('qProg').textContent=(idx+1)+'/'+exam.length;
   document.getElementById('pBar').style.width=((idx+1)/exam.length*100)+'%';
   document.getElementById('qTxt').textContent=q.pregunta||'';
+  
+  // Dividimos por \n pero mantenemos el texto tal cual para que el CSS haga su trabajo
   var opts=(q.opciones||'').split('\n').filter(function(o){return o.trim()});
   var wrap=document.getElementById('optsWrap');
   wrap.innerHTML='';
+  
   for(var i=0;i<opts.length;i++){
     var txt=opts[i].trim();
     var ltr=String.fromCharCode(65+i);
     var div=document.createElement('div');
     div.className='opt';
-    div.innerHTML='<div class="oltr">'+ltr+'</div><div>'+txt+'</div>';
+    // Se añade la clase opt-text para aplicar el white-space: pre-line
+    div.innerHTML='<div class="oltr">'+ltr+'</div><div class="opt-text">'+txt+'</div>';
     div.dataset.ltr=ltr;
     div.onclick=function(){selectOpt(this)};
     wrap.appendChild(div);
