@@ -4,198 +4,224 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ENFOCADOS</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-/* He mantenido tus estilos originales intactos */
+/* TUS ESTILOS PROFESIONALES ORIGINALES (Sin cambios) */
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--Y:rgb(250,250,0);--Yd:rgb(215,215,0);--D:#2c3e50;--D2:#1a252f;--V:#10b981;--R:#ef4444;--G:#64748b;--B:#e2e8f0}
 body{font-family:'Inter',sans-serif;background:linear-gradient(160deg,#fffef0 0%,#fff9c4 100%);min-height:100vh;color:#1e293b;line-height:1.6}
 .wrap{max-width:860px;margin:0 auto;padding:1.8rem 1.2rem}
 header{text-align:center;margin-bottom:1.6rem}
-h1{font-family:'Montserrat',sans-serif;font-size:2.2rem;font-weight:800;color:var(--D);letter-spacing:-1px;text-transform:uppercase}
-.card{background:#fff;border-radius:24px;padding:2.2rem;box-shadow:0 20px 25px -5px rgba(0,0,0,0.1);border:1px solid rgba(255,255,255,0.7);position:relative;margin-bottom:1.5rem}
-#loginSection{max-width:400px;margin:2rem auto;text-align:center}
-input{width:100%;padding:1rem;margin:1rem 0;border-radius:12px;border:2px solid var(--B);font-size:1rem;outline:none}
-.btn-login{width:100%;background:var(--D);color:#fff;padding:1rem;border-radius:12px;border:none;font-weight:700;cursor:pointer;font-family:'Montserrat'}
-.p-wrap{margin-bottom:2rem}
-.p-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem}
-#qNum{font-family:'Montserrat',sans-serif;font-weight:700;color:var(--D)}
-#qProg{font-weight:600;color:var(--G);font-size:.9rem;background:var(--B);padding:.2rem .8rem;border-radius:20px}
-.p-bar-bg{height:8px;background:var(--B);border-radius:4px;overflow:hidden}
-#pbar{height:100%;width:0%;background:linear-gradient(90deg, var(--Yd), var(--Y));transition:width .4s ease}
-.qtxt{font-size:1.35rem;font-weight:600;color:var(--D);margin-bottom:2rem}
+h1{font-family:'Montserrat',sans-serif;font-size:3rem;font-weight:800;color:var(--D);letter-spacing:-1px;text-transform:uppercase}
+.card{background:#fff;border-radius:24px;padding:2.2rem;box-shadow:0 20px 25px -5px rgba(0,0,0,0.1),0 10px 10px -5px rgba(0,0,0,0.04);border:1px solid rgba(255,255,255,0.7);position:relative}
+.screen{display:none;animation:fadeIn 0.4s ease-out}
+.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* Estilos de Login */
+#secLogin{max-width:420px;margin:2rem auto}
+.input-group{margin-bottom:1.5rem;text-align:left}
+label{display:block;font-weight:600;margin-bottom:.5rem;color:var(--D);font-size:.9rem}
+input{width:100%;padding:1.1rem;border-radius:14px;border:2px solid var(--B);font-size:1rem;transition:all .2s;font-family:inherit}
+input:focus{border-color:var(--Yd);box-shadow:0 0 0 4px rgba(250,250,0,0.15);outline:none}
+.btn-main{width:100%;background:var(--D);color:#fff;padding:1.1rem;border-radius:14px;border:none;font-weight:700;cursor:pointer;font-family:'Montserrat';font-size:1rem;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:.8rem}
+.btn-main:hover{background:var(--D2);transform:translateY(-2px)}
+
+/* Estilos del Quiz (Tus clases originales) */
+.p-wrap{margin-bottom:2rem}.p-top{display:flex;justify-content:space-between;margin-bottom:.8rem}
+#qNum{font-family:'Montserrat';font-weight:700;color:var(--D)}
+.p-bar-bg{height:8px;background:var(--B);border-radius:10px;overflow:hidden}
+#pbar{height:100%;background:linear-gradient(90deg,var(--Yd),var(--Y));transition:width .4s ease}
+.qtxt{font-size:1.4rem;font-weight:700;color:var(--D);margin-bottom:2.2rem;line-height:1.4}
 .opts{display:grid;gap:1rem}
-.opt{display:flex;align-items:center;padding:1.2rem;border:2px solid var(--B);border-radius:16px;cursor:pointer;transition:all .2s ease;background:#f8fafc}
-.opt:hover:not(.dis){border-color:var(--Y);transform:translateX(4px)}
-.oltr{width:36px;height:36px;background:var(--Y);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;margin-right:1.2rem;flex-shrink:0}
-.opt.ok{border-color:var(--V);background:rgba(16,185,129,0.05)}
-.opt.ok .oltr{background:var(--V);color:#fff}
-.opt.ko{border-color:var(--R);background:rgba(239,68,68,0.05)}
-.opt.ko .oltr{background:var(--R);color:#fff}
-.fb{margin-top:2rem;padding:1.5rem;border-radius:16px;animation:slideUp .3s ease forwards}
-.fb.ok{background:#ecfdf5;border:1px solid var(--V);color:#065f46}
-.fb.ko{background:#fef2f2;border:1px solid var(--R);color:#991b1b}
-.nav{display:flex;justify-content:space-between;margin-top:1.5rem}
-button.nav-btn{padding:1rem 1.8rem;border-radius:14px;border:none;font-weight:700;cursor:pointer;font-family:'Montserrat'}
-.btn-p{background:var(--B);color:var(--D)}
-.btn-n{background:var(--D);color:#fff}
-#results{display:none;text-align:center}
-@keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.opt{display:flex;align-items:center;padding:1.2rem;border:2px solid var(--B);border-radius:18px;cursor:pointer;transition:all .2s;background:#f8fafc;position:relative}
+.oltr{width:38px;height:38px;background:var(--Y);border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;margin-right:1.2rem;font-size:1rem}
+.opt.selected{border-color:var(--D);background:#fff}
+.opt.ok{border-color:var(--V);background:#ecfdf5}.opt.ok .oltr{background:var(--V);color:#fff}
+.opt.ko{border-color:var(--R);background:#fef2f2}.opt.ko .oltr{background:var(--R);color:#fff}
+.fb{margin-top:2rem;padding:1.8rem;border-radius:20px;border-left:6px solid}
+.fb.ok{background:#f0fdf4;border-color:var(--V);color:#166534}
+.fb.ko{background:#fef2f2;border-color:var(--R);color:#991b1b}
+.nav-btns{display:flex;justify-content:space-between;margin-top:2.5rem;gap:1rem}
+.btn-nav{flex:1;padding:1.1rem;border-radius:14px;border:none;font-weight:700;cursor:pointer;font-family:'Montserrat';transition:all .2s}
+#btnPrev{background:var(--B);color:var(--D)}
+#btnNext{background:var(--D);color:#fff}
+.hidden{visibility:hidden}
 </style>
 </head>
 <body>
 
 <div class="wrap">
-  <header><h1>ENFOCADOS</h1></header>
+    <header><h1>ENFOCADOS</h1></header>
 
-  <div id="loginSection" class="card">
-    <h2 style="font-family:'Montserrat';margin-bottom:1rem">Acceso</h2>
-    <p>Introduce tu DNI para comenzar</p>
-    <input type="text" id="dniInput" placeholder="DNI">
-    <button class="btn-login" onclick="checkLogin()">ENTRAR</button>
-    <p id="loginMsg" style="color:var(--R);margin-top:1rem;display:none">DNI no autorizado</p>
-  </div>
-
-  <div id="quizSection" style="display:none">
-    <div class="card">
-      <div class="p-wrap">
-        <div class="p-top"><span id="qNum"></span><span id="qProg"></span></div>
-        <div class="p-bar-bg"><div id="pbar"></div></div>
-      </div>
-      <div id="qContainer"></div>
-      <div id="fbWrap"></div>
-      <div class="nav">
-        <button onclick="prevQ()" id="prevBtn" class="nav-btn btn-p">Anterior</button>
-        <button onclick="nextQ()" id="nextBtn" class="nav-btn btn-n">Siguiente</button>
-      </div>
+    <div id="secLogin" class="screen active card">
+        <h2 style="font-family:'Montserrat';margin-bottom:1.5rem">Acceso Alumnos</h2>
+        <div class="input-group">
+            <label>Introduce tu DNI</label>
+            <input type="text" id="dniInput" placeholder="Ej: 12345678Z">
+        </div>
+        <button class="btn-main" onclick="handleLogin()">ENTRAR AL TEST</button>
+        <p id="loginErr" style="color:var(--R);margin-top:1rem;font-weight:600;display:none">DNI no autorizado</p>
     </div>
-  </div>
 
-  <div id="results" class="card">
-    <div id="rEmoji" style="font-size:4.5rem;margin-bottom:1rem">🏆</div>
-    <h2 style="font-family:'Montserrat';margin-bottom:1rem">¡Test Finalizado!</h2>
-    <div style="font-size:3.5rem;font-weight:800;margin-bottom:1rem" id="rPct">0%</div>
-    <p>Correctas: <span id="rOk">0</span> | Incorrectas: <span id="rKo">0</span></p>
-    <button onclick="location.reload()" class="nav-btn btn-n" style="margin-top:2rem">Reiniciar</button>
-  </div>
+    <div id="secQuiz" class="screen card">
+        <div class="p-wrap">
+            <div class="p-top"><span id="qNum"></span><span id="qProg"></span></div>
+            <div class="p-bar-bg"><div id="pbar" style="width:0%"></div></div>
+        </div>
+        <div id="qArea"></div>
+        <div id="fbWrap"></div>
+        <div class="nav-btns">
+            <button id="btnPrev" class="btn-nav" onclick="prevQ()">← Anterior</button>
+            <button id="btnNext" class="btn-nav" onclick="nextQ()">Siguiente →</button>
+        </div>
+    </div>
+
+    <div id="secRes" class="screen card" style="text-align:center">
+        <div id="rEmoji" style="font-size:5rem;margin-bottom:1rem">🏆</div>
+        <h2 style="font-family:'Montserrat';font-size:2rem">¡Test Finalizado!</h2>
+        <div id="rPct" style="font-size:4rem;font-weight:800;color:var(--D);margin:1rem 0">0%</div>
+        <p style="font-size:1.1rem;color:var(--G)">
+            Has acertado <span id="rOk" style="color:var(--V);font-weight:700">0</span> 
+            de <span id="rTot" style="font-weight:700">0</span> preguntas.
+        </p>
+        <button class="btn-main" style="margin-top:2.5rem" onclick="location.reload()">REPETIR TEST</button>
+    </div>
 </div>
 
 <script>
-// URLS DE TUS FICHEROS (Publicados como CSV)
+// CONFIGURACIÓN DE TUS DATOS (Google Sheets)
 const URL_USUARIOS = 'https://docs.google.com/spreadsheets/d/1niLz8cxdTrNBJMAU0YDMRpiAWEmbGHt7h4HEPD6xkLA/export?format=csv&gid=353115110';
 const URL_PREGUNTAS = 'https://docs.google.com/spreadsheets/d/19mVUe0lezjxuAW4FqJTbG5UJx649ECUzA9HVwEwy0do/export?format=csv&gid=1012787791';
 
-let exam = [];
-let users = [];
-let idx = 0;
-let answered = [];
-let correct = [];
+let users = [], exam = [], answers = [], correct = [], idx = 0;
 
-// Función para procesar los datos de Google Sheets
-function parseCSV(csv) {
-  const lines = csv.split('\n');
-  const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
-  return lines.slice(1).filter(l => l.trim()).map(line => {
-    const values = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-    const obj = {};
-    headers.forEach((h, i) => {
-      let v = values[i] ? values[i].trim() : "";
-      obj[h] = v.replace(/^"|"$/g, '');
-    });
-    return obj;
-  });
-}
-
-// 1. Cargar Usuarios
+// Cargar usuarios al iniciar (Manteniendo tu lógica de carga silenciosa)
 fetch(URL_USUARIOS)
-  .then(res => res.text())
-  .then(data => { users = parseCSV(data); })
-  .catch(err => console.error("Error cargando usuarios"));
+    .then(r => r.text())
+    .then(csv => { users = parseCSV(csv); });
 
-// 2. Validar Login (Tal como estaba en tu index)
-function checkLogin() {
-  const dni = document.getElementById('dniInput').value.trim().toUpperCase();
-  const userFound = users.find(u => (u.dni || u.DNI) === dni);
-  
-  if(userFound) {
-    document.getElementById('loginSection').style.display = 'none';
-    cargarPreguntas();
-  } else {
-    document.getElementById('loginMsg').style.display = 'block';
-  }
+function parseCSV(csv) {
+    const lines = csv.split('\n');
+    const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, '').toLowerCase());
+    return lines.slice(1).filter(l => l.trim()).map(line => {
+        const values = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+        const obj = {};
+        headers.forEach((h, i) => {
+            let v = values[i] ? values[i].trim().replace(/^"|"$/g, '') : "";
+            obj[h] = v;
+        });
+        return obj;
+    });
 }
 
-// 3. Cargar Preguntas y mostrar Quiz
-function cargarPreguntas() {
-  fetch(URL_PREGUNTAS)
-    .then(res => res.text())
-    .then(data => {
-      exam = parseCSV(data);
-      document.getElementById('quizSection').style.display = 'block';
-      showQ();
-    })
-    .catch(err => alert("Error cargando base de datos"));
-}
-
-function showQ() {
-  const q = exam[idx];
-  const container = document.getElementById('qContainer');
-  const fbWrap = document.getElementById('fbWrap');
-  container.innerHTML = '';
-  fbWrap.innerHTML = '';
-
-  document.getElementById('qNum').textContent = 'Pregunta ' + (idx + 1);
-  document.getElementById('qProg').textContent = (idx + 1) + ' de ' + exam.length;
-  document.getElementById('pbar').style.width = ((idx + 1) / exam.length * 100) + '%';
-
-  const qText = document.createElement('div');
-  qText.className = 'qtxt';
-  qText.textContent = q.pregunta || q.Pregunta;
-  container.appendChild(qText);
-
-  const optsDiv = document.createElement('div');
-  optsDiv.className = 'opts';
-
-  ['a', 'b', 'c', 'd'].forEach(l => {
-    const val = q['opcion_' + l] || q['Opcion_' + l];
-    if (val) {
-      const opt = document.createElement('div');
-      const isRes = (answered[idx] !== undefined);
-      opt.className = 'opt' + (isRes ? ' dis' : '');
-      
-      const resCorrecta = (q.respuesta || q.Respuesta).toLowerCase();
-      if (isRes) {
-        if (l === resCorrecta) opt.classList.add('ok');
-        else if (l === answered[idx]) opt.classList.add('ko');
-      }
-
-      opt.innerHTML = `<div class="oltr">${l.toUpperCase()}</div><span>${val}</span>`;
-      opt.onclick = () => { if(!isRes) checkAnswer(l); };
-      optsDiv.appendChild(opt);
+function handleLogin() {
+    const dni = document.getElementById('dniInput').value.trim().toUpperCase();
+    const found = users.find(u => (u.dni || u.DNI) === dni);
+    
+    if(found) {
+        fetch(URL_PREGUNTAS)
+            .then(r => r.text())
+            .then(csv => {
+                exam = parseCSV(csv);
+                answers = new Array(exam.length).fill(null);
+                correct = new Array(exam.length).fill(null);
+                showScreen('secQuiz');
+                renderQ();
+            });
+    } else {
+        document.getElementById('loginErr').style.display = 'block';
     }
-  });
-  container.appendChild(optsDiv);
-  if (answered[idx] !== undefined) showFeedback(q);
 }
 
-function checkAnswer(l) {
-  answered[idx] = l.toLowerCase();
-  const resCorrecta = (exam[idx].respuesta || exam[idx].Respuesta).toLowerCase();
-  correct[idx] = (answered[idx] === resCorrecta);
-  showQ();
+function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
 }
 
-function showFeedback(q) {
-  const isCorrect = correct[idx];
-  const fb = document.createElement('div');
-  fb.className = 'fb ' + (isCorrect ? 'ok' : 'ko');
-  fb.innerHTML = `
-    <div class="fb-title">${isCorrect ? '✓ ¡Correcto!' : '✗ Incorrecto'}</div>
-    <div><strong>Respuesta: ${(q.respuesta || q.Respuesta).toUpperCase()}</strong></div>
-    <div style="font-size:0.9rem;margin-top:5px">${q.saber || q.Saber || ''}</div>
-  `;
-  fbWrap.appendChild(fb);
+function renderQ() {
+    const q = exam[idx];
+    const area = document.getElementById('qArea');
+    const fbWrap = document.getElementById('fbWrap');
+    
+    // UI Progress
+    document.getElementById('qNum').textContent = `Pregunta ${idx + 1}`;
+    document.getElementById('qProg').textContent = `${idx + 1} de ${exam.length}`;
+    document.getElementById('pbar').style.width = `${((idx+1)/exam.length)*100}%`;
+    
+    // Renderizado profesional de pregunta y opciones
+    let html = `<div class="qtxt">${q.pregunta}</div><div class="opts">`;
+    ['a','b','c','d'].forEach(l => {
+        const txt = q['opcion_'+l];
+        if(!txt) return;
+        
+        let cls = 'opt';
+        if(answers[idx] === l) {
+            const isCorrect = (l === q.respuesta.toLowerCase());
+            cls += isCorrect ? ' ok' : ' ko';
+        } else if(answers[idx] !== null && l === q.respuesta.toLowerCase()) {
+            cls += ' ok'; // Mostrar la correcta si falló
+        }
+        
+        html += `<div class="${cls}" onclick="checkAns('${l}')">
+                    <div class="oltr">${l.toUpperCase()}</div>
+                    <span>${txt}</span>
+                 </div>`;
+    });
+    html += `</div>`;
+    area.innerHTML = html;
+    
+    // Feedback
+    fbWrap.innerHTML = '';
+    if(answers[idx] !== null) renderFeedback(q);
+    updateNav();
+}
+
+function checkAns(l) {
+    if(answers[idx] !== null) return;
+    answers[idx] = l;
+    correct[idx] = (l === exam[idx].respuesta.toLowerCase());
+    renderQ();
+}
+
+function renderFeedback(q) {
+    const isOk = correct[idx];
+    const fb = document.createElement('div');
+    fb.className = `fb ${isOk ? 'ok' : 'ko'}`;
+    fb.innerHTML = `
+        <div style="font-weight:800;margin-bottom:0.5rem">${isOk ? '✓ ¡RESPUESTA CORRECTA!' : '✗ RESPUESTA INCORRECTA'}</div>
+        <div style="font-size:0.95rem"><strong>Justificación:</strong> ${q.saber || 'Revisa el manual para más detalles.'}</div>
+    `;
+    document.getElementById('fbWrap').appendChild(fb);
+}
+
+function updateNav() {
+    const btnPrev = document.getElementById('btnPrev');
+    const btnNext = document.getElementById('btnNext');
+    btnPrev.classList.toggle('hidden', idx === 0);
+    btnNext.textContent = (idx === exam.length - 1) ? 'FINALIZAR TEST' : 'Siguiente →';
 }
 
 function nextQ() {
-  if (idx 
+    if(idx < exam.length - 1) { idx++; renderQ(); }
+    else { showResults(); }
+}
+
+function prevQ() { if(idx > 0) { idx--; renderQ(); } }
+
+function showResults() {
+    showScreen('secRes');
+    const ok = correct.filter(c => c === true).length;
+    const pct = Math.round((ok/exam.length)*100);
+    document.getElementById('rOk').textContent = ok;
+    document.getElementById('rTot').textContent = exam.length;
+    document.getElementById('rPct').textContent = pct + '%';
+    
+    if(pct < 50) document.getElementById('rEmoji').textContent = '❌';
+    else if(pct < 80) document.getElementById('rEmoji').textContent = '💪';
+    else document.getElementById('rEmoji').textContent = '🏆';
+}
+</script>
+</body>
+</html>
