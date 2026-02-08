@@ -36,6 +36,8 @@ h1{font-family:'Montserrat',sans-serif;font-size:3rem;font-weight:800;color:var(
 .nav{display:flex;gap:.7rem;margin-top:1.5rem}
 .btn{width:100%;padding:.88rem;background:var(--Y);color:var(--D);border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Montserrat';display:flex;align-items:center;justify-content:center;gap:.5rem;transition:all .2s;font-size:.95rem}
 .btn:hover{background:var(--Yd);transform:translateY(-1px)}
+.login-card{max-width:400px;margin:2rem auto;text-align:center}
+.login-input{width:100%;padding:.8rem;margin:1rem 0;border:2px solid var(--B);border-radius:10px;font-size:1rem;text-align:center}
 .res-wrap{text-align:center;padding:1rem 0}
 .res-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0}
 .res-item{padding:1.2rem;border-radius:12px;background:var(--B)}
@@ -53,7 +55,14 @@ h1{font-family:'Montserrat',sans-serif;font-size:3rem;font-weight:800;color:var(
     <p class="sub">Plataforma de Entrenamiento de Alto Rendimiento</p>
   </header>
 
-  <div id="game" style="display:block">
+  <div id="login" class="card login-card">
+    <h2 style="font-family:'Montserrat';margin-bottom:1rem">Acceso Profesional</h2>
+    <p style="color:var(--G);font-size:.9rem">Introduce tu clave de acceso para comenzar</p>
+    <input type="password" id="pass" class="login-input" placeholder="Clave de acceso">
+    <button class="btn" onclick="start()">Entrar al Sistema</button>
+  </div>
+
+  <div id="game" style="display:none">
     <div class="ubar">
       <span>Pregunta <span id="qNum">1</span> de <span id="qTotal">-</span></span>
     </div>
@@ -80,16 +89,13 @@ h1{font-family:'Montserrat',sans-serif;font-size:3rem;font-weight:800;color:var(
     <div class="res-wrap">
       <span id="rEmoji" class="emoji"></span>
       <h2 style="font-family:'Montserrat';font-size:1.8rem;margin-bottom:.5rem">¡Entrenamiento Completado!</h2>
-      <p style="color:var(--G);margin-bottom:1.5rem">Aquí tienes el resumen de tu rendimiento profesional</p>
-      
       <div class="res-grid">
         <div class="res-item" style="background:#f0fdf4"><span class="res-label">ACIERTOS</span><span id="rOk" class="res-val" style="color:var(--V)">-</span></div>
         <div class="res-item" style="background:#fef2f2"><span class="res-label">ERRORES</span><span id="rKo" class="res-val" style="color:var(--R)">-</span></div>
         <div class="res-item"><span class="res-label">TOTAL</span><span id="rTot" class="res-val">-</span></div>
         <div class="res-item" style="background:#fffef0;border:2px solid var(--Y)"><span class="res-label">PRECISIÓN</span><span id="rPct" class="res-val">-</span></div>
       </div>
-
-      <button class="btn" onclick="location.reload()" style="max-width:280px;margin:0 auto">Reiniciar Entrenamiento</button>
+      <button class="btn" onclick="location.reload()" style="max-width:280px;margin:0 auto">Reiniciar</button>
     </div>
   </div>
 </div>
@@ -100,107 +106,98 @@ var idx=0;
 var ans=[];
 var correct=[];
 
+async function start(){
+  const p = document.getElementById('pass').value;
+  if(p === 'ENFOCADOS2024'){ // Cambia aquí tu clave si es otra
+    document.getElementById('login').style.display = 'none';
+    document.getElementById('game').style.display = 'block';
+    await loadData();
+  } else {
+    alert('Clave incorrecta');
+  }
+}
+
 async function loadData(){
   try{
-    const response=await fetch('preguntas.json');
-    exam=await response.json();
+    // Cambia 'preguntas.json' por tu URL completa si es necesario
+    const response = await fetch('preguntas.json');
+    exam = await response.json();
     showQ();
   }catch(e){
-    console.error("Error cargando el JSON",e);
+    console.error("No se pudo cargar el archivo de datos", e);
   }
 }
 
 function showQ(){
-  var q=exam[idx];
-  document.getElementById('qNum').textContent=(idx+1);
-  document.getElementById('qTotal').textContent=exam.length;
-  document.getElementById('pbar').style.width=((idx+1)/exam.length*100)+'%';
+  var q = exam[idx];
+  document.getElementById('qNum').textContent = (idx+1);
+  document.getElementById('qTotal').textContent = exam.length;
+  document.getElementById('pbar').style.width = ((idx+1)/exam.length*100)+'%';
 
-  var html='<div class="qtxt">'+q.pregunta+'</div>';
-  html+='<div class="opts">';
+  var html = '<div class="qtxt">' + q.pregunta + '</div>';
+  html += '<div class="opts">';
   
-  // AJUSTE 1: Dibujar siempre todas las opciones (las 4)
-  q.opciones.forEach(function(opt,i){
-    var letter=String.fromCharCode(65+i);
-    var cls='opt';
-    if(ans[idx]!==undefined){
-      cls+=' dis';
-      if(opt===q.respuesta) cls+=' ok';
-      else if(i===ans[idx]) cls+=' ko';
+  // AJUSTE: Muestra todas las opciones disponibles (las 4)
+  q.opciones.forEach(function(opt, i){
+    var letter = String.fromCharCode(65+i);
+    var cls = 'opt';
+    if(ans[idx] !== undefined){
+      cls += ' dis';
+      if(opt === q.respuesta) cls += ' ok';
+      else if(i === ans[idx]) cls += ' ko';
     }
-    html+='<div class="'+cls+'" onclick="check('+i+')"><div class="oltr">'+letter+'</div><div>'+opt+'</div></div>';
+    html += '<div class="'+cls+'" onclick="check('+i+')"><div class="oltr">'+letter+'</div><div>'+opt+'</div></div>';
   });
   
-  html+='</div>';
-  document.getElementById('qArea').innerHTML=html;
+  html += '</div>';
+  document.getElementById('qArea').innerHTML = html;
 
-  // AJUSTE 2: Si ya respondió, mostramos la motivación
-  if(ans[idx]!==undefined){
-    var isCorrect = (q.opciones[ans[idx]]===q.respuesta);
-    showFeedback(isCorrect);
-  }else{
-    document.getElementById('fbWrap').innerHTML='';
+  // AJUSTE: Si ya se ha respondido, mostramos la motivación (saber)
+  if(ans[idx] !== undefined){
+    showFeedback(q.opciones[ans[idx]] === q.respuesta);
+  } else {
+    document.getElementById('fbWrap').innerHTML = '';
   }
 }
 
 function check(i){
-  if(ans[idx]!==undefined)return;
-  ans[idx]=i;
-  var q=exam[idx];
-  var isCorrect=(q.opciones[i]===q.respuesta);
-  correct[idx]=isCorrect;
-  showQ(); // Refrescamos para mostrar cajones y motivación
+  if(ans[idx] !== undefined) return;
+  ans[idx] = i;
+  var q = exam[idx];
+  correct[idx] = (q.opciones[i] === q.respuesta);
+  showQ(); // Refresca para mostrar la motivación al instante
 }
 
 function showFeedback(isCorrect){
-  var q=exam[idx];
-  var fb=document.createElement('div');
-  fb.className='fb '+(isCorrect?'ok':'ko');
-  fb.innerHTML='<div class=\"fb-title\">'+(isCorrect?'✓ ¡Correcto!':'✗ Incorrecto')+'</div>' +
-               '<div class=\"fb-body\"><strong>Respuesta correcta:</strong> '+q.respuesta+'<br><br>'+(q.saber||'')+'</div>';
-  document.getElementById('fbWrap').innerHTML='';
+  var q = exam[idx];
+  var fb = document.createElement('div');
+  fb.className = 'fb ' + (isCorrect ? 'ok' : 'ko');
+  fb.innerHTML = '<div class="fb-title">' + (isCorrect ? '✓ ¡Correcto!' : '✗ Incorrecto') + '</div>' +
+                 '<div class="fb-body"><strong>Respuesta correcta:</strong> ' + q.respuesta + '<br><br>' + (q.saber || '') + '</div>';
+  document.getElementById('fbWrap').innerHTML = '';
   document.getElementById('fbWrap').appendChild(fb);
 }
 
 function nextQ(){
-  if(idx<exam.length-1){
-    idx++;
-    showQ();
-  }else{
-    showResults();
-  }
+  if(idx < exam.length - 1){ idx++; showQ(); }
+  else { showResults(); }
 }
 
 function prevQ(){
-  if(idx>0){
-    idx--;
-    showQ();
-  }
+  if(idx > 0){ idx--; showQ(); }
 }
 
 function showResults(){
-  var ok=0;
-  for(var i=0;i<correct.length;i++){
-    if(correct[i])ok++;
-  }
-  var pct=Math.round(ok/exam.length*100);
-  document.getElementById('game').style.display='none';
-  document.getElementById('results').style.display='block';
-  document.getElementById('rOk').textContent=ok;
-  document.getElementById('rKo').textContent=(exam.length-ok);
-  document.getElementById('rTot').textContent=exam.length;
-  document.getElementById('rPct').textContent=pct+'%';
-  var emoji='😐';
-  if(pct>=90)emoji='🏆';
-  else if(pct>=75)emoji='😄';
-  else if(pct>=60)emoji='🙂';
-  else if(pct>=50)emoji='😕';
-  else emoji='😞';
-  document.getElementById('rEmoji').textContent=emoji;
+  var ok = correct.filter(Boolean).length;
+  var pct = Math.round(ok/exam.length*100);
+  document.getElementById('game').style.display = 'none';
+  document.getElementById('results').style.display = 'block';
+  document.getElementById('rOk').textContent = ok;
+  document.getElementById('rKo').textContent = (exam.length-ok);
+  document.getElementById('rTot').textContent = exam.length;
+  document.getElementById('rPct').textContent = pct + '%';
+  document.getElementById('rEmoji').textContent = pct >= 70 ? '🏆' : '😞';
 }
-
-window.onload=loadData;
 </script>
-
 </body>
 </html>
