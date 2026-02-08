@@ -6,34 +6,33 @@
 <title>ENFOCADOS</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <style>
-/* Estilos blindados */
-*{margin:0;padding:0;box-sizing:border-box}
-:root{--Y:rgb(250,250,0);--D:#2c3e50;--V:#10b981;--R:#ef4444;--B:#e2e8f0}
-body{font-family:'Inter',sans-serif;background:#fffef0;color:#1e293b;padding:1rem}
-.card{background:#fff;border-radius:18px;padding:1.5rem;box-shadow:0 4px 20px rgba(0,0,0,.08);border:2px solid var(--Y);max-width:600px;margin:auto}
-.btn{width:100%;padding:1rem;background:var(--Y);color:var(--D);border:none;border-radius:10px;font-weight:700;cursor:pointer;margin-top:1rem}
-.opt{display:flex;align-items:center;gap:1rem;padding:1rem;border:2px solid var(--B);border-radius:11px;margin-bottom:10px;cursor:pointer;text-align:left}
-.opt.ok{border-color:var(--V);background:#f0fdf4}
-.opt.ko{border-color:var(--R);background:#fef2f2}
-.oltr{width:30px;height:30px;border-radius:50%;background:var(--B);display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0}
-.fb{margin-top:1rem;padding:1rem;background:#f8fafc;border-left:4px solid var(--Y);font-size:0.9rem}
-.hidden{display:none}
-input, select{width:100%;padding:.8rem;margin:10px 0;border:2px solid var(--B);border-radius:8px;font-family:inherit}
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{--Y:rgb(250,250,0);--D:#2c3e50;--V:#10b981;--R:#ef4444;--B:#e2e8f0}
+    body{font-family:'Inter',sans-serif;background:#fffef0;color:#1e293b;padding:1rem}
+    .card{background:#fff;border-radius:18px;padding:1.5rem;box-shadow:0 4px 20px rgba(0,0,0,.08);border:2px solid var(--Y);max-width:600px;margin:auto}
+    .btn{width:100%;padding:1rem;background:var(--Y);color:var(--D);border:none;border-radius:10px;font-weight:700;cursor:pointer;margin-top:1rem}
+    .opt{display:flex;align-items:center;gap:1rem;padding:1rem;border:2px solid var(--B);border-radius:11px;margin-bottom:10px;cursor:pointer;text-align:left;background:#fff;transition: 0.2s;}
+    .opt:hover{border-color: var(--D); background:#fdfdfd}
+    .opt.ok{border-color:var(--V);background:#f0fdf4}
+    .opt.ko{border-color:var(--R);background:#fef2f2}
+    .oltr{width:30px;height:30px;border-radius:50%;background:var(--B);display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0}
+    .fb{margin-top:1rem;padding:1rem;background:#f1f5f9;border-left:4px solid var(--D);font-size:0.9rem}
+    .hidden{display:none}
 </style>
 </head>
 <body>
 
 <div id="secLogin" class="card">
     <h1 style="text-align:center;font-family:Montserrat">ENFOCADOS</h1>
-    <p style="text-align:center;margin-bottom:1rem">Acceso Autorizado</p>
-    <input type="email" id="inEmail" placeholder="Introduce tu correo">
+    <p style="text-align:center; margin-bottom:1rem">Introduce tu email para comenzar</p>
+    <input type="email" id="inEmail" placeholder="correo@ejemplo.com" style="width:100%;padding:.8rem;border:2px solid var(--B);border-radius:8px">
     <button class="btn" onclick="doLogin()">Entrar</button>
 </div>
 
 <div id="secConfig" class="card hidden">
-    <h2 id="cfgUser" style="margin-bottom:1rem"></h2>
-    <label>Preguntas:</label><input type="number" id="inNum" value="10">
-    <label>Materia:</label><select id="selMateria"><option value="">Todas las materias</option></select>
+    <h2 id="cfgUser">Bienvenido/a</h2>
+    <p style="margin:1rem 0">Selecciona materia para el test de 10 preguntas:</p>
+    <select id="selMateria" style="width:100%;padding:.8rem;border:2px solid var(--B);border-radius:8px"><option value="">Todas las materias</option></select>
     <button class="btn" onclick="startExam()">Empezar Test</button>
 </div>
 
@@ -46,8 +45,8 @@ input, select{width:100%;padding:.8rem;margin:10px 0;border:2px solid var(--B);b
 
 <div id="secRes" class="card hidden" style="text-align:center">
     <h2>Resultado Final</h2>
-    <div id="rPct" style="font-size:4rem;font-weight:800;color:var(--D)"></div>
-    <button class="btn" onclick="location.reload()">Cerrar y Salir</button>
+    <div id="rPct" style="font-size:3.5rem;font-weight:800;margin:1rem"></div>
+    <button class="btn" onclick="location.reload()">Volver a intentar</button>
 </div>
 
 <script>
@@ -64,11 +63,9 @@ function fetchJSONP(url, callback) {
 
 function doLogin() {
     const email = document.getElementById('inEmail').value.trim().toLowerCase();
-    if(!email) return;
     fetchJSONP(apiUrl + '?type=users', (res) => {
-        const emailIdx = res.headers.indexOf('Correo');
-        const user = res.rows.find(r => r[emailIdx]?.toLowerCase() === email);
-        if (user) {
+        const uIdx = res.headers.findIndex(h => h.toLowerCase() === 'correo');
+        if (res.rows.some(r => r[uIdx]?.toLowerCase() === email)) {
             fetchJSONP(apiUrl + '?type=questions', (qRes) => {
                 const h = qRes.headers.map(s => s.toLowerCase().trim());
                 allQs = qRes.rows.map(r => {
@@ -84,17 +81,15 @@ function doLogin() {
                 });
                 document.getElementById('secLogin').classList.add('hidden');
                 document.getElementById('secConfig').classList.remove('hidden');
-                document.getElementById('cfgUser').textContent = "Bienvenido";
             });
-        } else { alert("Correo no autorizado."); }
+        } else { alert("Acceso denegado"); }
     });
 }
 
 function startExam() {
-    const num = document.getElementById('inNum').value;
     const mat = document.getElementById('selMateria').value;
     let pool = mat ? allQs.filter(q => q.materia === mat) : allQs;
-    exam = pool.sort(() => 0.5 - Math.random()).slice(0, num);
+    exam = pool.sort(() => 0.5 - Math.random()).slice(0, 10);
     idx = 0; correct = [];
     showQ();
     document.getElementById('secConfig').classList.add('hidden');
@@ -107,43 +102,41 @@ function showQ() {
     document.getElementById('fbWrap').innerHTML = "";
     document.getElementById('btnNext').disabled = true;
 
-    // --- LÓGICA DE DIVISIÓN POR LETRA CLAVE ---
-    // Buscamos el patrón: letra + paréntesis (a), b), c), d))
-    let texto = q.opciones || "";
-    let opts = texto.split(/\s*(?=[a-d]\))/i).map(t => t.trim()).filter(t => t.length > 0);
+    // --- SOLUCIÓN ESPECÍFICA PARA EL TEXTO CON "\n" ---
+    let textoOriginal = q.opciones || "";
     
-    // Si la división falló (solo hay 1 bloque), intentamos dividir por letra + punto (a. b. c. d.)
-    if(opts.length <= 1) {
-        opts = texto.split(/\s*(?=[a-d]\.)/i).map(t => t.trim()).filter(t => t.length > 0);
-    }
+    // Dividimos usando la secuencia literal \n
+    let opcionesArray = textoOriginal.split(/\\n/).map(t => t.trim()).filter(t => t.length > 0);
 
     const wrap = document.getElementById('optsWrap');
     wrap.innerHTML = "";
 
-    opts.forEach((txt) => {
-        const letter = txt.substring(0, 1).toUpperCase();
+    opcionesArray.forEach((txt) => {
+        // Extraemos la letra (a, b, c o d) del inicio del texto
+        const letra = txt.charAt(0).toUpperCase();
+        
         const div = document.createElement('div');
         div.className = 'opt';
-        div.innerHTML = `<div class="oltr">${letter}</div><div>${txt}</div>`;
+        div.innerHTML = `<div class="oltr">${letra}</div><div>${txt}</div>`;
         
         div.onclick = () => {
             if(!document.getElementById('btnNext').disabled) return;
-            const resCorrecta = (q.respuesta || "").trim().substring(0,1).toUpperCase();
-            const isOk = letter === resCorrecta;
+            const correcta = (q.respuesta || "").trim().charAt(0).toUpperCase();
+            const esOk = letra === correcta;
             
-            div.classList.add(isOk ? 'ok' : 'ko');
-            correct[idx] = isOk;
+            div.classList.add(esOk ? 'ok' : 'ko');
+            correct[idx] = esOk;
 
-            if(!isOk) {
+            if(!esOk) {
                 Array.from(wrap.children).forEach(c => {
-                    if(c.querySelector('.oltr').textContent === resCorrecta) c.classList.add('ok');
+                    if(c.querySelector('.oltr').textContent === correcta) c.classList.add('ok');
                 });
             }
             
             document.getElementById('fbWrap').innerHTML = `
                 <div class="fb">
-                    <b style="color:${isOk?'green':'red'}">${isOk?'¡CORRECTO!':'INCORRECTO'}</b><br>
-                    <p style="margin-top:5px">${q.motivacion || q.saber || ''}</p>
+                    <b style="color:${esOk?'#10b981':'#ef4444'}">${esOk?'¡CORRECTO!':'INCORRECTO'}</b><br>
+                    ${q.motivacion || q.saber || ''}
                 </div>`;
             document.getElementById('btnNext').disabled = false;
         };
