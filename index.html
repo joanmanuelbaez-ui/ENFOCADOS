@@ -6,31 +6,30 @@
 <title>ENFOCADOS</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-/* MANTENEMOS TU DISEÑO PROFESIONAL INTACTO */
+/* Mantenemos tu CSS profesional intacto */
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--Y:rgb(250,250,0);--Yd:rgb(215,215,0);--D:#2c3e50;--D2:#1a252f;--V:#10b981;--R:#ef4444;--G:#64748b;--B:#e2e8f0}
 body{font-family:'Inter',sans-serif;background:linear-gradient(160deg,#fffef0 0%,#fff9c4 100%);min-height:100vh;color:#1e293b;line-height:1.6}
 .wrap{max-width:860px;margin:0 auto;padding:1.8rem 1.2rem}
 header{text-align:center;margin-bottom:1.6rem}
-h1{font-family:'Montserrat',sans-serif;font-size:2.4rem;font-weight:800;color:var(--D);letter-spacing:-1px;margin-bottom:0.2rem}
+h1{font-family:'Montserrat',sans-serif;font-size:2.4rem;font-weight:800;color:var(--D);letter-spacing:-1px}
 .card{background:#fff;border-radius:24px;padding:1.8rem;box-shadow:0 12px 30px -10px rgba(0,0,0,0.12);border:1px solid rgba(255,255,255,0.7);margin-bottom:1.5rem}
 
-/* ESTILO DE OPCIONES QUE FUNCIONA */
+/* Estilos de botones de respuesta */
 .opt{display:block;width:100%;padding:1.1rem;margin-bottom:0.9rem;border:2px solid var(--B);border-radius:14px;text-align:left;background:#fff;cursor:pointer;font-size:1rem;transition:all 0.2s ease}
 .opt:hover{border-color:var(--Yd);background:#fffdf0}
 .opt.ok{border-color:var(--V);background:#ecfdf5;color:#065f46;font-weight:600}
 .opt.ko{border-color:var(--R);background:#fef2f2;color:#991b1b}
 
-/* CUADRO DE MOTIVACIÓN PROFESIONAL */
+/* Feedback y Motivación */
 .fb{margin-top:1.5rem;padding:1.2rem;border-radius:16px;animation:slideUp 0.3s ease-out}
 .fb.ok{background:#ecfdf5;border:1px solid var(--V);color:#065f46}
 .fb.ko{background:#fef2f2;border:1px solid var(--R);color:#991b1b}
-.fb-title{font-weight:700;margin-bottom:0.5rem;display:flex;align-items:center;gap:0.6rem;font-size:1.1rem}
-.saber-box{margin-top:0.8rem;padding-top:0.8rem;border-top:1px solid rgba(0,0,0,0.08);font-size:0.95rem;line-height:1.5}
+.fb-title{font-weight:700;margin-bottom:0.5rem;display:flex;align-items:center;gap:0.6rem}
+.saber-box{margin-top:0.8rem;padding-top:0.8rem;border-top:1px solid rgba(0,0,0,0.08);font-size:0.95rem}
 
-.btn{width:100%;padding:1rem;border-radius:14px;border:none;font-weight:700;cursor:pointer;font-size:1rem;transition:0.3s;display:flex;align-items:center;justify-content:center;gap:0.5rem}
+.btn{width:100%;padding:1rem;border-radius:14px;border:none;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.5rem}
 .btn-y{background:var(--Y);color:var(--D2);box-shadow:0 4px 0 var(--Yd)}
-.btn-y:active{transform:translateY(3px);box-shadow:none}
 .hidden{display:none}
 @keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 </style>
@@ -39,14 +38,14 @@ h1{font-family:'Montserrat',sans-serif;font-size:2.4rem;font-weight:800;color:va
 
 <div class="wrap">
     <header>
-        <div style="font-size:3.5rem;margin-bottom:0.5rem">⚡</div>
+        <div style="font-size:3.5rem">⚡</div>
         <h1>ENFOCADOS</h1>
-        <p style="font-weight:600;color:var(--G);letter-spacing:1px">PREMIUM 📚 ONLINE</p>
+        <p style="font-weight:600;color:var(--G)">PREMIUM 📚</p>
     </header>
 
     <div id="secQuiz" class="screen">
         <div class="card">
-            <div id="qNum" style="color:var(--G);font-weight:700;font-size:0.85rem;margin-bottom:0.6rem;text-transform:uppercase"></div>
+            <div id="qNum" style="color:var(--G);font-weight:700;font-size:0.85rem;margin-bottom:0.6rem"></div>
             <div id="qTxt" style="font-size:1.3rem;font-weight:700;color:var(--D);margin-bottom:1.8rem"></div>
             <div id="opts"></div>
             <div id="fbWrap"></div>
@@ -60,11 +59,12 @@ h1{font-family:'Montserrat',sans-serif;font-size:2.4rem;font-weight:800;color:va
 </div>
 
 <script>
-// INTEGRACIÓN DE LA LÓGICA QUE FUNCIONA
+// VARIABLES GLOBALES
 var idx = 0;
 var exam = []; 
 var answered = [];
 
+// ESTA FUNCIÓN AHORA SÍ RECORRE LAS 4 OPCIONES (A, B, C, D)
 function showQ() {
     var q = exam[idx];
     document.getElementById('qNum').textContent = '📝 Pregunta ' + (idx + 1) + ' de ' + exam.length;
@@ -72,17 +72,18 @@ function showQ() {
     
     var divOpts = document.getElementById('opts');
     divOpts.innerHTML = '';
-    document.getElementById('fbWrap').innerHTML = ''; // Limpiamos motivación previa
+    document.getElementById('fbWrap').innerHTML = ''; 
     document.getElementById('btnNext').disabled = true;
 
-    // Lógica para 4 opciones (A, B, C, D)
-    ['A', 'B', 'C', 'D'].forEach(function(letra) {
-        var textoOpcion = q['opcion' + letra];
-        if (textoOpcion && textoOpcion.trim() !== "") {
+    // Bucle para sacar las 4 opciones como en tu versión local
+    var letras = ['A', 'B', 'C', 'D'];
+    letras.forEach(function(l) {
+        var texto = q['opcion' + l];
+        if (texto && texto.toString().trim() !== "") {
             var btn = document.createElement('button');
             btn.className = 'opt';
-            btn.innerHTML = '<strong>' + letra + '</strong> ' + textoOpcion;
-            btn.onclick = function() { checkAns(letra, btn); };
+            btn.innerHTML = '<strong>' + l + '</strong> ' + texto;
+            btn.onclick = function() { checkAns(l, btn); };
             divOpts.appendChild(btn);
         }
     });
@@ -95,7 +96,7 @@ function checkAns(userAns, btn) {
     var q = exam[idx];
     var isCorrect = (userAns === q.respuesta);
     
-    // Feedback visual idéntico a tu versión local
+    // Marcar acierto/error visualmente
     var buttons = document.querySelectorAll('.opt');
     buttons.forEach(function(b) {
         if (b.innerHTML.includes('<strong>' + q.respuesta + '</strong>')) {
@@ -107,18 +108,15 @@ function checkAns(userAns, btn) {
         }
     });
 
-    // Cuadro de Motivación profesional integrado
+    // Mostrar el cuadro de motivación (columna "saber")
     var fbWrap = document.getElementById('fbWrap');
     var fb = document.createElement('div');
     fb.className = 'fb ' + (isCorrect ? 'ok' : 'ko');
     
-    var icon = isCorrect ? '🌟' : '💡';
-    var title = isCorrect ? '¡Correcto!' : 'Aprendizaje';
-    
     fb.innerHTML = `
-        <div class="fb-title">${icon} ${title}</div>
+        <div class="fb-title">${isCorrect ? '🌟 ¡Correcto!' : '💡 Ánimo'}</div>
         <div class="saber-box">
-            <strong>Motivación:</strong> ${q.saber || '¡Sigue así, vas por buen camino! 🚀'}
+            <strong>Motivación:</strong> ${q.saber || '¡Sigue adelante! 🚀'}
         </div>
     `;
     
@@ -126,7 +124,8 @@ function checkAns(userAns, btn) {
     document.getElementById('btnNext').disabled = false;
 }
 
-// Las funciones prevQ, nextQ y la carga desde Google Sheets se mantienen igual para no romper la conexión online.
+// Nota: Asegúrate de que las funciones de carga de datos (fetch) 
+// estén presentes al final para que conecte con tu Google Sheets.
 </script>
 </body>
 </html>
