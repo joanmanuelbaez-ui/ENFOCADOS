@@ -3,64 +3,58 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ENFOCADOS - Test Profesional</title>
+<title>ENFOCADOS</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  *{margin:0;padding:0;box-sizing:border-box}
-  :root{--Y:rgb(250,250,0);--Yd:rgb(215,215,0);--D:#2c3e50;--D2:#1a252f;--V:#10b981;--R:#ef4444;--G:#64748b;--B:#e2e8f0}
-  body{font-family:'Inter',sans-serif;background:linear-gradient(160deg,#fffef0 0%,#fff9c4 100%);min-height:100vh;color:#1e293b;line-height:1.6}
-  .wrap{max-width:860px;margin:0 auto;padding:1.8rem 1.2rem}
-  header{text-align:center;margin-bottom:1.6rem}
-  h1{font-family:'Montserrat',sans-serif;font-size:2.2rem;font-weight:800;color:var(--D);letter-spacing:-1px;text-transform:uppercase}
-  
-  /* Contenedor Principal */
-  .card{background:#fff;border-radius:24px;padding:2rem;box-shadow:0 20px 25px -5px rgba(0,0,0,0.1),0 10px 10px -5px rgba(0,0,0,0.04);border:1px solid rgba(255,255,255,0.7);position:relative;overflow:hidden}
-  
-  /* Progreso */
-  .p-wrap{margin-bottom:2rem}
-  .p-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem}
-  #qNum{font-family:'Montserrat',sans-serif;font-weight:700;color:var(--D);font-size:1.1rem}
-  #qProg{font-weight:600;color:var(--G);font-size:.9rem;background:var(--B);padding:.2rem .8rem;border-radius:20px}
-  .p-bar-bg{height:8px;background:var(--B);border-radius:4px;overflow:hidden}
-  #pbar{height:100%;width:0%;background:linear-gradient(90deg, var(--Yd), var(--Y));transition:width .4s ease}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--Y:rgb(250,250,0);--Yd:rgb(215,215,0);--D:#2c3e50;--D2:#1a252f;--V:#10b981;--R:#ef4444;--G:#64748b;--B:#e2e8f0}
+body{font-family:'Inter',sans-serif;background:linear-gradient(160deg,#fffef0 0%,#fff9c4 100%);min-height:100vh;color:#1e293b;line-height:1.6}
+.wrap{max-width:860px;margin:0 auto;padding:1.8rem 1.2rem}
+header{text-align:center;margin-bottom:1.6rem}
+h1{font-family:'Montserrat',sans-serif;font-size:2.2rem;font-weight:800;color:var(--D);letter-spacing:-1px;text-transform:uppercase}
 
-  /* Pregunta y Opciones */
-  .qtxt{font-size:1.35rem;font-weight:600;color:var(--D);margin-bottom:2rem;line-height:1.4}
-  .opts{display:grid;gap:1rem}
-  .opt{display:flex;align-items:center;padding:1.2rem;border:2px solid var(--B);border-radius:16px;cursor:pointer;transition:all .2s ease;background:#f8fafc}
-  .opt:hover:not(.dis){border-color:var(--Y);transform:translateX(4px);background:#fff}
-  .oltr{width:36px;height:36px;background:var(--Y);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;margin-right:1.2rem;flex-shrink:0;box-shadow:0 4px 6px -1px rgba(0,0,0,0.1)}
-  
-  /* Estados */
-  .opt.ok{border-color:var(--V);background:rgba(16,185,129,0.05)}
-  .opt.ok .oltr{background:var(--V);color:#fff}
-  .opt.ko{border-color:var(--R);background:rgba(239,68,68,0.05)}
-  .opt.ko .oltr{background:var(--R);color:#fff}
-  .opt.dis{cursor:default;opacity:0.8}
+.card{background:#fff;border-radius:24px;padding:2.2rem;box-shadow:0 20px 25px -5px rgba(0,0,0,0.1),0 10px 10px -5px rgba(0,0,0,0.04);border:1px solid rgba(255,255,255,0.7);position:relative;margin-bottom:1.5rem}
 
-  /* Feedback / Motivación */
-  .fb{margin-top:2rem;padding:1.5rem;border-radius:16px;animation:slideUp .3s ease}
-  .fb.ok{background:#ecfdf5;border:1px solid var(--V)}
-  .fb.ko{background:#fef2f2;border:1px solid var(--R)}
-  .fb-title{font-weight:700;margin-bottom:.4rem;font-size:1.1rem}
-  .fb.ok .fb-title{color:var(--V)}
-  .fb.ko .fb-title{color:var(--R)}
-  
-  /* Navegación */
-  .nav{display:flex;justify-content:space-between;margin-top:2.5rem;gap:1rem}
-  button{padding:1rem 2rem;border-radius:14px;border:none;font-weight:700;cursor:pointer;font-family:'Montserrat',sans-serif;transition:all .2s;display:flex;align-items:center;gap:.5rem}
-  .btn-p{background:var(--B);color:var(--D)}
-  .btn-n{background:var(--D);color:#fff;margin-left:auto}
-  button:hover:not(:disabled){filter:brightness(1.1);transform:translateY(-2px)}
-  button:disabled{opacity:.4;cursor:not-allowed}
+.p-wrap{margin-bottom:2rem}
+.p-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem}
+#qNum{font-family:'Montserrat',sans-serif;font-weight:700;color:var(--D);font-size:1.1rem}
+#qProg{font-weight:600;color:var(--G);font-size:.9rem;background:var(--B);padding:.2rem .8rem;border-radius:20px}
+.p-bar-bg{height:8px;background:var(--B);border-radius:4px;overflow:hidden}
+#pbar{height:100%;width:0%;background:linear-gradient(90deg, var(--Yd), var(--Y));transition:width .4s ease}
 
-  /* Resultados */
-  #results{display:none;text-align:center}
-  .res-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:2rem 0}
-  .res-item{padding:1.5rem;border-radius:16px;background:var(--B)}
-  .res-val{display:block;font-size:2rem;font-weight:800;color:var(--D)}
-  
-  @keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.qtxt{font-size:1.35rem;font-weight:600;color:var(--D);margin-bottom:2rem;line-height:1.4}
+.opts{display:grid;gap:1rem}
+.opt{display:flex;align-items:center;padding:1.2rem;border:2px solid var(--B);border-radius:16px;cursor:pointer;transition:all .2s ease;background:#f8fafc;position:relative}
+.opt:hover:not(.dis){border-color:var(--Y);transform:translateX(4px);background:#fff}
+.oltr{width:36px;height:36px;background:var(--Y);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;margin-right:1.2rem;flex-shrink:0;box-shadow:0 4px 6px -1px rgba(0,0,0,0.1)}
+
+.opt.ok{border-color:var(--V);background:rgba(16,185,129,0.05)}
+.opt.ok .oltr{background:var(--V);color:#fff}
+.opt.ko{border-color:var(--R);background:rgba(239,68,68,0.05)}
+.opt.ko .oltr{background:var(--R);color:#fff}
+.opt.dis{cursor:default}
+
+.fb{margin-top:2rem;padding:1.5rem;border-radius:16px;animation:slideUp .3s ease forwards}
+.fb.ok{background:#ecfdf5;border:1px solid var(--V)}
+.fb.ko{background:#fef2f2;border:1px solid var(--R)}
+.fb-title{font-weight:700;margin-bottom:.4rem;font-size:1.1rem}
+.fb.ok .fb-title{color:var(--V)}
+.fb.ko .fb-title{color:var(--R)}
+.fb-body{color:var(--D);font-size:0.95rem}
+
+.nav{display:flex;justify-content:space-between;margin-top:1.5rem;gap:1rem}
+button{padding:1rem 1.8rem;border-radius:14px;border:none;font-weight:700;cursor:pointer;font-family:'Montserrat',sans-serif;transition:all .2s;display:flex;align-items:center;gap:.5rem;font-size:0.9rem}
+.btn-p{background:var(--B);color:var(--D)}
+.btn-n{background:var(--D);color:#fff;margin-left:auto}
+button:hover:not(:disabled){filter:brightness(1.1);transform:translateY(-2px)}
+button:disabled{opacity:.4;cursor:not-allowed}
+
+#results{display:none;text-align:center}
+.res-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(120px, 1fr));gap:1rem;margin:2rem 0}
+.res-item{padding:1.2rem;border-radius:16px;background:var(--B)}
+.res-val{display:block;font-size:1.8rem;font-weight:800;color:var(--D)}
+
+@keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
 <body>
@@ -74,8 +68,8 @@
     <div class="card">
       <div class="p-wrap">
         <div class="p-top">
-          <span id="qNum">Cargando...</span>
-          <span id="qProg">0 de 0</span>
+          <span id="qNum">Pregunta 1</span>
+          <span id="qProg">1 de 0</span>
         </div>
         <div class="p-bar-bg"><div id="pbar"></div></div>
       </div>
@@ -91,133 +85,110 @@
   </div>
 
   <div id="results" class="card">
-    <div id="rEmoji" style="font-size:4rem;margin-bottom:1rem">🏆</div>
-    <h2 style="font-family:'Montserrat';margin-bottom:1.5rem">Resultado Final</h2>
+    <div id="rEmoji" style="font-size:4.5rem;margin-bottom:1rem">🏆</div>
+    <h2 style="font-family:'Montserrat';font-size:1.8rem;margin-bottom:1.5rem">¡Test Finalizado!</h2>
     <div class="res-grid">
-      <div class="res-item">
-        <span class="res-val" id="rOk" style="color:var(--V)">0</span>
-        <small>Correctas</small>
-      </div>
-      <div class="res-item">
-        <span class="res-val" id="rKo" style="color:var(--R)">0</span>
-        <small>Incorrectas</small>
-      </div>
+      <div class="res-item"><span class="res-val" id="rOk" style="color:var(--V)">0</span><small>Correctas</small></div>
+      <div class="res-item"><span class="res-val" id="rKo" style="color:var(--R)">0</span><small>Incorrectas</small></div>
+      <div class="res-item"><span class="res-val" id="rTot">0</span><small>Total</small></div>
     </div>
-    <div style="background:var(--D);color:#fff;padding:1.5rem;border-radius:16px;margin-bottom:2rem">
-      <span style="font-size:0.9rem;opacity:0.8;text-transform:uppercase;letter-spacing:1px">Puntuación Total</span>
-      <div id="rPct" style="font-size:3rem;font-weight:800">0%</div>
+    <div style="background:var(--D);color:#fff;padding:2rem;border-radius:20px;margin-bottom:2rem">
+      <span style="font-size:0.8rem;opacity:0.8;text-transform:uppercase;letter-spacing:1px;font-weight:700">Puntuación</span>
+      <div id="rPct" style="font-size:3.5rem;font-weight:800">0%</div>
     </div>
-    <button onclick="location.reload()" class="btn-n" style="margin:0 auto">Reintentar examen</button>
+    <button onclick="location.reload()" class="btn-n" style="margin:0 auto">Reiniciar Test</button>
   </div>
 </div>
 
 <script>
-// --- DATOS DEL EXAMEN (Ejemplo) ---
-const exam = [
-  {
-    pregunta: "¿Qué mide la Ley de Ohm?",
-    opcion_a: "La relación entre tensión, intensidad y resistencia",
-    opcion_b: "La fuerza de gravedad",
-    opcion_c: "La velocidad de la luz",
-    opcion_d: "La presión atmosférica",
-    respuesta: "a",
-    saber: "La Ley de Ohm es fundamental en electricidad ($V = I \\cdot R$) y establece que la corriente es proporcional al voltaje e inversamente a la resistencia."
-  },
-  {
-    pregunta: "¿Cuál es el componente encargado de proteger una instalación contra sobrecargas?",
-    opcion_a: "Un interruptor simple",
-    opcion_b: "El magnetotérmico",
-    opcion_c: "Un pulsador",
-    opcion_d: "Un cable de tierra",
-    respuesta: "b",
-    saber: "El pequeño interruptor automático (PIA) o magnetotérmico corta el paso de corriente cuando detecta un exceso de calor o intensidad."
-  }
-];
+var exam = [];
+var idx = 0;
+var answered = []; 
+var correct = [];
 
-let idx = 0;
-let answered = []; // Almacena la letra elegida por el usuario
-let correct = [];  // Almacena booleano true/false
+// Carga de datos
+fetch('preguntas.json')
+  .then(res => res.json())
+  .then(data => {
+    exam = data;
+    showQ();
+  })
+  .catch(err => console.error("Error cargando JSON:", err));
 
 function showQ() {
-  const q = exam[idx];
-  const container = document.getElementById('qContainer');
+  if (exam.length === 0) return;
+  var q = exam[idx];
+  var container = document.getElementById('qContainer');
   container.innerHTML = '';
   
-  // Update Header
+  // Header y Progreso
   document.getElementById('qNum').textContent = 'Pregunta ' + (idx + 1);
   document.getElementById('qProg').textContent = (idx + 1) + ' de ' + exam.length;
   document.getElementById('pbar').style.width = ((idx + 1) / exam.length * 100) + '%';
   document.getElementById('prevBtn').disabled = (idx === 0);
+  document.getElementById('nextBtn').textContent = (idx === exam.length - 1) ? 'Finalizar' : 'Siguiente';
 
-  // Question Text
-  const qText = document.createElement('div');
-  qText.className = 'qtxt';
-  qText.textContent = q.pregunta;
-  container.appendChild(qText);
+  // Pregunta
+  var qDiv = document.createElement('div');
+  qDiv.className = 'qtxt';
+  qDiv.textContent = q.pregunta;
+  container.appendChild(qDiv);
 
-  // Options Grid
-  const optsDiv = document.createElement('div');
+  // Opciones
+  var optsDiv = document.createElement('div');
   optsDiv.className = 'opts';
 
-  ['a', 'b', 'c', 'd'].forEach(l => {
+  ['a', 'b', 'c', 'd'].forEach(function(l) {
     if (q['opcion_' + l]) {
-      const opt = document.createElement('div');
-      const isRes = (answered[idx] !== undefined);
-      opt.className = 'opt' + (isRes ? ' dis' : '');
+      var opt = document.createElement('div');
+      var isAnswered = (answered[idx] !== undefined);
+      opt.className = 'opt' + (isAnswered ? ' dis' : '');
       
-      if (isRes) {
+      if (isAnswered) {
         if (l === q.respuesta.toLowerCase()) opt.classList.add('ok');
         else if (l === answered[idx]) opt.classList.add('ko');
       }
 
-      opt.innerHTML = `<div class="oltr">${l.toUpperCase()}</div><span>${q['opcion_'+l]}</span>`;
-      opt.onclick = () => { if(!isRes) checkAnswer(l); };
+      opt.innerHTML = '<div class="oltr">' + l.toUpperCase() + '</div><span>' + q['opcion_' + l] + '</span>';
+      opt.onclick = function() { if (!isAnswered) selectOpt(l); };
       optsDiv.appendChild(opt);
     }
   });
-
   container.appendChild(optsDiv);
-  
-  // Feedback / Motivación
-  const fbWrap = document.getElementById('fbWrap');
+
+  // Mostrar Motivación (Feedback) si ya se respondió
+  var fbWrap = document.getElementById('fbWrap');
   fbWrap.innerHTML = '';
   if (answered[idx] !== undefined) {
     showFeedback(answered[idx] === q.respuesta.toLowerCase(), q);
   }
 }
 
-function checkAnswer(selected) {
-  const q = exam[idx];
-  answered[idx] = selected.toLowerCase();
-  correct[idx] = (answered[idx] === q.respuesta.toLowerCase());
+function selectOpt(letter) {
+  answered[idx] = letter.toLowerCase();
+  correct[idx] = (answered[idx] === exam[idx].respuesta.toLowerCase());
   showQ();
 }
 
 function showFeedback(isCorrect, q) {
-  const fbWrap = document.getElementById('fbWrap');
-  const fb = document.createElement('div');
+  var fb = document.createElement('div');
   fb.className = 'fb ' + (isCorrect ? 'ok' : 'ko');
-  
-  const motivacion = q.saber ? q.saber : "¡Sigue adelante con la siguiente pregunta!";
-
-  fb.innerHTML = `
-    <div class="fb-title">${isCorrect ? '✓ ¡Correcto!' : '✗ Incorrecto'}</div>
-    <div class="fb-body">
-      <strong>Respuesta correcta: ${q.respuesta.toUpperCase()}</strong><br>
-      <p style="margin-top:0.5rem; font-style: italic;">${motivacion}</p>
-    </div>
-  `;
-  fbWrap.appendChild(fb);
+  fb.innerHTML = '<div class="fb-title">' + (isCorrect ? '✓ ¡Correcto!' : '✗ Incorrecto') + '</div>' +
+                 '<div class="fb-body"><strong>Respuesta correcta: ' + q.respuesta.toUpperCase() + '</strong><br>' + 
+                 (q.saber || '¡Sigue así!') + '</div>';
+  document.getElementById('fbWrap').appendChild(fb);
 }
 
 function nextQ() {
+  if (answered[idx] === undefined) {
+    alert("Por favor, selecciona una opción.");
+    return;
+  }
   if (idx < exam.length - 1) {
     idx++;
     showQ();
-  } else if (answered.length === exam.length) {
-    showResults();
   } else {
-    alert("Por favor, responde antes de continuar.");
+    showResults();
   }
 }
 
@@ -230,26 +201,24 @@ function prevQ() {
 
 function showResults() {
   document.getElementById('quiz').style.display = 'none';
-  const resDiv = document.getElementById('results');
-  resDiv.style.display = 'block';
-
-  let okCount = correct.filter(v => v === true).length;
-  let pct = Math.round((okCount / exam.length) * 100);
-
-  document.getElementById('rOk').textContent = okCount;
-  document.getElementById('rKo').textContent = exam.length - okCount;
+  document.getElementById('results').style.display = 'block';
+  
+  var ok = correct.filter(Boolean).length;
+  var pct = Math.round((ok / exam.length) * 100);
+  
+  document.getElementById('rOk').textContent = ok;
+  document.getElementById('rKo').textContent = exam.length - ok;
+  document.getElementById('rTot').textContent = exam.length;
   document.getElementById('rPct').textContent = pct + '%';
 
-  let emoji = '😞';
+  var emoji = '😞';
   if(pct >= 90) emoji = '🏆';
-  else if(pct >= 70) emoji = '😄';
-  else if(pct >= 50) emoji = '😐';
+  else if(pct >= 75) emoji = '😄';
+  else if(pct >= 60) emoji = '🙂';
+  else if(pct >= 50) emoji = '😕';
+  
   document.getElementById('rEmoji').textContent = emoji;
 }
-
-// Inicio
-showQ();
 </script>
-
 </body>
 </html>
