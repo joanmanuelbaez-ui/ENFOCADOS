@@ -16,18 +16,18 @@ h1{font-family:'Montserrat',sans-serif;font-size:3rem;font-weight:800;color:var(
 
 .screen{display:none}.active{display:block}
 
-/* LOGIN ORIGINAL */
-.login-card{max-width:420px;margin:2rem auto;background:var(--D);border-radius:28px;padding:3rem 2.5rem;color:#fff;text-align:center;box-shadow:0 25px 50px -12px rgba(0,0,0,0.25);position:relative;overflow:hidden}
-.login-card::before{content:'';position:absolute;top:0;left:0;right:0;height:6px;background:var(--Y)}
+/* LOGIN ORIGINAL RECUPERADO */
+.login-card{max-width:420px;margin:2rem auto;background:var(--D);border-radius:28px;padding:3.5rem 2.5rem;color:#fff;text-align:center;box-shadow:0 25px 50px -12px rgba(0,0,0,0.3);position:relative}
+.login-card::after{content:'';position:absolute;top:0;left:0;right:0;height:8px;background:var(--Y);border-radius:28px 28px 0 0}
 .input-group{margin-bottom:1.5rem;text-align:left}
-.input-group label{display:block;font-weight:500;margin-bottom:.6rem;color:rgba(255,255,255,0.9);font-size:.85rem;text-transform:uppercase;letter-spacing:1px}
-.input-group input{width:100%;padding:1.1rem;border-radius:14px;border:2px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:#fff;font-size:1rem;transition:0.3s;outline:none}
+.input-group label{display:block;font-weight:600;margin-bottom:.6rem;color:rgba(255,255,255,0.8);font-size:.75rem;text-transform:uppercase;letter-spacing:1.2px}
+.input-group input{width:100%;padding:1.1rem;border-radius:15px;border:2px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:#fff;font-size:1rem;outline:none;transition:0.3s}
 .input-group input:focus{border-color:var(--Y);background:rgba(255,255,255,0.1)}
 
-.btn-main{width:100%;background:var(--Y);color:var(--D);padding:1.1rem;border-radius:14px;border:none;font-weight:800;cursor:pointer;font-family:'Montserrat';font-size:1rem;text-transform:uppercase;transition:0.2s;box-shadow:0 4px 0 var(--Yd)}
-.btn-main:active{transform:translateY(2px);box-shadow:none}
+.btn-main{width:100%;background:var(--Y);color:var(--D);padding:1.2rem;border-radius:15px;border:none;font-weight:800;cursor:pointer;font-family:'Montserrat';font-size:1.1rem;text-transform:uppercase;box-shadow:0 4px 0 var(--Yd);transition:0.2s}
+.btn-main:active{transform:translateY(3px);box-shadow:none}
 
-/* TEST */
+/* CUESTIONARIO */
 .card{background:#fff;border-radius:24px;padding:2.2rem;box-shadow:0 20px 25px -5px rgba(0,0,0,0.1)}
 .qtxt{font-size:1.4rem;font-weight:700;margin-bottom:1.8rem;color:var(--D)}
 .opts{display:grid;gap:1rem}
@@ -36,43 +36,42 @@ h1{font-family:'Montserrat',sans-serif;font-size:3rem;font-weight:800;color:var(
 .opt.ok{border-color:var(--V);background:#ecfdf5}
 .opt.ko{border-color:var(--R);background:#fef2f2}
 
-.fb{margin-top:20px;padding:1.5rem;border-radius:18px;border-left:5px solid}
+.fb{margin-top:20px;padding:1.5rem;border-radius:18px;border-left:6px solid}
 .fb.ok{background:#f0fdf4;border-color:var(--V)}
 .fb.ko{background:#fef2f2;border-color:var(--R)}
-.fb-title{font-weight:800;text-transform:uppercase;margin-bottom:5px}
 
 .nav-btns{display:flex;gap:12px;margin-top:25px}
 .btn-nav{flex:1;padding:1.1rem;border-radius:14px;border:none;font-weight:700;cursor:pointer}
-.hidden{visibility:hidden}
+.hidden{display:none}
 </style>
 </head>
 <body>
 
 <div class="wrap">
     <header>
-        <svg width="50" height="50" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M13 10V3L4 14H11V21L20 10H13Z" fill="#FAFA00" stroke="#2c3e50" stroke-width="2" stroke-linejoin="round"/>
+        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13 10V3L4 14H11V21L20 10H13Z" fill="#FAFA00" stroke="#2c3e50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         <h1>ENFOCADOS</h1>
     </header>
 
     <div id="secLogin" class="screen active">
         <div class="login-card">
-            <h2 style="margin-bottom:1.8rem; font-family:Montserrat">Acceso Alumno</h2>
+            <h2 style="margin-bottom:2rem; font-family:Montserrat; font-size:1.6rem">Acceso Alumno</h2>
             <div class="input-group">
-                <label>Usuario</label>
-                <input type="text" id="userInput" placeholder="Ej: Juan Pérez">
+                <label>Nombre de Usuario</label>
+                <input type="text" id="userInput" placeholder="Tu nombre">
             </div>
             <div class="input-group">
-                <label>Correo Electrónico</label>
+                <label>Correo de Acceso</label>
                 <input type="email" id="emailInput" placeholder="tu@email.com">
             </div>
-            <button class="btn-main" onclick="startTest()">Entrar al Test</button>
+            <button class="btn-main" onclick="start()">Iniciar Examen</button>
         </div>
     </div>
 
     <div id="secQuiz" class="screen card">
-        <div id="qNum" style="color:var(--G); font-weight:700; margin-bottom:10px"></div>
+        <div id="qNum" style="color:var(--G); font-weight:700; margin-bottom:10px; font-size:0.9rem"></div>
         <div id="qArea"></div>
         <div id="fbWrap"></div>
         <div class="nav-btns">
@@ -82,97 +81,77 @@ h1{font-family:'Montserrat',sans-serif;font-size:3rem;font-weight:800;color:var(
     </div>
 
     <div id="secRes" class="screen card" style="text-align:center">
-        <div id="rEmoji" style="font-size:4rem"></div>
-        <h2 id="rPct" style="font-size:3.5rem; font-weight:800">0%</h2>
-        <p>Has acertado <span id="rOk">0</span> de <span id="rTot">0</span></p>
-        <button class="btn-main" style="margin-top:20px; width:auto; padding:1rem 2rem" onclick="location.reload()">Reiniciar</button>
+        <div id="rEmoji" style="font-size:4.5rem; margin-bottom:1rem"></div>
+        <h2 id="rPct" style="font-size:3.5rem; font-weight:800; color:var(--D)">0%</h2>
+        <p style="margin-bottom:2rem">Has completado el test con éxito.</p>
+        <button class="btn-main" style="width:auto; padding:1rem 3rem" onclick="location.reload()">Reiniciar</button>
     </div>
 </div>
 
 <script>
 var exam=[], answers=[], correct=[], idx=0;
-const URL_BASE = "https://raw.githubusercontent.com/Ancland/Enfocados/main/ENFOCADOS%20FINAL.json";
+const JSON_URL = "https://raw.githubusercontent.com/Ancland/Enfocados/main/ENFOCADOS%20FINAL.json";
 
-async function startTest() {
-    var u = document.getElementById('userInput').value;
-    var e = document.getElementById('emailInput').value;
-    if(!u || !e) return alert("Por favor, introduce tus datos para comenzar.");
-
+async function start(){
+    if(!document.getElementById('userInput').value || !document.getElementById('emailInput').value) {
+        return alert("Por favor rellena los datos");
+    }
     try {
-        const response = await fetch(URL_BASE);
-        exam = await response.json();
+        const res = await fetch(JSON_URL);
+        exam = await res.json();
         answers = new Array(exam.length).fill(null);
         correct = new Array(exam.length).fill(null);
-        
         document.getElementById('secLogin').classList.remove('active');
         document.getElementById('secQuiz').classList.add('active');
         renderQ();
-    } catch(err) {
-        alert("Error al conectar con la base de datos.");
-    }
+    } catch(e) { alert("Error al conectar con la base de datos."); }
 }
 
-function renderQ() {
+function renderQ(){
     var q = exam[idx];
-    document.getElementById('qNum').textContent = "PREGUNTA " + (idx+1) + " / " + exam.length;
-    
-    var html = '<div class="qtxt">' + q.pregunta + '</div><div class="opts">';
-    var opciones = ['a','b','c','d'];
-    
-    opciones.forEach(function(l) {
-        var texto = q['opcion_' + l];
-        if(!texto) return;
-        
-        var clase = 'opt';
-        if(answers[idx] !== null) {
-            if(l === q.respuesta.toLowerCase()) clase += ' ok';
-            else if(answers[idx] === l) clase += ' ko';
+    document.getElementById('qNum').textContent = "PREGUNTA " + (idx+1) + " DE " + exam.length;
+    var h = '<div class="qtxt">' + q.pregunta + '</div><div class="opts">';
+    ['a','b','c','d'].forEach(l => {
+        var txt = q['opcion_' + l];
+        if(!txt) return;
+        var cls = 'opt';
+        if(answers[idx] !== null){
+            if(l === q.respuesta.toLowerCase()) cls += ' ok';
+            else if(answers[idx] === l) cls += ' ko';
         }
-        
-        html += '<div class="' + clase + '" onclick="checkAnswer(\'' + l + '\')">' +
-                '<div class="oltr">' + l.toUpperCase() + '</div>' +
-                '<span>' + texto + '</span></div>';
+        h += '<div class="'+cls+'" onclick="pick(\''+l+'\')"><div class="oltr">'+l.toUpperCase()+'</div><span>'+txt+'</span></div>';
     });
+    document.getElementById('qArea').innerHTML = h + '</div>';
     
-    document.getElementById('qArea').innerHTML = html + '</div>';
-    
-    // Feedback y Justificación
-    var fbWrap = document.getElementById('fbWrap');
-    fbWrap.innerHTML = '';
-    if(answers[idx] !== null) {
-        var esCorrecta = (answers[idx] === q.respuesta.toLowerCase());
-        fbWrap.innerHTML = '<div class="fb ' + (esCorrecta?'ok':'ko') + '">' +
-                           '<div class="fb-title">' + (esCorrecta?'✓ ¡Correcto!':'✗ Incorrecto') + '</div>' +
-                           '<div>' + (q.saber || '') + '</div></div>';
+    var fb = document.getElementById('fbWrap');
+    fb.innerHTML = '';
+    if(answers[idx] !== null){
+        var ok = (answers[idx] === q.respuesta.toLowerCase());
+        fb.innerHTML = '<div class="fb '+(ok?'ok':'ko')+'"><strong>'+(ok?'✓ Correcto':'✗ Incorrecto')+'</strong><br>'+(q.saber||'')+'</div>';
     }
-    
     document.getElementById('btnPrev').classList.toggle('hidden', idx === 0);
-    document.getElementById('btnNext').textContent = (idx === exam.length - 1) ? "Ver Resultados" : "Siguiente";
+    document.getElementById('btnNext').textContent = (idx === exam.length -1) ? "Finalizar" : "Siguiente";
 }
 
-function checkAnswer(l) {
+function pick(l){
     if(answers[idx] !== null) return;
     answers[idx] = l;
     correct[idx] = (l === exam[idx].respuesta.toLowerCase());
     renderQ();
 }
 
-function nextQ() {
+function nextQ(){
     if(idx < exam.length - 1) { idx++; renderQ(); }
-    else { showFinal(); }
+    else { finish(); }
 }
 
-function prevQ() { if(idx > 0) { idx--; renderQ(); } }
+function prevQ(){ if(idx > 0) { idx--; renderQ(); } }
 
-function showFinal() {
+function finish(){
     document.getElementById('secQuiz').classList.remove('active');
     document.getElementById('secRes').classList.add('active');
-    
     var ok = correct.filter(c => c === true).length;
     var pct = Math.round((ok/exam.length)*100);
-    
-    document.getElementById('rOk').textContent = ok;
-    document.getElementById('rTot').textContent = exam.length;
     document.getElementById('rPct').textContent = pct + '%';
     document.getElementById('rEmoji').textContent = pct >= 50 ? '🎉' : '📚';
 }
