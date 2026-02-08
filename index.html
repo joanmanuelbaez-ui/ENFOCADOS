@@ -3,222 +3,152 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ENFOCADOS - Plataforma de Oposiciones</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<title>ENFOCADOS - Oposiciones</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <style>
-/* --- FORMATO PROFESIONAL RECUPERADO --- */
+/* --- ESTILO PROFESIONAL ENFOCADOS --- */
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--Y:rgb(250,250,0);--Yd:rgb(215,215,0);--D:#2c3e50;--V:#10b981;--R:#ef4444;--G:#64748b;--B:#e2e8f0}
-body{font-family:'Inter',sans-serif;background:linear-gradient(160deg,#fffef0 0%,#fff9c4 100%);min-height:100vh;color:#1e293b;line-height:1.6}
-.wrap{max-width:860px;margin:0 auto;padding:1.8rem 1.2rem}
-header{text-align:center;margin-bottom:1.6rem}
-h1{font-family:'Montserrat',sans-serif;font-size:3rem;font-weight:800;color:var(--D);letter-spacing:-1px}
-.sub{color:var(--G);font-size:1.02rem;font-weight:500;text-transform:uppercase;letter-spacing:1px}
-.card{background:#fff;border-radius:18px;padding:2rem;box-shadow:0 4px 24px rgba(0,0,0,.08);border:2px solid var(--Y);margin-bottom:1.4rem}
-.field{margin-bottom:1.1rem}
-.field label{display:block;margin-bottom:.3rem;color:var(--D);font-weight:600;font-size:.9rem}
-.field input, .field select{width:100%;padding:.82rem 1rem;border:2px solid var(--B);border-radius:10px;font-size:1rem;font-family:inherit}
-.btn{width:100%;padding:.88rem 1.5rem;background:var(--Y);color:var(--D);border:none;border-radius:10px;font-size:1.05rem;font-weight:700;cursor:pointer;font-family:'Montserrat',sans-serif;transition:all .2s}
-.btn:hover{background:var(--Yd);transform:translateY(-1px)}
-.btn:disabled{background:#cbd5e1;color:#94a3b8;cursor:not-allowed}
-.ubar{background:var(--Y);padding:.78rem 1.1rem;border-radius:10px;display:flex;justify-content:space-between;margin-bottom:1.4rem;font-weight:600}
-.spin-wrap{text-align:center;padding:2.8rem 0}
-.spin{border:3px solid #eee;border-top:3px solid var(--Y);border-radius:50%;width:40px;height:40px;animation:sp .9s linear infinite;margin:0 auto .9rem}
-@keyframes sp{to{transform:rotate(360deg)}}
-.qhdr{display:flex;justify-content:space-between;margin-bottom:1rem;border-bottom:2px solid var(--Y);padding-bottom:5px}
-.pbar-bg{background:var(--B);border-radius:4px;height:6px;margin-bottom:1.2rem;overflow:hidden}
-.pbar{background:var(--Y);height:100%;transition:width .4s ease}
-/* Alternativas de respuesta */
-.opt{display:flex;align-items:center;gap:.85rem;padding:1rem;border:2px solid var(--B);border-radius:11px;cursor:pointer;background:#fff;margin-bottom:10px;transition:0.2s}
-.opt:hover{border-color:var(--Y);background:#fffef0}
+:root{--Y:rgb(250,250,0);--Yd:rgb(220,220,0);--D:#1e293b;--V:#10b981;--R:#ef4444;--B:#e2e8f0}
+body{font-family:'Inter',sans-serif;background:#fffef0;color:var(--D);min-height:100vh}
+.wrap{max-width:800px;margin:0 auto;padding:1.5rem}
+header{text-align:center;margin-bottom:2rem}
+h1{font-family:'Montserrat',sans-serif;font-size:2.5rem;font-weight:800;letter-spacing:-1px}
+.card{background:#fff;border-radius:20px;padding:1.8rem;box-shadow:0 10px 30px rgba(0,0,0,.05);border:2px solid var(--Y);margin-bottom:1.5rem}
+.ubar{background:var(--Y);padding:.8rem;border-radius:12px;display:flex;justify-content:space-between;font-weight:600;margin-bottom:1.5rem}
+.q-text{font-size:1.2rem;font-weight:600;margin-bottom:1.8rem;line-height:1.4}
+
+/* CAJONES DE RESPUESTA */
+.opt{display:flex;align-items:center;gap:1rem;padding:1.1rem;border:2px solid var(--B);border-radius:14px;cursor:pointer;margin-bottom:12px;transition:all .2s;background:#fff}
+.opt:hover{border-color:var(--Y);background:#fffdf0}
 .opt.ok{border-color:var(--V);background:#f0fdf4}
 .opt.ko{border-color:var(--R);background:#fef2f2}
-.oltr{width:30px;height:30px;border-radius:50%;background:var(--B);display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0}
-/* Feedback / Saber */
-.fb{margin-top:1.3rem;padding:1.1rem;border-radius:10px;background:#f8fafc;border-left:4px solid var(--Y)}
-.fb-t{font-weight:700;margin-bottom:4px;color:var(--D)}
-.hidden{display:none!important}
+.oltr{width:32px;height:32px;border-radius:50%;background:var(--B);display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0}
+.ok .oltr{background:var(--V);color:#fff}
+.ko .oltr{background:var(--R);color:#fff}
+
+/* FEEDBACK / SABER */
+.fb{margin-top:1.5rem;padding:1.2rem;border-radius:12px;background:#f8fafc;border-left:5px solid var(--Y);animation:fadeIn 0.3s ease}
+.fb-t{font-weight:700;text-transform:uppercase;font-size:0.85rem;margin-bottom:5px;color:var(--D)}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+.btn{width:100%;padding:1rem;background:var(--Y);color:var(--D);border:none;border-radius:12px;font-size:1.1rem;font-weight:700;cursor:pointer;font-family:'Montserrat',sans-serif;transition:0.2s}
+.btn:hover{background:var(--Yd)}
+.btn:disabled{background:#e2e8f0;color:#94a3b8;cursor:not-allowed}
+.hidden{display:none}
 </style>
 </head>
 <body>
 
 <div class="wrap">
-    <header>
-        <h1>ENFOCADOS</h1>
-        <div class="sub">Plataforma de Preparación Profesional</div>
+    <header id="mainHeader">
+        <h1 id="logo">ENFOCADOS</h1>
+        <p style="color:#64748b; font-weight:500">PREMIUM ONLINE</p>
     </header>
 
     <div id="secLogin" class="card">
-        <h2 style="text-align:center;margin-bottom:1.5rem;font-family:'Montserrat'">Panel de Acceso</h2>
-        <div class="field">
-            <label>Correo Electrónico Autorizado</label>
-            <input type="email" id="inEmail" placeholder="ejemplo@correo.com">
+        <div style="margin-bottom:1.5rem">
+            <label style="display:block;margin-bottom:.5rem;font-weight:600">Correo de acceso</label>
+            <input type="email" id="inEmail" style="width:100%;padding:.8rem;border:2px solid var(--B);border-radius:10px" placeholder="tu@email.com">
         </div>
-        <button class="btn" onclick="doLogin()">Entrar</button>
+        <button class="btn" onclick="doLogin()">Acceder ahora</button>
     </div>
 
-    <div id="secLoading" class="card hidden">
-        <div class="spin-wrap">
-            <div class="spin"></div>
-            <p id="loadMsg">Sincronizando datos...</p>
+    <div id="secQ" class="hidden">
+        <div class="ubar"><span id="qProg"></span><span id="qTimer">Test en curso</span></div>
+        <div class="card">
+            <div id="qTxt" class="q-text"></div>
+            <div id="optsWrap"></div>
+            <div id="fbWrap"></div>
+            <button id="btnNext" class="btn" style="margin-top:1.5rem" onclick="nextQ()" disabled>Continuar</button>
         </div>
-    </div>
-
-    <div id="secConfig" class="card hidden">
-        <div class="ubar"><span id="cfgUser"></span><span style="font-size:0.8rem; cursor:pointer" onclick="location.reload()">Cerrar</span></div>
-        <h3 style="margin-bottom:1.2rem; font-family:'Montserrat'">Configuración del Test</h3>
-        <div class="field">
-            <label>Cantidad de preguntas</label>
-            <input type="number" id="inNum" value="10" min="1" max="100">
-        </div>
-        <div class="field">
-            <label>Materia o Bloque</label>
-            <select id="selMateria"><option value="">Todos los bloques</option></select>
-        </div>
-        <button class="btn" onclick="startExam()">Iniciar Evaluación</button>
-    </div>
-
-    <div id="secQ" class="card hidden">
-        <div class="qhdr"><span id="qNum" style="font-weight:800"></span><span id="qProg" style="font-size:0.9rem"></span></div>
-        <div class="pbar-bg"><div id="pBar" class="pbar"></div></div>
-        <div id="qTxt" style="font-size:1.15rem; font-weight:600; margin-bottom:1.5rem; color:var(--D)"></div>
-        <div id="optsWrap"></div>
-        <div id="fbWrap"></div>
-        <button id="btnNext" class="btn" style="margin-top:1.5rem" onclick="nextQ()" disabled>Continuar</button>
     </div>
 
     <div id="secRes" class="card hidden" style="text-align:center">
-        <h2 style="font-family:'Montserrat'">Evaluación Finalizada</h2>
-        <div id="rPct" style="font-size:4.5rem; font-weight:800; color:var(--D); margin:1rem 0"></div>
-        <div style="display:flex; justify-content:center; gap:2rem; margin-bottom:2rem">
-            <div><b id="rOk" style="color:var(--V);font-size:1.6rem"></b><br><small>Aciertos</small></div>
-            <div><b id="rKo" style="color:var(--R);font-size:1.6rem"></b><br><small>Errores</small></div>
-        </div>
-        <button class="btn" onclick="location.reload()">Nuevo Test</button>
+        <h2 style="font-family:'Montserrat'">Resultado Final</h2>
+        <div id="rPct" style="font-size:4rem; font-weight:800; margin:1rem 0"></div>
+        <button class="btn" onclick="location.reload()">Repetir Test</button>
     </div>
 </div>
 
 <script>
 const apiUrl = 'https://script.google.com/macros/s/AKfycbxOW1CWs8n04Lek1Sm0mYZE_F6N0epkbvr0czCt_QzY7qdn65X3g1oya0Br2BtwXQBS/exec';
-
-let allQuestions = [], exam = [], idx = 0, answers = [], correct = [], curUser = null;
-
-function showScreen(id) {
-    document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
-    document.getElementById(id).classList.remove('hidden');
-}
+let exam = [], idx = 0, correctCount = 0;
 
 function fetchJSONP(url, callback) {
-    const callbackName = 'jsonp_' + Math.round(100000 * Math.random());
-    window[callbackName] = function(data) {
-        delete window[callbackName];
-        document.body.removeChild(script);
-        callback(data);
-    };
-    const script = document.createElement('script');
-    script.src = url + (url.indexOf('?') >= 0 ? '&' : '?') + 'callback=' + callbackName;
-    document.body.appendChild(script);
-}
-
-function parseTable(headers, rows) {
-    return rows.map(row => {
-        let obj = {};
-        headers.forEach((h, i) => obj[h.toLowerCase().trim()] = row[i]);
-        return obj;
-    });
+    const name = 'jsonp_' + Date.now();
+    window[name] = (data) => { delete window[name]; callback(data); };
+    const s = document.createElement('script');
+    s.src = `${url}${url.includes('?') ? '&' : '?'}callback=${name}`;
+    document.body.appendChild(s);
 }
 
 function doLogin() {
     const email = document.getElementById('inEmail').value.trim().toLowerCase();
     if(!email) return;
-    showScreen('secLoading');
-
-    fetchJSONP(apiUrl + '?type=users', function(res) {
-        const users = parseTable(res.headers, res.rows);
-        const user = users.find(u => u.correo && u.correo.toLowerCase() === email);
-
-        if(user) {
-            curUser = user;
-            fetchJSONP(apiUrl + '?type=questions', function(qRes) {
-                allQuestions = parseTable(qRes.headers, qRes.rows);
-                setupConfig();
-                showScreen('secConfig');
-            });
-        } else {
-            alert("Acceso denegado.");
-            showScreen('secLogin');
-        }
+    
+    fetchJSONP(apiUrl + '?type=questions', function(res) {
+        const headers = res.headers.map(h => h.toLowerCase().trim());
+        const rows = res.rows.map(row => {
+            let obj = {};
+            headers.forEach((h, i) => obj[h] = row[i]);
+            return obj;
+        });
+        exam = rows.sort(() => 0.5 - Math.random()).slice(0, 10);
+        showScreen('secQ');
+        showQ();
     });
 }
 
-function setupConfig() {
-    document.getElementById('cfgUser').textContent = "Usuario: " + (curUser.usuario || "Autorizado");
-    const materias = [...new Set(allQuestions.map(q => q.materia).filter(m => m))];
-    const sel = document.getElementById('selMateria');
-    sel.innerHTML = '<option value="">Todos los bloques</option>';
-    materias.forEach(m => {
-        const opt = document.createElement('option');
-        opt.value = m; opt.textContent = m;
-        sel.appendChild(opt);
-    });
-}
-
-function startExam() {
-    const num = parseInt(document.getElementById('inNum').value);
-    const mat = document.getElementById('selMateria').value;
-    const pool = mat ? allQuestions.filter(q => q.materia === mat) : allQuestions;
-    exam = pool.sort(() => 0.5 - Math.random()).slice(0, num);
-    idx = 0; answers = []; correct = [];
-    showQ();
-    showScreen('secQ');
+function showScreen(id) {
+    document.getElementById('secLogin').classList.add('hidden');
+    document.getElementById('secQ').classList.add('hidden');
+    document.getElementById('secRes').classList.add('hidden');
+    document.getElementById(id).classList.remove('hidden');
 }
 
 function showQ() {
     const q = exam[idx];
-    document.getElementById('qNum').textContent = "Pregunta " + (idx + 1);
-    document.getElementById('qProg').textContent = (idx + 1) + " / " + exam.length;
-    document.getElementById('pBar').style.width = ((idx + 1) / exam.length * 100) + "%";
+    document.getElementById('qProg').textContent = `Pregunta ${idx + 1} de ${exam.length}`;
     document.getElementById('qTxt').textContent = q.pregunta;
-    
-    // TRATAMIENTO DE OPCIONES (Separa por salto de línea)
-    const rawOpts = q.opciones ? q.opciones.split('\n') : [];
-    const opts = rawOpts.map(o => o.trim()).filter(o => o.length > 0);
     
     const wrap = document.getElementById('optsWrap');
     wrap.innerHTML = "";
     document.getElementById('fbWrap').innerHTML = "";
     document.getElementById('btnNext').disabled = true;
 
+    // LÓGICA DE DIVISIÓN DE OPCIONES MEJORADA
+    // Divide por: Salto de línea real OR la cadena "\n" OR detectando el patrón ".b)" ".c)" ".d)"
+    let rawText = q.opciones || "";
+    let opts = rawText.split(/\n|\\n|(?=\.[b-d]\))/g).map(s => s.trim()).filter(s => s.length > 2);
+
     opts.forEach(optTxt => {
-        // Detectamos la letra (A, B, C o D) al inicio del texto
-        const letterMatch = optTxt.match(/^([A-Da-d])/);
-        const letter = letterMatch ? letterMatch[0].toUpperCase() : "";
-        
+        // Limpiar restos de letras al inicio si existen (ej: "a) " o ".b) ")
+        const cleanTxt = optTxt.replace(/^[a-d]\)\s*|^\.[a-d]\)\s*/i, "");
+        const letter = optTxt.match(/[a-d]/i)[0].toUpperCase();
+
         const div = document.createElement('div');
         div.className = 'opt';
-        div.innerHTML = `<div class="oltr">${letter || '•'}</div><div>${optTxt}</div>`;
+        div.innerHTML = `<div class="oltr">${letter}</div><div>${cleanTxt}</div>`;
         
         div.onclick = () => {
             if(!document.getElementById('btnNext').disabled) return;
             
-            const respCorrecta = q.respuesta.trim().toUpperCase();
-            const isOk = letter === respCorrecta;
-            
-            div.classList.add(isOk ? 'ok' : 'ko');
-            correct[idx] = isOk;
-            
-            // Si falla, marcamos también la que era correcta visualmente
-            if(!isOk) {
-               Array.from(wrap.children).forEach(child => {
-                   if(child.querySelector('.oltr').textContent === respCorrecta) child.classList.add('ok');
-               });
+            const isOk = letter === q.respuesta.trim().toUpperCase();
+            if(isOk) {
+                div.classList.add('ok');
+                correctCount++;
+            } else {
+                div.classList.add('ko');
+                // Marcar la correcta para que el alumno aprenda
+                Array.from(wrap.children).forEach(c => {
+                    if(c.querySelector('.oltr').textContent === q.respuesta.trim().toUpperCase()) c.classList.add('ok');
+                });
             }
-            
-            // Mostrar MOTIVACIÓN / SABER
+
             document.getElementById('fbWrap').innerHTML = `
                 <div class="fb">
-                    <div class="fb-t">${isOk ? '✓ ACIERTO' : '✗ ERROR'}</div>
-                    <div style="font-size:0.95rem">${q.motivacion || q.saber || 'Revisa el material de estudio para más detalles.'}</div>
+                    <div class="fb-t">${isOk ? 'Respuesta Correcta' : 'Respuesta Incorrecta'}</div>
+                    <div style="font-size:0.95rem; line-height:1.4">${q.motivacion || q.saber || ''}</div>
                 </div>`;
             document.getElementById('btnNext').disabled = false;
         };
@@ -230,10 +160,7 @@ function nextQ() {
     idx++;
     if(idx < exam.length) showQ();
     else {
-        const ok = correct.filter(c => c).length;
-        document.getElementById('rOk').textContent = ok;
-        document.getElementById('rKo').textContent = exam.length - ok;
-        document.getElementById('rPct').textContent = Math.round(ok/exam.length*100) + "%";
+        document.getElementById('rPct').textContent = Math.round((correctCount/exam.length)*100) + "%";
         showScreen('secRes');
     }
 }
