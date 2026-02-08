@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ENFOCADOS</title>
+<title>ENFOCADOS - Plataforma de Oposiciones</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-/* --- ESTILOS ORIGINALES --- */
+/* --- FORMATO ORIGINAL PROFESIONAL --- */
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--Y:rgb(250,250,0);--Yd:rgb(215,215,0);--D:#2c3e50;--D2:#1a252f;--V:#10b981;--R:#ef4444;--G:#64748b;--B:#e2e8f0}
 body{font-family:'Inter',sans-serif;background:linear-gradient(160deg,#fffef0 0%,#fff9c4 100%);min-height:100vh;color:#1e293b;line-height:1.6}
@@ -14,7 +14,7 @@ body{font-family:'Inter',sans-serif;background:linear-gradient(160deg,#fffef0 0%
 header{text-align:center;margin-bottom:1.6rem}
 header svg{display:block;margin:0 auto .4rem}
 h1{font-family:'Montserrat',sans-serif;font-size:3rem;font-weight:800;color:var(--D);letter-spacing:-1px}
-.sub{color:var(--G);font-size:1.02rem;font-weight:500}
+.sub{color:var(--G);font-size:1.02rem;font-weight:500;text-transform:uppercase;letter-spacing:1px}
 .card{background:#fff;border-radius:18px;padding:2rem;box-shadow:0 4px 24px rgba(0,0,0,.08);border:2px solid var(--Y);margin-bottom:1.4rem}
 .field{margin-bottom:1.1rem;text-align:left}
 .field label{display:block;margin-bottom:.3rem;color:var(--D);font-weight:600;font-size:.9rem}
@@ -23,9 +23,7 @@ h1{font-family:'Montserrat',sans-serif;font-size:3rem;font-weight:800;color:var(
 .btn{width:100%;padding:.88rem 1.5rem;background:var(--Y);color:var(--D);border:none;border-radius:10px;font-size:1.05rem;font-weight:700;cursor:pointer;font-family:'Montserrat',sans-serif;transition:all .2s;box-shadow:0 3px 8px rgba(250,250,0,0.3)}
 .btn:hover{background:var(--Yd);transform:translateY(-1px);box-shadow:0 5px 14px rgba(250,250,0,0.4)}
 .btn:disabled{background:#cbd5e1;color:#94a3b8;cursor:not-allowed;transform:none;box-shadow:none}
-.btn-out{background:#fff;color:var(--D);border:2px solid var(--D);box-shadow:none}
-.btn-out:hover{background:var(--D);color:#fff}
-.ubar{background:linear-gradient(135deg,var(--Y),rgb(255,255,100));padding:.78rem 1.1rem;border-radius:10px;display:flex;justify-content:space-between;align-items:center;margin-bottom:1.4rem}
+.ubar{background:linear-gradient(135deg,var(--Y),rgb(255,255,100));padding:.78rem 1.1rem;border-radius:10px;display:flex;justify-content:space-between;align-items:center;margin-bottom:1.4rem;font-weight:600}
 .spin-wrap{text-align:center;padding:2.8rem 0;color:var(--G)}
 .spin{border:3px solid #eee;border-top:3px solid var(--Y);border-radius:50%;width:40px;height:40px;animation:sp .9s linear infinite;margin:0 auto .9rem}
 @keyframes sp{to{transform:rotate(360deg)}}
@@ -37,9 +35,8 @@ h1{font-family:'Montserrat',sans-serif;font-size:3rem;font-weight:800;color:var(
 .opt.ok{border-color:var(--V);background:#f0fdf4}
 .opt.ko{border-color:var(--R);background:#fef2f2}
 .oltr{width:30px;height:30px;border-radius:50%;background:var(--B);display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0}
-.fb{margin-top:1.3rem;padding:1.1rem;border-radius:10px}
-.fb.ok{background:#f0fdf4;border-left:4px solid var(--V)}
-.fb.ko{background:#fef2f2;border-left:4px solid var(--R)}
+.fb{margin-top:1.3rem;padding:1.1rem;border-radius:10px;background:#f8fafc;border-left:4px solid var(--Y)}
+.fb-t{font-weight:700;margin-bottom:4px;color:var(--D)}
 .hidden{display:none!important}
 </style>
 </head>
@@ -47,224 +44,187 @@ h1{font-family:'Montserrat',sans-serif;font-size:3rem;font-weight:800;color:var(
 
 <div class="wrap">
     <header>
-        <svg width="68" height="68" viewBox="0 0 68 68" fill="none">
+        <svg width="60" height="60" viewBox="0 0 68 68" fill="none">
             <circle cx="34" cy="34" r="32" fill="rgb(250,250,0)" stroke="#2c3e50" stroke-width="3"/>
             <path d="M22 34L30 42L46 26" stroke="#2c3e50" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         <h1>ENFOCADOS</h1>
-        <div class="sub">Plataforma de Preparación para Oposiciones</div>
+        <div class="sub">Plataforma de Preparación Profesional</div>
     </header>
 
     <div id="secLogin" class="card">
-        <h2 style="text-align:center;margin-bottom:1.2rem;font-family:'Montserrat'">Acceso</h2>
+        <h2 style="text-align:center;margin-bottom:1.5rem;font-family:'Montserrat'">Panel de Acceso</h2>
         <div class="field">
-            <label>Nombre Completo</label>
-            <input type="text" id="inName">
+            <label>Correo Electrónico Autorizado</label>
+            <input type="email" id="inEmail" placeholder="ejemplo@correo.com">
         </div>
-        <div class="field">
-            <label>Correo Electrónico</label>
-            <input type="email" id="inEmail">
-        </div>
-        <button class="btn" onclick="doLogin()">Entrar →</button>
-        <div id="loginErr"></div>
+        <button class="btn" onclick="doLogin()">Entrar</button>
     </div>
 
     <div id="secLoading" class="card hidden">
         <div class="spin-wrap">
             <div class="spin"></div>
-            <p id="loadMsg">Conectando con la base de datos...</p>
+            <p id="loadMsg">Sincronizando con base de datos...</p>
         </div>
     </div>
 
     <div id="secConfig" class="card hidden">
-        <div class="ubar"><span id="cfgUser"></span><button onclick="location.reload()" style="background:var(--D);color:#fff;border:none;padding:5px 10px;border-radius:5px;cursor:pointer">Salir</button></div>
-        <h3 style="margin-bottom:1rem">Configura tu examen</h3>
+        <div class="ubar"><span id="cfgUser"></span><span style="font-size:0.8rem; cursor:pointer" onclick="location.reload()">Cerrar Sesión</span></div>
+        <h3 style="margin-bottom:1.2rem; font-family:'Montserrat'">Configuración del Test</h3>
         <div class="field">
-            <label>Número de preguntas (Máx 100)</label>
+            <label>Cantidad de preguntas</label>
             <input type="number" id="inNum" value="10" min="1" max="100">
         </div>
         <div class="field">
-            <label>Materia</label>
-            <select id="selMateria"><option value="">Todas</option></select>
+            <label>Materia o Bloque</label>
+            <select id="selMateria"><option value="">Todos los bloques</option></select>
         </div>
-        <button class="btn" onclick="startExam()">Comenzar 🎯</button>
+        <button class="btn" onclick="startExam()">Iniciar Evaluación</button>
     </div>
 
     <div id="secQ" class="card hidden">
-        <div class="qhdr"><span id="qNum" style="font-weight:800"></span><span id="qProg"></span></div>
-        <div class="pbar-bg"><div id="pBar" class="pbar" style="width:0%"></div></div>
-        <div id="qTxt" style="font-size:1.1rem; font-weight:600; margin-bottom:1.5rem"></div>
+        <div class="qhdr"><span id="qNum" style="font-weight:800; color:var(--D)"></span><span id="qProg" style="font-size:0.9rem"></span></div>
+        <div class="pbar-bg"><div id="pBar" class="pbar"></div></div>
+        <div id="qTxt" style="font-size:1.15rem; font-weight:600; margin-bottom:1.5rem; color:var(--D2)"></div>
         <div id="optsWrap"></div>
         <div id="fbWrap"></div>
-        <div style="display:flex; gap:10px; margin-top:1.5rem">
-            <button id="btnPrev" class="btn btn-out hidden" onclick="prevQ()">Anterior</button>
-            <button id="btnNext" class="btn" onclick="nextQ()" disabled>Siguiente</button>
-        </div>
+        <button id="btnNext" class="btn" style="margin-top:1.5rem" onclick="nextQ()" disabled>Continuar</button>
     </div>
 
     <div id="secRes" class="card hidden" style="text-align:center">
-        <h2 style="font-size:2.5rem" id="rEmoji"></h2>
-        <div id="rPct" style="font-size:4rem; font-weight:800; color:var(--D)"></div>
-        <p style="margin-bottom:1.5rem">Resultado Final</p>
-        <div style="display:flex; justify-content:space-around; margin-bottom:2rem">
-            <div><b id="rOk" style="color:var(--V);font-size:1.5rem"></b><br>Correctas</div>
-            <div><b id="rKo" style="color:var(--R);font-size:1.5rem"></b><br>Errores</div>
+        <h2 style="font-family:'Montserrat'; margin-bottom:0.5rem">Evaluación Finalizada</h2>
+        <div id="rPct" style="font-size:4.5rem; font-weight:800; color:var(--D); margin:1rem 0"></div>
+        <div style="display:flex; justify-content:center; gap:2rem; margin-bottom:2rem">
+            <div><b id="rOk" style="color:var(--V);font-size:1.6rem"></b><br><small>Aciertos</small></div>
+            <div><b id="rKo" style="color:var(--R);font-size:1.6rem"></b><br><small>Errores</small></div>
         </div>
-        <button class="btn" onclick="location.reload()">Nuevo Intento</button>
+        <button class="btn" onclick="location.reload()">Reiniciar Plataforma</button>
     </div>
 </div>
 
 <script>
-// URL NUEVA SUMINISTRADA
-var apiUrl = 'https://script.google.com/macros/s/AKfycbxOW1CWs8n04Lek1Sm0mYZE_F6N0epkbvr0czCt_QzY7qdn65X3g1oya0Br2BtwXQBS/exec';
+const apiUrl = 'https://script.google.com/macros/s/AKfycbxOW1CWs8n04Lek1Sm0mYZE_F6N0epkbvr0czCt_QzY7qdn65X3g1oya0Br2BtwXQBS/exec';
 
-var allQuestions = [], exam = [], idx = 0, answers = [], correct = [], curUser = null;
+let allQuestions = [], exam = [], idx = 0, answers = [], correct = [], curUser = null;
 
 function showScreen(id) {
     document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
     document.getElementById(id).classList.remove('hidden');
 }
 
-function doLogin() {
-    var name = document.getElementById('inName').value.trim();
-    var email = document.getElementById('inEmail').value.trim().toLowerCase();
-    
-    if(!name || !email) return alert("Por favor, rellena todos los campos.");
-    
-    showScreen('secLoading');
-    
-    // CARGAR USUARIOS
-    fetchJSONP(apiUrl + '?type=users', function(res) {
-        if(!res || !res.rows) {
-            alert("Error: No se pudieron recibir datos. Revisa si el script de Google tiene acceso 'Anyonmous'.");
-            showScreen('secLogin');
-            return;
-        }
-
-        var users = parseTable(res.headers, res.rows);
-        var user = users.find(u => u.correo && u.correo.toLowerCase() === email);
-
-        // Bypass admin o validación
-        if(email === 'joanmanuelbaez@gmail.com' || user) {
-            curUser = { nombre: name, email: email };
-            document.getElementById('loadMsg').textContent = "Cargando banco de preguntas...";
-            
-            // CARGAR PREGUNTAS
-            fetchJSONP(apiUrl + '?type=questions', function(qRes) {
-                allQuestions = parseTable(qRes.headers, qRes.rows);
-                setupConfig();
-                showScreen('secConfig');
-            });
-        } else {
-            alert("Usuario no autorizado. Contacta con soporte.");
-            showScreen('secLogin');
-        }
-    });
-}
-
 function fetchJSONP(url, callback) {
-    var callbackName = 'jsonp_' + Math.round(100000 * Math.random());
+    const callbackName = 'jsonp_' + Math.round(100000 * Math.random());
     window[callbackName] = function(data) {
         delete window[callbackName];
         document.body.removeChild(script);
         callback(data);
     };
-    var script = document.createElement('script');
+    const script = document.createElement('script');
     script.src = url + (url.indexOf('?') >= 0 ? '&' : '?') + 'callback=' + callbackName;
     document.body.appendChild(script);
 }
 
 function parseTable(headers, rows) {
     return rows.map(row => {
-        var obj = {};
+        let obj = {};
         headers.forEach((h, i) => obj[h.toLowerCase().trim()] = row[i]);
         return obj;
     });
 }
 
+function doLogin() {
+    const email = document.getElementById('inEmail').value.trim().toLowerCase();
+    if(!email) return;
+    showScreen('secLoading');
+
+    fetchJSONP(apiUrl + '?type=users', function(res) {
+        const users = parseTable(res.headers, res.rows);
+        const user = users.find(u => u.correo && u.correo.toLowerCase() === email);
+
+        if(user) {
+            curUser = user;
+            document.getElementById('loadMsg').textContent = "Cargando banco de preguntas...";
+            fetchJSONP(apiUrl + '?type=questions', function(qRes) {
+                allQuestions = parseTable(qRes.headers, qRes.rows);
+                setupConfig();
+                showScreen('secConfig');
+            });
+        } else {
+            alert("Acceso denegado: Usuario no registrado.");
+            showScreen('secLogin');
+        }
+    });
+}
+
 function setupConfig() {
-    document.getElementById('cfgUser').textContent = "Hola, " + curUser.nombre;
-    var materias = [...new Set(allQuestions.map(q => q.materia).filter(m => m))];
-    var sel = document.getElementById('selMateria');
-    sel.innerHTML = '<option value="">Todas las materias</option>';
-    materias.forEach(m => sel.innerHTML += `<option value="${m}">${m}</option>`);
+    document.getElementById('cfgUser').textContent = "Usuario: " + (curUser.usuario || curUser.nombre || "Autorizado");
+    const materias = [...new Set(allQuestions.map(q => q.materia).filter(m => m))];
+    const sel = document.getElementById('selMateria');
+    sel.innerHTML = '<option value="">Todos los bloques</option>';
+    materias.forEach(m => {
+        const opt = document.createElement('option');
+        opt.value = m; opt.textContent = m;
+        sel.appendChild(opt);
+    });
 }
 
 function startExam() {
-    var num = parseInt(document.getElementById('inNum').value);
-    var mat = document.getElementById('selMateria').value;
-    var pool = mat ? allQuestions.filter(q => q.materia === mat) : allQuestions;
-    
-    if(pool.length === 0) return alert("No hay preguntas en esta categoría.");
+    const num = parseInt(document.getElementById('inNum').value);
+    const mat = document.getElementById('selMateria').value;
+    const pool = mat ? allQuestions.filter(q => q.materia === mat) : allQuestions;
     
     exam = pool.sort(() => 0.5 - Math.random()).slice(0, num);
-    idx = 0; answers = new Array(exam.length).fill(null);
-    correct = new Array(exam.length).fill(null);
+    idx = 0; answers = []; correct = [];
     showQ();
     showScreen('secQ');
 }
 
 function showQ() {
-    var q = exam[idx];
+    const q = exam[idx];
     document.getElementById('qNum').textContent = "Pregunta " + (idx + 1);
-    document.getElementById('qProg').textContent = (idx + 1) + "/" + exam.length;
+    document.getElementById('qProg').textContent = (idx + 1) + " de " + exam.length;
     document.getElementById('pBar').style.width = ((idx + 1) / exam.length * 100) + "%";
     document.getElementById('qTxt').textContent = q.pregunta;
     
-    var opts = (q.opciones || "").split("\n").filter(o => o.trim());
-    var wrap = document.getElementById('optsWrap');
+    const opts = q.opciones.split('\n').filter(o => o.trim());
+    const wrap = document.getElementById('optsWrap');
     wrap.innerHTML = "";
-    
-    opts.forEach((txt, i) => {
-        var ltr = String.fromCharCode(65 + i);
-        var div = document.createElement('div');
+    document.getElementById('fbWrap').innerHTML = "";
+    document.getElementById('btnNext').disabled = true;
+
+    opts.forEach(optTxt => {
+        const letter = optTxt.trim().charAt(0).toUpperCase();
+        const div = document.createElement('div');
         div.className = 'opt';
-        if(answers[idx] === ltr) {
-            div.classList.add(correct[idx] ? 'ok' : 'ko');
-        }
-        div.innerHTML = `<div class="oltr">${ltr}</div><div>${txt}</div>`;
-        div.onclick = function() { selectOpt(ltr, q.respuesta.trim().toUpperCase()); };
+        div.innerHTML = `<div class="oltr">${letter}</div><div>${optTxt.substring(2).trim() || optTxt}</div>`;
+        
+        div.onclick = () => {
+            if(!document.getElementById('btnNext').disabled) return;
+            const isOk = letter === q.respuesta.trim().toUpperCase();
+            div.classList.add(isOk ? 'ok' : 'ko');
+            correct[idx] = isOk;
+            
+            document.getElementById('fbWrap').innerHTML = `
+                <div class="fb">
+                    <div class="fb-t">${isOk ? 'Respuesta Correcta' : 'Respuesta Incorrecta'}</div>
+                    <div style="font-size:0.95rem">${q.motivacion || q.saber || ''}</div>
+                </div>`;
+            document.getElementById('btnNext').disabled = false;
+        };
         wrap.appendChild(div);
     });
-
-    document.getElementById('fbWrap').innerHTML = answers[idx] ? renderFb(q) : "";
-    document.getElementById('btnNext').disabled = answers[idx] === null;
-    document.getElementById('btnPrev').classList.toggle('hidden', idx === 0);
-    if(idx === exam.length -1) document.getElementById('btnNext').textContent = "Finalizar";
-    else document.getElementById('btnNext').textContent = "Siguiente";
-}
-
-function selectOpt(ltr, correctLtr) {
-    if(answers[idx] !== null) return;
-    answers[idx] = ltr;
-    correct[idx] = (ltr === correctLtr);
-    showQ();
-}
-
-function renderFb(q) {
-    var isOk = correct[idx];
-    return `<div class="fb ${isOk?'ok':'ko'}">
-        <b>${isOk?'✓ ¡Correcto!':'✗ Incorrecto'}</b><br>
-        <small>Respuesta: ${q.respuesta}</small><br><br>
-        ${q.saber || ''}
-    </div>`;
 }
 
 function nextQ() {
-    if(idx < exam.length - 1) { idx++; showQ(); }
-    else showResults();
-}
-
-function prevQ() { if(idx > 0) { idx--; showQ(); } }
-
-function showResults() {
-    var ok = correct.filter(c => c === true).length;
-    var pct = Math.round((ok / exam.length) * 100);
-    document.getElementById('rOk').textContent = ok;
-    document.getElementById('rKo').textContent = exam.length - ok;
-    document.getElementById('rPct').textContent = pct + "%";
-    document.getElementById('rEmoji').textContent = pct >= 50 ? "🎉" : "📚";
-    showScreen('secRes');
+    idx++;
+    if(idx < exam.length) showQ();
+    else {
+        const ok = correct.filter(c => c).length;
+        document.getElementById('rOk').textContent = ok;
+        document.getElementById('rKo').textContent = exam.length - ok;
+        document.getElementById('rPct').textContent = Math.round(ok/exam.length*100) + "%";
+        showScreen('secRes');
+    }
 }
 </script>
 </body>
