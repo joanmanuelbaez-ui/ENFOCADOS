@@ -6,7 +6,7 @@
 <title>ENFOCADOS</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-/* TUS ESTILOS ORIGINALES */
+/* TUS ESTILOS ORIGINALES REPLICADOS */
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--Y:rgb(250,250,0);--Yd:rgb(215,215,0);--D:#2c3e50;--D2:#1a252f;--V:#10b981;--R:#ef4444;--G:#64748b;--B:#e2e8f0}
 body{font-family:'Inter',sans-serif;background:linear-gradient(160deg,#fffef0 0%,#fff9c4 100%);min-height:100vh;color:#1e293b;line-height:1.6}
@@ -14,32 +14,34 @@ body{font-family:'Inter',sans-serif;background:linear-gradient(160deg,#fffef0 0%
 header{text-align:center;margin-bottom:1.6rem}
 header svg{display:block;margin:0 auto .4rem}
 h1{font-family:'Montserrat',sans-serif;font-size:3rem;font-weight:800;color:var(--D);letter-spacing:-1px}
+.screen{display:none}.active{display:block}
 
-/* LOGIN BOX (USUARIO Y CORREO) */
+/* LOGIN ORIGINAL */
 .login-card{max-width:420px;margin:2rem auto;background:var(--D);border-radius:28px;padding:3rem 2.5rem;color:#fff;text-align:center;box-shadow:0 25px 50px -12px rgba(0,0,0,0.25)}
-.login-card h2{font-family:'Montserrat';font-size:1.8rem;font-weight:700;margin-bottom:.5rem}
+.login-card h2{font-family:'Montserrat';font-size:1.8rem;font-weight:700;margin-bottom:.5rem;color:#fff}
 .input-group{margin-bottom:1.5rem;text-align:left}
 .input-group label{display:block;font-weight:500;margin-bottom:.6rem;color:rgba(255,255,255,0.9);font-size:.85rem;text-transform:uppercase;letter-spacing:1px}
 .input-group input{width:100%;padding:1.1rem;border-radius:14px;border:2px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:#fff;font-size:1rem}
-.btn-main{width:100%;background:var(--Y);color:var(--D);padding:1.1rem;border-radius:14px;border:none;font-weight:800;cursor:pointer;font-family:'Montserrat';font-size:1rem;display:flex;align-items:center;justify-content:center;gap:.8rem;text-transform:uppercase;transition:all .2s}
-.btn-main:hover{background:var(--Yd);transform:translateY(-2px)}
+.btn-main{width:100%;background:var(--Y);color:var(--D);padding:1.1rem;border-radius:14px;border:none;font-weight:800;cursor:pointer;font-family:'Montserrat';font-size:1rem;display:flex;align-items:center;justify-content:center;gap:.8rem;text-transform:uppercase}
 
-/* CUESTIONARIO */
+/* CUESTIONARIO CON CAJONES */
 .card{background:#fff;border-radius:24px;padding:2.2rem;box-shadow:0 20px 25px -5px rgba(0,0,0,0.1)}
-.screen{display:none}.active{display:block}
 .p-bar-bg{height:8px;background:var(--B);border-radius:10px;margin:10px 0 20px 0}
 .p-bar{height:100%;background:var(--Y);transition:width .3s}
-.qtxt{font-size:1.4rem;font-weight:700;margin-bottom:1.5rem}
+.qtxt{font-size:1.4rem;font-weight:700;margin-bottom:1.5rem;color:var(--D)}
 .opts{display:grid;gap:1rem}
-.opt{display:flex;align-items:center;padding:1.2rem;border:2px solid var(--B);border-radius:18px;cursor:pointer;background:#f8fafc}
+.opt{display:flex;align-items:center;padding:1.2rem;border:2px solid var(--B);border-radius:18px;cursor:pointer;background:#f8fafc;transition: 0.2s}
+.opt:hover{border-color: var(--Y)}
 .oltr{width:38px;height:38px;background:var(--Y);border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;margin-right:1.2rem;flex-shrink:0}
 .opt.ok{border-color:var(--V);background:#ecfdf5}
 .opt.ko{border-color:var(--R);background:#fef2f2}
 
-/* JUSTIFICACIÓN */
-.fb{margin-top:20px;padding:1.5rem;border-radius:15px;border-left:5px solid}
+/* FEEDBACK/JUSTIFICACIÓN */
+.fb{margin-top:20px;padding:1.5rem;border-radius:15px;border-left:5px solid; animation: fadeIn 0.4s}
 .fb.ok{background:#f0fdf4;border-color:var(--V)}
 .fb.ko{background:#fef2f2;border-color:var(--R)}
+@keyframes fadeIn { from {opacity:0} to {opacity:1} }
+
 .nav-btns{display:flex;gap:10px;margin-top:20px}
 .btn-nav{flex:1;padding:1rem;border-radius:12px;border:none;font-weight:700;cursor:pointer}
 .hidden{visibility:hidden}
@@ -63,9 +65,9 @@ h1{font-family:'Montserrat',sans-serif;font-size:3rem;font-weight:800;color:var(
             </div>
             <div class="input-group">
                 <label>Correo Electrónico</label>
-                <input type="email" id="emailInput" placeholder="ejemplo@correo.com">
+                <input type="email" id="emailInput" placeholder="tu@email.com">
             </div>
-            <button class="btn-main" onclick="startTest()">
+            <button class="btn-main" onclick="entrar()">
                 <span>Entrar al Test</span>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
@@ -73,7 +75,7 @@ h1{font-family:'Montserrat',sans-serif;font-size:3rem;font-weight:800;color:var(
     </div>
 
     <div id="secQuiz" class="screen card">
-        <div id="qNum" style="font-weight:700;color:var(--G)">Pregunta 1 de ...</div>
+        <div id="qNum" style="font-weight:700; color:var(--G)">Pregunta</div>
         <div class="p-bar-bg"><div id="pBar" class="p-bar" style="width:0%"></div></div>
         <div id="qArea"></div>
         <div id="fbWrap"></div>
@@ -85,91 +87,70 @@ h1{font-family:'Montserrat',sans-serif;font-size:3rem;font-weight:800;color:var(
 
     <div id="secRes" class="screen card" style="text-align:center">
         <div id="rEmoji" style="font-size:5rem">😐</div>
-        <h2 id="rPct" style="font-size:4rem;margin:1rem 0;font-family:'Montserrat'">0%</h2>
+        <h2 id="rPct" style="font-size:4rem;margin:1rem 0; font-family:'Montserrat'">0%</h2>
         <p>Aciertos: <span id="rOk">0</span> / <span id="rTot">0</span></p>
-        <button class="btn-main" style="margin-top:2rem;width:auto;padding:1rem 3rem;margin-inline:auto" onclick="location.reload()">Reiniciar</button>
+        <button class="btn-main" style="margin-top:2rem;width:auto;padding:1rem 3rem;margin-inline:auto" onclick="location.reload()">Reintentar</button>
     </div>
 </div>
 
 <script>
-// URL de tu API en GitHub
 const API_URL = 'https://raw.githubusercontent.com/Ancland/Enfocados/main/ENFOCADOS%20FINAL.json';
-
 let exam = [], answers = [], idx = 0;
 
-// Al entrar, cargamos los datos pero no los mostramos hasta el login
-async function startTest() {
-    const user = document.getElementById('userInput').value.trim();
-    const email = document.getElementById('emailInput').value.trim();
-
-    if(!user || !email) {
-        alert("Por favor, rellena todos los campos");
-        return;
-    }
-
+async function entrar() {
+    const u = document.getElementById('userInput').value;
+    const e = document.getElementById('emailInput').value;
+    if(!u || !e) return alert("Rellena los datos");
+    
     try {
         const res = await fetch(API_URL);
         exam = await res.json();
         answers = new Array(exam.length).fill(null);
-        showScreen('secQuiz');
+        document.getElementById('secLogin').classList.remove('active');
+        document.getElementById('secQuiz').classList.add('active');
         showQ();
-    } catch(e) {
-        alert("Error cargando el test de GitHub");
-    }
-}
-
-function showScreen(id) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
+    } catch(err) { alert("Error al cargar preguntas"); }
 }
 
 function showQ() {
     const q = exam[idx];
     document.getElementById('qNum').textContent = `Pregunta ${idx + 1} de ${exam.length}`;
     document.getElementById('pBar').style.width = `${((idx+1)/exam.length)*100}%`;
-    
-    // Título de la pregunta
-    let html = `<div class="qtxt">${q.pregunta}</div><div class="opts">`;
-    
-    // Renderizado de las 4 opciones en cajones distintos
-    ['a','b','c','d'].forEach(letra => {
-        const texto = q['opcion_' + letra];
-        if(!texto) return;
 
+    // Pregunta y Opciones en cajones separados
+    let html = `<div class="qtxt">${q.pregunta}</div><div class="opts">`;
+    ['a','b','c','d'].forEach(l => {
+        const txt = q['opcion_' + l];
+        if(!txt) return;
         let cls = 'opt';
         if(answers[idx] !== null) {
-            if(letra === q.respuesta.toLowerCase()) cls += ' ok';
-            else if(answers[idx] === letra) cls += ' ko';
+            if(l === q.respuesta.toLowerCase()) cls += ' ok';
+            else if(answers[idx] === l) cls += ' ko';
         }
-        
-        html += `
-            <div class="${cls}" onclick="pick('${letra}')">
-                <div class="oltr">${letra.toUpperCase()}</div>
-                <span>${texto}</span>
-            </div>`;
+        html += `<div class="${cls}" onclick="pick('${l}')"><div class="oltr">${l.toUpperCase()}</div><span>${txt}</span></div>`;
     });
     html += `</div>`;
     document.getElementById('qArea').innerHTML = html;
 
-    // Justificación (campo 'saber' del JSON)
+    // Justificación (Campo "saber")
     const fb = document.getElementById('fbWrap');
     fb.innerHTML = '';
     if(answers[idx] !== null) {
-        const isCorrect = answers[idx] === q.respuesta.toLowerCase();
+        const corr = answers[idx] === q.respuesta.toLowerCase();
         fb.innerHTML = `
-            <div class="fb ${isCorrect?'ok':'ko'}">
-                <strong>${isCorrect?'✓ ¡Correcto!':'✗ Incorrecto'}</strong><br>
-                <small>${q.saber || 'No hay justificación disponible.'}</small>
+            <div class="fb ${corr?'ok':'ko'}">
+                <strong>${corr?'✓ ¡Correcto!':'✗ Incorrecto'}</strong><br>
+                <small>${q.saber || 'Sin justificación disponible.'}</small>
             </div>`;
     }
-
+    
     document.getElementById('btnPrev').classList.toggle('hidden', idx === 0);
     document.getElementById('btnNext').textContent = idx === exam.length - 1 ? 'Finalizar' : 'Siguiente →';
 }
 
-function pick(letra) {
+function pick(l) {
     if(answers[idx] !== null) return;
-    answers[idx] = letra;
+    answers[idx] = l;
     showQ();
 }
 
@@ -181,18 +162,14 @@ function nextQ() {
 function prevQ() { if(idx > 0) { idx--; showQ(); } }
 
 function finish() {
-    showScreen('secRes');
+    document.getElementById('secQuiz').classList.remove('active');
+    document.getElementById('secRes').classList.add('active');
     const ok = exam.filter((q, i) => answers[i] === q.respuesta.toLowerCase()).length;
     const pct = Math.round((ok/exam.length)*100);
     document.getElementById('rOk').textContent = ok;
     document.getElementById('rTot').textContent = exam.length;
     document.getElementById('rPct').textContent = pct + '%';
-    
-    let emo = '😞';
-    if(pct >= 90) emo = '🏆';
-    else if(pct >= 70) emo = '😄';
-    else if(pct >= 50) emo = '😐';
-    document.getElementById('rEmoji').textContent = emo;
+    document.getElementById('rEmoji').textContent = pct >= 70 ? '😄' : (pct >= 50 ? '😐' : '😞');
 }
 </script>
 </body>
