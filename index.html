@@ -6,7 +6,6 @@
 <title>ENFOCADOS</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-/* TUS ESTILOS ORIGINALES REPLICADOS */
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--Y:rgb(250,250,0);--Yd:rgb(215,215,0);--D:#2c3e50;--D2:#1a252f;--V:#10b981;--R:#ef4444;--G:#64748b;--B:#e2e8f0}
 body{font-family:'Inter',sans-serif;background:linear-gradient(160deg,#fffef0 0%,#fff9c4 100%);min-height:100vh;color:#1e293b;line-height:1.6}
@@ -14,163 +13,194 @@ body{font-family:'Inter',sans-serif;background:linear-gradient(160deg,#fffef0 0%
 header{text-align:center;margin-bottom:1.6rem}
 header svg{display:block;margin:0 auto .4rem}
 h1{font-family:'Montserrat',sans-serif;font-size:3rem;font-weight:800;color:var(--D);letter-spacing:-1px}
-.screen{display:none}.active{display:block}
-
-/* LOGIN ORIGINAL */
-.login-card{max-width:420px;margin:2rem auto;background:var(--D);border-radius:28px;padding:3rem 2.5rem;color:#fff;text-align:center;box-shadow:0 25px 50px -12px rgba(0,0,0,0.25)}
-.login-card h2{font-family:'Montserrat';font-size:1.8rem;font-weight:700;margin-bottom:.5rem;color:#fff}
-.input-group{margin-bottom:1.5rem;text-align:left}
-.input-group label{display:block;font-weight:500;margin-bottom:.6rem;color:rgba(255,255,255,0.9);font-size:.85rem;text-transform:uppercase;letter-spacing:1px}
-.input-group input{width:100%;padding:1.1rem;border-radius:14px;border:2px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:#fff;font-size:1rem}
-.btn-main{width:100%;background:var(--Y);color:var(--D);padding:1.1rem;border-radius:14px;border:none;font-weight:800;cursor:pointer;font-family:'Montserrat';font-size:1rem;display:flex;align-items:center;justify-content:center;gap:.8rem;text-transform:uppercase}
-
-/* CUESTIONARIO CON CAJONES */
-.card{background:#fff;border-radius:24px;padding:2.2rem;box-shadow:0 20px 25px -5px rgba(0,0,0,0.1)}
-.p-bar-bg{height:8px;background:var(--B);border-radius:10px;margin:10px 0 20px 0}
-.p-bar{height:100%;background:var(--Y);transition:width .3s}
-.qtxt{font-size:1.4rem;font-weight:700;margin-bottom:1.5rem;color:var(--D)}
-.opts{display:grid;gap:1rem}
-.opt{display:flex;align-items:center;padding:1.2rem;border:2px solid var(--B);border-radius:18px;cursor:pointer;background:#f8fafc;transition: 0.2s}
-.opt:hover{border-color: var(--Y)}
-.oltr{width:38px;height:38px;background:var(--Y);border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;margin-right:1.2rem;flex-shrink:0}
-.opt.ok{border-color:var(--V);background:#ecfdf5}
+.sub{color:var(--G);font-size:1.02rem;font-weight:500}
+.card{background:#fff;border-radius:18px;padding:2rem;box-shadow:0 4px 24px rgba(0,0,0,.08);border:2px solid var(--Y);margin-bottom:1.4rem}
+.ubar{background:linear-gradient(135deg,var(--Y),rgb(255,255,100));padding:.78rem 1.1rem;border-radius:10px;display:flex;justify-content:space-between;align-items:center;margin-bottom:1.4rem}
+.ubar span{color:var(--D);font-weight:600}
+.pbar-bg{background:var(--B);border-radius:4px;height:6px;margin-bottom:1.2rem;overflow:hidden}
+.pbar{background:var(--Y);height:100%;transition:width .4s ease}
+.qtxt{font-size:1.12rem;font-weight:500;margin-bottom:1.3rem}
+.opts{display:flex;flex-direction:column;gap:.7rem}
+.opt{display:flex;align-items:center;gap:.85rem;padding:1rem 1.1rem;border:2px solid var(--B);border-radius:11px;cursor:pointer;background:#fff;transition:all .2s}
+.opt:hover:not(.dis){border-color:var(--Y);background:#fffef0}
+.opt.dis{cursor:not-allowed;opacity:.85}
+.opt.ok{border-color:var(--V);background:#f0fdf4}
 .opt.ko{border-color:var(--R);background:#fef2f2}
-
-/* FEEDBACK/JUSTIFICACIÓN */
-.fb{margin-top:20px;padding:1.5rem;border-radius:15px;border-left:5px solid; animation: fadeIn 0.4s}
-.fb.ok{background:#f0fdf4;border-color:var(--V)}
-.fb.ko{background:#fef2f2;border-color:var(--R)}
-@keyframes fadeIn { from {opacity:0} to {opacity:1} }
-
-.nav-btns{display:flex;gap:10px;margin-top:20px}
-.btn-nav{flex:1;padding:1rem;border-radius:12px;border:none;font-weight:700;cursor:pointer}
-.hidden{visibility:hidden}
+.oltr{width:34px;height:34px;border-radius:50%;background:var(--B);display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0}
+.opt.ok .oltr{background:var(--V);color:#fff}
+.opt.ko .oltr{background:var(--R);color:#fff}
+.fb{margin-top:1.3rem;padding:1.1rem 1.2rem;border-radius:10px}
+.fb.ok{background:#f0fdf4;border-left:4px solid var(--V)}
+.fb.ko{background:#fef2f2;border-left:4px solid var(--R)}
+.fb-title{font-weight:700;margin-bottom:.4rem}
+.nav{display:flex;gap:.7rem;margin-top:1.5rem}
+.btn{width:100%;padding:.88rem;background:var(--Y);color:var(--D);border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Montserrat';display:flex;align-items:center;justify-content:center;gap:.5rem;transition:all .2s;font-size:.95rem}
+.btn:hover{background:var(--Yd);transform:translateY(-1px)}
+.res-wrap{text-align:center;padding:1rem 0}
+.res-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0}
+.res-item{padding:1.2rem;border-radius:12px;background:var(--B)}
+.res-label{font-size:.85rem;color:var(--G);display:block;margin-bottom:.3rem}
+.res-val{font-size:1.8rem;font-weight:800;color:var(--D)}
+.emoji{font-size:3.5rem;margin-bottom:1rem;display:block}
 </style>
 </head>
 <body>
 
 <div class="wrap">
-    <header>
-        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 7L12 12L22 7L12 2Z" fill="#2c3e50"/><path d="M2 17L12 22L22 17" stroke="#2c3e50" stroke-width="2"/><path d="M2 12L12 17L22 12" stroke="#2c3e50" stroke-width="2"/></svg>
-        <h1>ENFOCADOS</h1>
-    </header>
+  <header>
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgb(250,250,0)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+    <h1>ENFOCADOS</h1>
+    <p class="sub">Plataforma de Entrenamiento de Alto Rendimiento</p>
+  </header>
 
-    <div id="secLogin" class="screen active">
-        <div class="login-card">
-            <h2>Acceso Alumno</h2>
-            <p style="margin-bottom:2rem; opacity:0.7">Introduce tus credenciales</p>
-            <div class="input-group">
-                <label>Nombre de Usuario</label>
-                <input type="text" id="userInput" placeholder="Tu nombre">
-            </div>
-            <div class="input-group">
-                <label>Correo Electrónico</label>
-                <input type="email" id="emailInput" placeholder="tu@email.com">
-            </div>
-            <button class="btn-main" onclick="entrar()">
-                <span>Entrar al Test</span>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </button>
-        </div>
+  <div id="game" style="display:block">
+    <div class="ubar">
+      <span>Pregunta <span id="qNum">1</span> de <span id="qTotal">-</span></span>
+    </div>
+    <div class="pbar-bg"><div id="pbar" class="pbar" style="width:0%"></div></div>
+    
+    <div class="card">
+      <div id="qArea"></div>
+      <div id="fbWrap"></div>
     </div>
 
-    <div id="secQuiz" class="screen card">
-        <div id="qNum" style="font-weight:700; color:var(--G)">Pregunta</div>
-        <div class="p-bar-bg"><div id="pBar" class="p-bar" style="width:0%"></div></div>
-        <div id="qArea"></div>
-        <div id="fbWrap"></div>
-        <div class="nav-btns">
-            <button id="btnPrev" class="btn-nav" style="background:var(--B)" onclick="prevQ()">Anterior</button>
-            <button id="btnNext" class="btn-nav" style="background:var(--D);color:#fff" onclick="nextQ()">Siguiente →</button>
-        </div>
+    <div class="nav">
+      <button class="btn" onclick="prevQ()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        Anterior
+      </button>
+      <button class="btn" onclick="nextQ()">
+        Siguiente
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+      </button>
     </div>
+  </div>
 
-    <div id="secRes" class="screen card" style="text-align:center">
-        <div id="rEmoji" style="font-size:5rem">😐</div>
-        <h2 id="rPct" style="font-size:4rem;margin:1rem 0; font-family:'Montserrat'">0%</h2>
-        <p>Aciertos: <span id="rOk">0</span> / <span id="rTot">0</span></p>
-        <button class="btn-main" style="margin-top:2rem;width:auto;padding:1rem 3rem;margin-inline:auto" onclick="location.reload()">Reintentar</button>
+  <div id="results" class="card" style="display:none">
+    <div class="res-wrap">
+      <span id="rEmoji" class="emoji"></span>
+      <h2 style="font-family:'Montserrat';font-size:1.8rem;margin-bottom:.5rem">¡Entrenamiento Completado!</h2>
+      <p style="color:var(--G);margin-bottom:1.5rem">Aquí tienes el resumen de tu rendimiento profesional</p>
+      
+      <div class="res-grid">
+        <div class="res-item" style="background:#f0fdf4"><span class="res-label">ACIERTOS</span><span id="rOk" class="res-val" style="color:var(--V)">-</span></div>
+        <div class="res-item" style="background:#fef2f2"><span class="res-label">ERRORES</span><span id="rKo" class="res-val" style="color:var(--R)">-</span></div>
+        <div class="res-item"><span class="res-label">TOTAL</span><span id="rTot" class="res-val">-</span></div>
+        <div class="res-item" style="background:#fffef0;border:2px solid var(--Y)"><span class="res-label">PRECISIÓN</span><span id="rPct" class="res-val">-</span></div>
+      </div>
+
+      <button class="btn" onclick="location.reload()" style="max-width:280px;margin:0 auto">Reiniciar Entrenamiento</button>
     </div>
+  </div>
 </div>
 
 <script>
-const API_URL = 'https://raw.githubusercontent.com/Ancland/Enfocados/main/ENFOCADOS%20FINAL.json';
-let exam = [], answers = [], idx = 0;
+var exam=[];
+var idx=0;
+var ans=[];
+var correct=[];
 
-async function entrar() {
-    const u = document.getElementById('userInput').value;
-    const e = document.getElementById('emailInput').value;
-    if(!u || !e) return alert("Rellena los datos");
-    
-    try {
-        const res = await fetch(API_URL);
-        exam = await res.json();
-        answers = new Array(exam.length).fill(null);
-        document.getElementById('secLogin').classList.remove('active');
-        document.getElementById('secQuiz').classList.add('active');
-        showQ();
-    } catch(err) { alert("Error al cargar preguntas"); }
-}
-
-function showQ() {
-    const q = exam[idx];
-    document.getElementById('qNum').textContent = `Pregunta ${idx + 1} de ${exam.length}`;
-    document.getElementById('pBar').style.width = `${((idx+1)/exam.length)*100}%`;
-
-    // Pregunta y Opciones en cajones separados
-    let html = `<div class="qtxt">${q.pregunta}</div><div class="opts">`;
-    ['a','b','c','d'].forEach(l => {
-        const txt = q['opcion_' + l];
-        if(!txt) return;
-        let cls = 'opt';
-        if(answers[idx] !== null) {
-            if(l === q.respuesta.toLowerCase()) cls += ' ok';
-            else if(answers[idx] === l) cls += ' ko';
-        }
-        html += `<div class="${cls}" onclick="pick('${l}')"><div class="oltr">${l.toUpperCase()}</div><span>${txt}</span></div>`;
-    });
-    html += `</div>`;
-    document.getElementById('qArea').innerHTML = html;
-
-    // Justificación (Campo "saber")
-    const fb = document.getElementById('fbWrap');
-    fb.innerHTML = '';
-    if(answers[idx] !== null) {
-        const corr = answers[idx] === q.respuesta.toLowerCase();
-        fb.innerHTML = `
-            <div class="fb ${corr?'ok':'ko'}">
-                <strong>${corr?'✓ ¡Correcto!':'✗ Incorrecto'}</strong><br>
-                <small>${q.saber || 'Sin justificación disponible.'}</small>
-            </div>`;
-    }
-    
-    document.getElementById('btnPrev').classList.toggle('hidden', idx === 0);
-    document.getElementById('btnNext').textContent = idx === exam.length - 1 ? 'Finalizar' : 'Siguiente →';
-}
-
-function pick(l) {
-    if(answers[idx] !== null) return;
-    answers[idx] = l;
+async function loadData(){
+  try{
+    const response=await fetch('preguntas.json');
+    exam=await response.json();
     showQ();
+  }catch(e){
+    console.error("Error cargando el JSON",e);
+  }
 }
 
-function nextQ() {
-    if(idx < exam.length - 1) { idx++; showQ(); }
-    else finish();
+function showQ(){
+  var q=exam[idx];
+  document.getElementById('qNum').textContent=(idx+1);
+  document.getElementById('qTotal').textContent=exam.length;
+  document.getElementById('pbar').style.width=((idx+1)/exam.length*100)+'%';
+
+  var html='<div class="qtxt">'+q.pregunta+'</div>';
+  html+='<div class="opts">';
+  
+  // AJUSTE 1: Dibujar siempre todas las opciones (las 4)
+  q.opciones.forEach(function(opt,i){
+    var letter=String.fromCharCode(65+i);
+    var cls='opt';
+    if(ans[idx]!==undefined){
+      cls+=' dis';
+      if(opt===q.respuesta) cls+=' ok';
+      else if(i===ans[idx]) cls+=' ko';
+    }
+    html+='<div class="'+cls+'" onclick="check('+i+')"><div class="oltr">'+letter+'</div><div>'+opt+'</div></div>';
+  });
+  
+  html+='</div>';
+  document.getElementById('qArea').innerHTML=html;
+
+  // AJUSTE 2: Si ya respondió, mostramos la motivación
+  if(ans[idx]!==undefined){
+    var isCorrect = (q.opciones[ans[idx]]===q.respuesta);
+    showFeedback(isCorrect);
+  }else{
+    document.getElementById('fbWrap').innerHTML='';
+  }
 }
 
-function prevQ() { if(idx > 0) { idx--; showQ(); } }
-
-function finish() {
-    document.getElementById('secQuiz').classList.remove('active');
-    document.getElementById('secRes').classList.add('active');
-    const ok = exam.filter((q, i) => answers[i] === q.respuesta.toLowerCase()).length;
-    const pct = Math.round((ok/exam.length)*100);
-    document.getElementById('rOk').textContent = ok;
-    document.getElementById('rTot').textContent = exam.length;
-    document.getElementById('rPct').textContent = pct + '%';
-    document.getElementById('rEmoji').textContent = pct >= 70 ? '😄' : (pct >= 50 ? '😐' : '😞');
+function check(i){
+  if(ans[idx]!==undefined)return;
+  ans[idx]=i;
+  var q=exam[idx];
+  var isCorrect=(q.opciones[i]===q.respuesta);
+  correct[idx]=isCorrect;
+  showQ(); // Refrescamos para mostrar cajones y motivación
 }
+
+function showFeedback(isCorrect){
+  var q=exam[idx];
+  var fb=document.createElement('div');
+  fb.className='fb '+(isCorrect?'ok':'ko');
+  fb.innerHTML='<div class=\"fb-title\">'+(isCorrect?'✓ ¡Correcto!':'✗ Incorrecto')+'</div>' +
+               '<div class=\"fb-body\"><strong>Respuesta correcta:</strong> '+q.respuesta+'<br><br>'+(q.saber||'')+'</div>';
+  document.getElementById('fbWrap').innerHTML='';
+  document.getElementById('fbWrap').appendChild(fb);
+}
+
+function nextQ(){
+  if(idx<exam.length-1){
+    idx++;
+    showQ();
+  }else{
+    showResults();
+  }
+}
+
+function prevQ(){
+  if(idx>0){
+    idx--;
+    showQ();
+  }
+}
+
+function showResults(){
+  var ok=0;
+  for(var i=0;i<correct.length;i++){
+    if(correct[i])ok++;
+  }
+  var pct=Math.round(ok/exam.length*100);
+  document.getElementById('game').style.display='none';
+  document.getElementById('results').style.display='block';
+  document.getElementById('rOk').textContent=ok;
+  document.getElementById('rKo').textContent=(exam.length-ok);
+  document.getElementById('rTot').textContent=exam.length;
+  document.getElementById('rPct').textContent=pct+'%';
+  var emoji='😐';
+  if(pct>=90)emoji='🏆';
+  else if(pct>=75)emoji='😄';
+  else if(pct>=60)emoji='🙂';
+  else if(pct>=50)emoji='😕';
+  else emoji='😞';
+  document.getElementById('rEmoji').textContent=emoji;
+}
+
+window.onload=loadData;
 </script>
+
 </body>
 </html>
