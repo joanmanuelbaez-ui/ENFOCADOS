@@ -7,205 +7,76 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-/* TUS ESTILOS ORIGINALES ÍNTEGROS */
+/* ESTILOS ORIGINALES DE TU ARCHIVO LOCAL */
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--Y:rgb(250,250,0);--Yd:rgb(215,215,0);--D:#2c3e50;--D2:#1a252f;--V:#10b981;--R:#ef4444;--G:#64748b;--B:#e2e8f0}
 body{font-family:'Inter',sans-serif;background:linear-gradient(160deg,#fffef0 0%,#fff9c4 100%);min-height:100vh;color:#1e293b;line-height:1.6}
 .wrap{max-width:860px;margin:0 auto;padding:1.8rem 1.2rem}
 header{text-align:center;margin-bottom:1.6rem}
 header svg{display:block;margin:0 auto .4rem}
-h1{font-family:'Montserrat',sans-serif;font-size:3rem;font-weight:800;color:var(--D);letter-spacing:-1px}
-.sub{color:var(--G);font-size:1.02rem;font-weight:500}
-.card{background:#fff;border-radius:18px;padding:2rem;box-shadow:0 4px 24px rgba(0,0,0,.08);border:2px solid var(--Y);margin-bottom:1.4rem}
-.field{margin-bottom:1.1rem;text-align:left}
-.field label{display:block;margin-bottom:.3rem;color:var(--D);font-weight:600;font-size:.9rem}
-.field input{width:100%;padding:.82rem 1rem;border:2px solid var(--B);border-radius:10px;font-size:1rem;font-family:inherit;transition:border-color .2s}
-.field input:focus{outline:none;border-color:var(--Y);box-shadow:0 0 0 3px rgba(250,250,0,.18)}
-.btn{width:100%;padding:.88rem 1.5rem;background:var(--Y);color:var(--D);border:none;border-radius:10px;font-size:1.05rem;font-weight:700;cursor:pointer;font-family:'Montserrat',sans-serif;transition:background .2s,transform .15s,box-shadow .2s;box-shadow:0 3px 8px rgba(250,250,0,.3)}
-.btn:hover{background:var(--Yd);transform:translateY(-1px);box-shadow:0 5px 14px rgba(250,250,0,.4)}
-.btn:disabled{background:#cbd5e1;color:#94a3b8;cursor:not-allowed;transform:none;box-shadow:none}
+h1{font-family:'Montserrat',sans-serif;font-size:3rem;font-weight:800;color:var(--D);letter-spacing:-1px;text-transform:uppercase}
+.card{background:#fff;border-radius:24px;padding:2.2rem;box-shadow:0 20px 25px -5px rgba(0,0,0,0.1);border:1px solid rgba(255,255,255,0.7);position:relative}
 
-/* Estilos de navegación y quiz */
+/* LOGIN CARD ORIGINAL */
+.login-card{max-width:420px;margin:2rem auto;text-align:center}
+.input-group{margin-bottom:1.5rem;text-align:left}
+label{display:block;font-weight:600;margin-bottom:.5rem;color:var(--D);font-size:.9rem}
+input{width:100%;padding:1.1rem;border-radius:14px;border:2px solid var(--B);font-size:1rem;transition:all .2s;width:100%}
+input:focus{border-color:var(--Yd);box-shadow:0 0 0 4px rgba(250,250,0,0.15);outline:none}
+
+.btn-main{width:100%;background:var(--D);color:#fff;padding:1.1rem;border-radius:14px;border:none;font-weight:700;cursor:pointer;font-family:'Montserrat';font-size:1rem;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:.8rem}
+.btn-main:hover{background:var(--D2);transform:translateY(-2px)}
+
 .screen{display:none}.active{display:block}
-.p-wrap{margin-bottom:1.8rem}.p-top{display:flex;justify-content:space-between;margin-bottom:.6rem;font-weight:700;color:var(--D)}
+.p-wrap{margin-bottom:2rem}.p-top{display:flex;justify-content:space-between;margin-bottom:.8rem}
+#qNum{font-family:'Montserrat';font-weight:700;color:var(--D)}
 .p-bar-bg{height:8px;background:var(--B);border-radius:10px;overflow:hidden}
-.p-bar{height:100%;background:var(--Y);transition:width .3s}
-.q-txt{font-size:1.35rem;font-weight:700;color:var(--D);margin-bottom:1.8rem;line-height:1.4}
-.opts{display:grid;gap:.9rem}
-.opt{display:flex;align-items:center;padding:1.1rem;background:#f8fafc;border:2px solid var(--B);border-radius:14px;cursor:pointer;transition:all .2s}
-.opt:hover{border-color:var(--Y);background:#fff}
-.opt.selected{border-color:var(--D);background:#fff}
-.opt.ok{border-color:var(--V);background:#ecfdf5}
-.opt.ko{border-color:var(--R);background:#fef2f2}
-.ltr{width:34px;height:34px;background:var(--Y);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;margin-right:1rem;flex-shrink:0}
-.fb{margin-top:1.5rem;padding:1.5rem;border-radius:14px;animation:slideUp .3s ease-out}
-@keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.fb-ok{background:#ecfdf5;border:2px solid var(--V);color:#065f46}
-.fb-ko{background:#fef2f2;border:2px solid var(--R);color:#991b1b}
-.nav{display:flex;gap:1rem;margin-top:2rem}
-.hidden{display:none}
+#pbar{height:100%;background:linear-gradient(90deg,var(--Yd),var(--Y));transition:width .4s ease}
+.qtxt{font-size:1.4rem;font-weight:700;color:var(--D);margin-bottom:2.2rem}
+.opts{display:grid;gap:1rem}
+.opt{display:flex;align-items:center;padding:1.2rem;border:2px solid var(--B);border-radius:18px;cursor:pointer;transition:all .2s;background:#f8fafc}
+.oltr{width:38px;height:38px;background:var(--Y);border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;margin-right:1.2rem}
+.opt.ok{border-color:var(--V);background:#ecfdf5}.opt.ok .oltr{background:var(--V);color:#fff}
+.opt.ko{border-color:var(--R);background:#fef2f2}.opt.ko .oltr{background:var(--R);color:#fff}
+.fb{margin-top:2rem;padding:1.8rem;border-radius:20px;border-left:6px solid}
+.fb.ok{background:#f0fdf4;border-color:var(--V);color:#166534}
+.fb.ko{background:#fef2f2;border-color:var(--R);color:#991b1b}
+.nav-btns{display:flex;justify-content:space-between;margin-top:2.5rem;gap:1rem}
+.btn-nav{flex:1;padding:1.1rem;border-radius:14px;border:none;font-weight:700;cursor:pointer;font-family:'Montserrat'}
+#btnPrev{background:var(--B);color:var(--D)}
+#btnNext{background:var(--D);color:#fff}
+.hidden{visibility:hidden}
 </style>
 </head>
 <body>
 
 <div class="wrap">
     <header>
-        <svg width="50" height="50" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="#2c3e50"/>
-            <path d="M2 17L12 22L22 17" stroke="#2c3e50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M2 12L12 17L22 12" stroke="#2c3e50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="#2c3e50"/><path d="M2 17L12 22L22 17" stroke="#2c3e50" stroke-width="2"/><path d="M2 12L12 17L22 12" stroke="#2c3e50" stroke-width="2"/>
         </svg>
         <h1>ENFOCADOS</h1>
-        <p class="sub">Plataforma de Entrenamiento</p>
     </header>
 
-    <div id="secLogin" class="screen active">
-        <div class="card" style="max-width:400px;margin:0 auto">
-            <div class="field">
-                <label>DNI del Alumno</label>
-                <input type="text" id="dniInput" placeholder="Introduce tu DNI">
-            </div>
-            <button class="btn" onclick="validarAcceso()">ENTRAR AL TEST</button>
-            <p id="errLog" style="color:var(--R);margin-top:1rem;font-weight:600;display:none;text-align:center">DNI no autorizado</p>
+    <div id="secLogin" class="screen active card login-card">
+        <h2 style="font-family:'Montserrat';margin-bottom:0.5rem">Bienvenido</h2>
+        <p style="color:var(--G);margin-bottom:2rem">Introduce tus credenciales para acceder</p>
+        <div class="input-group">
+            <label>DNI del Alumno</label>
+            <input type="text" id="dniInput" placeholder="Introduce tu DNI">
         </div>
+        <button class="btn-main" onclick="validarAcceso()">
+            <span>ACCEDER AL TEST</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        <p id="errorMsg" style="color:var(--R);margin-top:1.2rem;font-weight:600;display:none">⚠️ DNI no autorizado</p>
     </div>
 
-    <div id="secQuiz" class="screen">
-        <div class="card">
-            <div class="p-wrap">
-                <div class="p-top"><span id="qIdx">Pregunta 1</span><span id="qTotal">1 de 10</span></div>
-                <div class="p-bar-bg"><div id="pBar" class="p-bar" style="width:10%"></div></div>
-            </div>
-            <div id="qArea"></div>
-            <div id="fbWrap"></div>
-            <div class="nav">
-                <button id="btnPrev" class="btn btn-out hidden" onclick="prevQ()">Anterior</button>
-                <button id="btnNext" class="btn" onclick="nextQ()" disabled>Siguiente →</button>
-            </div>
+    <div id="secQuiz" class="screen card">
+        <div class="p-wrap">
+            <div class="p-top"><span id="qNum"></span><span id="qProg"></span></div>
+            <div class="p-bar-bg"><div id="pbar" style="width:0%"></div></div>
         </div>
-    </div>
-
-    <div id="secRes" class="screen">
-        <div class="card" style="text-align:center">
-            <div id="rEmoji" style="font-size:4rem;margin-bottom:1rem">😐</div>
-            <h2 style="font-family:'Montserrat';margin-bottom:.5rem">Resultado Final</h2>
-            <div id="rPct" style="font-size:3.5rem;font-weight:800;color:var(--D);margin:1rem 0">0%</div>
-            <p style="font-size:1.1rem;color:var(--G)">
-                Has acertado <span id="rOk" style="color:var(--V);font-weight:700">0</span> preguntas de <span id="rTot" style="font-weight:700">0</span>.
-            </p>
-            <button class="btn" style="margin-top:2rem" onclick="location.reload()">REINTENTAR TEST</button>
-        </div>
-    </div>
-</div>
-
-<script>
-// DATOS GOOGLE SHEETS
-const URL_U = 'https://docs.google.com/spreadsheets/d/1niLz8cxdTrNBJMAU0YDMRpiAWEmbGHt7h4HEPD6xkLA/export?format=csv&gid=353115110';
-const URL_P = 'https://docs.google.com/spreadsheets/d/19mVUe0lezjxuAW4FqJTbG5UJx649ECUzA9HVwEwy0do/export?format=csv&gid=1012787791';
-
-let users = [], exam = [], answers = [], idx = 0;
-
-// Carga silenciosa de usuarios
-fetch(URL_U).then(r => r.text()).then(t => { users = parseCSV(t); });
-
-function parseCSV(csv) {
-    const lines = csv.split('\n');
-    const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, '').toLowerCase());
-    return lines.slice(1).filter(l => l.trim()).map(line => {
-        const values = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-        let obj = {};
-        headers.forEach((h, i) => {
-            obj[h] = values[i] ? values[i].trim().replace(/^"|"$/g, '') : "";
-        });
-        return obj;
-    });
-}
-
-function validarAcceso() {
-    const dni = document.getElementById('dniInput').value.trim().toUpperCase();
-    if(users.some(u => (u.dni || u.DNI) === dni)) {
-        fetch(URL_P).then(r => r.text()).then(t => {
-            exam = parseCSV(t);
-            answers = new Array(exam.length).fill(null);
-            showScreen('secQuiz');
-            renderQ();
-        });
-    } else {
-        document.getElementById('errLog').style.display = 'block';
-    }
-}
-
-function showScreen(id) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-}
-
-function renderQ() {
-    const q = exam[idx];
-    document.getElementById('qIdx').textContent = `Pregunta ${idx + 1}`;
-    document.getElementById('qTotal').textContent = `${idx + 1} de ${exam.length}`;
-    document.getElementById('pBar').style.width = `${((idx+1)/exam.length)*100}%`;
-    
-    let html = `<div class="q-txt">${q.pregunta}</div><div class="opts">`;
-    ['a','b','c','d'].forEach(l => {
-        const txt = q['opcion_'+l];
-        if(!txt) return;
-        let cls = 'opt';
-        if(answers[idx] === l) {
-            cls += (l === q.respuesta.toLowerCase()) ? ' ok' : ' ko';
-        } else if(answers[idx] !== null && l === q.respuesta.toLowerCase()) {
-            cls += ' ok';
-        }
-        html += `<div class="${cls}" onclick="marcar('${l}')"><div class="ltr">${l.toUpperCase()}</div><span>${txt}</span></div>`;
-    });
-    document.getElementById('qArea').innerHTML = html + '</div>';
-    
-    const fb = document.getElementById('fbWrap');
-    fb.innerHTML = '';
-    if(answers[idx]) {
-        const isOk = answers[idx] === q.respuesta.toLowerCase();
-        fb.innerHTML = `<div class="fb ${isOk?'fb-ok':'fb-ko'}">
-            <strong>${isOk?'✓ ¡Correcto!':'✗ Incorrecto'}</strong><br>
-            <small>${q.saber || ''}</small>
-        </div>`;
-    }
-    
-    document.getElementById('btnPrev').classList.toggle('hidden', idx === 0);
-    const btnN = document.getElementById('btnNext');
-    btnN.disabled = !answers[idx];
-    btnN.textContent = (idx === exam.length - 1) ? 'FINALIZAR' : 'Siguiente →';
-}
-
-function marcar(l) {
-    if(answers[idx]) return;
-    answers[idx] = l;
-    renderQ();
-}
-
-function nextQ() {
-    if(idx < exam.length - 1) { idx++; renderQ(); }
-    else { showRes(); }
-}
-
-function prevQ() { if(idx > 0) { idx--; renderQ(); } }
-
-function showRes() {
-    showScreen('secRes');
-    const ok = exam.filter((q, i) => answers[i] === q.respuesta.toLowerCase()).length;
-    const pct = Math.round((ok/exam.length)*100);
-    document.getElementById('rOk').textContent = ok;
-    document.getElementById('rTot').textContent = exam.length;
-    document.getElementById('rPct').textContent = pct + '%';
-    
-    // TUS EMOTICONOS ORIGINALES
-    let emo = '😐';
-    if(pct >= 90) emo = '🏆';
-    else if(pct >= 75) emo = '😄';
-    else if(pct >= 60) emo = '🙂';
-    else if(pct >= 50) emo = '😕';
-    else emo = '😞';
-    document.getElementById('rEmoji').textContent = emo;
-}
-</script>
-</body>
-</html>
+        <div id="qArea"></div>
+        <div id="fbWrap"></div>
+        <div class="nav-btns">
