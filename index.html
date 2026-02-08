@@ -15,7 +15,7 @@
         input, select{width:100%;padding:12px;border:2px solid var(--B);border-radius:8px;font-size:16px}
         .btn{width:100%;padding:15px;background:var(--Y);color:var(--D);border:none;border-radius:8px;font-weight:700;cursor:pointer;font-family:'Montserrat'}
         .btn:disabled{background:#ccc;cursor:not-allowed}
-        .opt{padding:12px;border:2px solid var(--B);border-radius:10px;margin-bottom:8px;cursor:pointer;transition:0.2s;display:flex;align-items:center}
+        .opt{padding:12px;border:2px solid var(--B);border-radius:10px;margin-bottom:8px;cursor:pointer;transition:0.2s;display:flex;align-items:center; font-size: 0.95rem}
         .opt.ok{border-color:var(--V);background:#f0fdf4}
         .opt.ko{border-color:var(--R);background:#fef2f2}
         .opt.dis{pointer-events:none}
@@ -89,7 +89,7 @@ function doLogin() {
         if(user) {
             fetchJSONP(apiUrl + '?type=questions&t=' + Date.now(), (qRes) => {
                 allQ = parse(qRes);
-                const mats = [...new Set(allQ.map(q => q.materia))];
+                const mats = [...new Set(allQ.map(q => q.materia).filter(m => m))];
                 const sel = document.getElementById('selMateria');
                 sel.innerHTML = '<option value="">Todas</option>';
                 mats.forEach(m => sel.innerHTML += `<option value="${m}">${m}</option>`);
@@ -122,7 +122,7 @@ function showQ() {
     document.getElementById('fbWrap').innerHTML = "";
     document.getElementById('btnNext').classList.add('hidden');
     
-    // RESOLUCIÓN CLAUDE: Split por salto de línea
+    // RESOLUCIÓN CLAUDE: Split por salto de línea (\n)
     const opts = (q.opciones || '').split('\n').filter(o => o.trim());
     const wrap = document.getElementById('optsWrap');
     wrap.innerHTML = "";
@@ -130,24 +130,38 @@ function showQ() {
     opts.forEach((text) => {
         const div = document.createElement('div');
         div.className = 'opt';
-        // Limpiamos la letra o número al inicio para que el botón se vea limpio
+        
+        // Extraemos la letra inicial (A, B, C...) para validar después
+        const letraOpcion = text.trim().substring(0, 1).toUpperCase();
+        
+        // Limpiamos la letra o número al inicio para que el botón se vea limpio (como pidió Claude)
         div.innerText = text.replace(/^[a-dA-D0-4][\.\)\-\s]+/, '').trim();
         
         div.onclick = () => {
             const allOpts = wrap.querySelectorAll('.opt');
             allOpts.forEach(o => o.classList.add('dis'));
             
-            const letraPulsada = text.trim().substring(0, 1).toUpperCase();
-            const correcta = q.respuesta.toString().trim().toUpperCase();
+            const correcta = (q.respuesta || "").toString().trim().toUpperCase();
+            const esCorrecto = (letraOpcion === correcta);
             
-            if(letraPulsada === correcta) {
+            // Si es correcto, marcamos este verde. Si no, rojo y buscamos el verde.
+            if(esCorrecto) {
                 div.classList.add('ok');
                 correctCount++;
-                showFeedback(true, q.saber, correcta);
             } else {
                 div.classList.add('ko');
-                showFeedback(false, q.saber, correcta);
+                // Buscamos cuál era la correcta para marcarla en verde
+                opts.forEach((t, i) => {
+                    if(t.trim().substring(0, 1).toUpperCase() === correcta) {
+                        wrap.children[i].classList.add('ok');
+                    }
+                });
             }
+            
+            // MOTIVACIÓN / EXPLICACIÓN (Resolución Claude)
+            const motivacion = q.saber || '¡Sigue adelante! 💪';
+            
+            showFeedback(esCorrecto, motivacion, correcta);
             document.getElementById('btnNext').classList.remove('hidden');
         };
         wrap.appendChild(div);
@@ -160,7 +174,10 @@ function showFeedback(isOk, saber, correcta) {
         <div class="fb ${isOk ? 'ok' : 'ko'}">
             <strong>${isOk ? '✓ ¡CORRECTO!' : '✗ INCORRECTO'}</strong><br>
             <p style="margin-top:5px">Respuesta correcta: ${correcta}</p>
-            <p style="margin-top:10px; font-style:italic">${saber || ""}</p>
+            <div style="margin-top:10px; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 8px;">
+                <strong>💡 Explicación:</strong><br>
+                <p style="font-style:italic">${saber}</p>
+            </div>
         </div>`;
 }
 
