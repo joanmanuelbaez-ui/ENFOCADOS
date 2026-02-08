@@ -68,3 +68,211 @@ h1{font-family:'Montserrat',sans-serif;font-size:3rem;font-weight:800;color:var(
             <div class="spin"></div>
             <p id="loadMsg">Sincronizando con base de datos...</p>
         </div>
+    </div>
+
+    <div id="secConfig" class="card hidden">
+        <div class="ubar"><span id="cfgUser"></span><span style="font-size:0.8rem; cursor:pointer" onclick="location.reload()">Cerrar Sesión</span></div>
+        <h3 style="margin-bottom:1.2rem; font-family:'Montserrat'">Configuración del Test</h3>
+        <div class="field">
+            <label>Cantidad de preguntas</label>
+            <input type="number" id="inNum" value="10" min="1" max="100">
+        </div>
+        <div class="field">
+            <label>Materia o Bloque</label>
+            <select id="selMateria"><option value="">Todos los bloques</option></select>
+        </div>
+        <button class="btn" onclick="startExam()">Iniciar Evaluación</button>
+    </div>
+
+    <div id="secQ" class="card hidden">
+        <div class="qhdr"><span id="qNum" style="font-weight:800; color:var(--D)"></span><span id="qProg" style="font-size:0.9rem"></span></div>
+        <div class="pbar-bg"><div id="pBar" class="pbar"></div></div>
+        <div id="qTxt" style="font-size:1.15rem; font-weight:600; margin-bottom:1.5rem; color:var(--D2)"></div>
+        <div id="optsWrap"></div>
+        <div id="fbWrap"></div>
+        <button id="btnNext" class="btn" style="margin-top:1.5rem" onclick="nextQ()" disabled>Continuar</button>
+    </div>
+
+    <div id="secRes" class="card hidden" style="text-align:center">
+        <h2 style="font-family:'Montserrat'; margin-bottom:0.5rem">Evaluación Finalizada</h2>
+        <div id="rPct" style="font-size:4.5rem; font-weight:800; color:var(--D); margin:1rem 0"></div>
+        <div style="display:flex; justify-content:center; gap:2rem; margin-bottom:2rem">
+            <div><b id="rOk" style="color:var(--V);font-size:1.6rem"></b><br><small>Aciertos</small></div>
+            <div><b id="rKo" style="color:var(--R);font-size:1.6rem"></b><br><small>Errores</small></div>
+        </div>
+        <button class="btn" onclick="location.reload()">Reiniciar Plataforma</button>
+    </div>
+</div>
+
+<script>
+const apiUrl = 'https://script.google.com/macros/s/AKfycbxOW1CWs8n04Lek1Sm0mYZE_F6N0epkbvr0czCt_QzY7qdn65X3g1oya0Br2BtwXQBS/exec';
+
+let allQuestions = [], exam = [], idx = 0, answers = [], correct = [], curUser = null;
+
+function showScreen(id) {
+    document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
+    document.getElementById(id).classList.remove('hidden');
+}
+
+function fetchJSONP(url, callback) {
+    const callbackName = 'jsonp_' + Math.round(100000 * Math.random());
+    window[callbackName] = function(data) {
+        delete window[callbackName];
+        document.body.removeChild(script);
+        callback(data);
+    };
+    const script = document.createElement('script');
+    script.src = url + (url.indexOf('?') >= 0 ? '&' : '?') + 'callback=' + callbackName;
+    document.body.appendChild(script);
+}
+
+function parseTable(headers, rows) {
+    return rows.map(row => {
+        let obj = {};
+        headers.forEach((h, i) => {
+            if (h) {
+                const key = h.toLowerCase().trim();
+                obj[key] = row[i];
+            }
+        });
+        return obj;
+    });
+}
+
+function doLogin() {
+    // CORRECCIÓN: Limpieza profunda del email
+    const emailInput = document.getElementById('inEmail').value.trim().toLowerCase().replace(/\s/g, '');
+    if(!emailInput) return;
+    
+    showScreen('secLoading');
+    fetchJSONP(apiUrl + '?type=users', function(res) {
+        if (!res || !res.rows) {
+            alert("Error al conectar con la base de datos.");
+            showScreen('secLogin');
+            return;
+        }
+        const users = parseTable(res.headers, res.rows);
+        // CORRECCIÓN: Comparación más robusta de emails
+        const user = users.find(u => {
+            if(!u.correo) return false;
+            const cleanUserEmail = u.correo.toString().toLowerCase().trim().replace(/\s/g, '');
+            return cleanUserEmail === emailInput;
+        });
+
+        if(user) {
+            curUser = user;
+            fetchJSONP(apiUrl + '?type=questions', function(qRes) {
+                allQuestions = parseTable(qRes.headers, qRes.rows);
+                setupConfig();
+                showScreen('secConfig');
+            });
+        } else {
+            alert("Acceso denegado. El correo no está autorizado.");
+            showScreen('secLogin');
+        }
+    });
+}
+
+function setupConfig() {
+    document.getElementById('cfgUser').textContent = "Usuario: " + (curUser.usuario || curUser.nombre || "Autorizado");
+    const materias = [...new Set(allQuestions.map(q => q.materia).filter(m => m))];
+    const sel = document.getElementById('selMateria');
+    sel.innerHTML = '<option value="">Todos los bloques</option>';
+    materias.forEach(m => {
+        const opt = document.createElement('option');
+        opt.value = m; opt.textContent = m;
+        sel.appendChild(opt);
+    });
+}
+
+function startExam() {
+    const numInput = document.getElementById('inNum');
+    let num = parseInt(numInput.value);
+    const mat = document.getElementById('selMateria').value;
+    const pool = mat ? allQuestions.filter(q => q.materia === mat) : allQuestions;
+    
+    if (pool.length === 0) {
+        alert("No hay preguntas disponibles para este bloque.");
+        return;
+    }
+    
+    if (num > pool.length) num = pool.length;
+    
+    exam = pool.sort(() => 0.5 - Math.random()).slice(0, num);
+    idx = 0; answers = []; correct = [];
+    showQ();
+    showScreen('secQ');
+}
+
+function showQ() {
+    const q = exam[idx];
+    document.getElementById('qNum').textContent = "Pregunta " + (idx + 1);
+    document.getElementById('qProg').textContent = (idx + 1) + " de " + exam.length;
+    document.getElementById('pBar').style.width = ((idx + 1) / exam.length * 100) + "%";
+    document.getElementById('qTxt').textContent = q.pregunta;
+    
+    // CORRECCIÓN: Separación de opciones más inteligente (acepta saltos de línea de todo tipo)
+    const optsStr = (q.opciones || "").toString();
+    const opts = optsStr.split(/\r?\n/).map(o => o.trim()).filter(o => o.length > 0);
+    
+    const wrap = document.getElementById('optsWrap');
+    wrap.innerHTML = "";
+    document.getElementById('fbWrap').innerHTML = "";
+    document.getElementById('btnNext').disabled = true;
+
+    opts.forEach(optTxt => {
+        const letter = optTxt.substring(0, 1).toUpperCase();
+        const div = document.createElement('div');
+        div.className = 'opt';
+        div.dataset.letter = letter;
+        div.innerHTML = `<div class="oltr">${letter}</div><div>${optTxt}</div>`;
+        
+        div.onclick = () => {
+            if(!document.getElementById('btnNext').disabled) return;
+            
+            // CORRECCIÓN: Obtención limpia de la respuesta correcta
+            const respCorrecta = (q.respuesta || "").toString().trim().charAt(0).toUpperCase();
+            const isOk = letter === respCorrecta;
+            answers[idx] = letter;
+            correct[idx] = isOk;
+            
+            Array.from(wrap.children).forEach(opt => opt.classList.add('dis'));
+            
+            Array.from(wrap.children).forEach(opt => {
+                if(opt.dataset.letter === respCorrecta) {
+                    opt.classList.add('ok');
+                }
+            });
+            
+            if(!isOk) {
+                div.classList.add('ko');
+            }
+            
+            const explicacion = q.saber || q.motivacion || '¡Excelente trabajo! Sigue adelante 💪';
+            
+            document.getElementById('fbWrap').innerHTML = `
+                <div class="fb ${isOk ? 'ok' : 'ko'}">
+                    <div class="fb-t">${isOk ? '✓ ¡Respuesta Correcta!' : '✗ Respuesta Incorrecta'}</div>
+                    <div class="fb-body"><strong>Respuesta correcta:</strong> ${respCorrecta}<br><br><strong>💡 Explicación:</strong> ${explicacion}</div>
+                </div>`;
+            
+            document.getElementById('btnNext').disabled = false;
+        };
+        wrap.appendChild(div);
+    });
+}
+
+function nextQ() {
+    idx++;
+    if(idx < exam.length) showQ();
+    else {
+        const ok = correct.filter(c => c).length;
+        document.getElementById('rOk').textContent = ok;
+        document.getElementById('rKo').textContent = exam.length - ok;
+        document.getElementById('rPct').textContent = Math.round(ok/exam.length*100) + "%";
+        showScreen('secRes');
+    }
+}
+</script>
+</body>
+</html>
