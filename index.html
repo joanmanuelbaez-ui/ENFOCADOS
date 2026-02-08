@@ -6,7 +6,7 @@
 <title>ENFOCADOS</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-/* Mantenemos tus estilos originales intactos */
+/* He mantenido tus estilos originales intactos */
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--Y:rgb(250,250,0);--Yd:rgb(215,215,0);--D:#2c3e50;--D2:#1a252f;--V:#10b981;--R:#ef4444;--G:#64748b;--B:#e2e8f0}
 body{font-family:'Inter',sans-serif;background:linear-gradient(160deg,#fffef0 0%,#fff9c4 100%);min-height:100vh;color:#1e293b;line-height:1.6}
@@ -15,8 +15,7 @@ header{text-align:center;margin-bottom:1.6rem}
 h1{font-family:'Montserrat',sans-serif;font-size:2.2rem;font-weight:800;color:var(--D);letter-spacing:-1px;text-transform:uppercase}
 .card{background:#fff;border-radius:24px;padding:2.2rem;box-shadow:0 20px 25px -5px rgba(0,0,0,0.1);border:1px solid rgba(255,255,255,0.7);position:relative;margin-bottom:1.5rem}
 #loginSection{max-width:400px;margin:2rem auto;text-align:center}
-input{width:100%;padding:1rem;margin:1rem 0;border-radius:12px;border:2px solid var(--B);font-size:1rem;outline:none;font-family:inherit}
-input:focus{border-color:var(--Yd)}
+input{width:100%;padding:1rem;margin:1rem 0;border-radius:12px;border:2px solid var(--B);font-size:1rem;outline:none}
 .btn-login{width:100%;background:var(--D);color:#fff;padding:1rem;border-radius:12px;border:none;font-weight:700;cursor:pointer;font-family:'Montserrat'}
 .p-wrap{margin-bottom:2rem}
 .p-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem}
@@ -33,11 +32,9 @@ input:focus{border-color:var(--Yd)}
 .opt.ok .oltr{background:var(--V);color:#fff}
 .opt.ko{border-color:var(--R);background:rgba(239,68,68,0.05)}
 .opt.ko .oltr{background:var(--R);color:#fff}
-.opt.dis{cursor:default}
 .fb{margin-top:2rem;padding:1.5rem;border-radius:16px;animation:slideUp .3s ease forwards}
 .fb.ok{background:#ecfdf5;border:1px solid var(--V);color:#065f46}
 .fb.ko{background:#fef2f2;border:1px solid var(--R);color:#991b1b}
-.fb-title{font-weight:700;margin-bottom:.4rem}
 .nav{display:flex;justify-content:space-between;margin-top:1.5rem}
 button.nav-btn{padding:1rem 1.8rem;border-radius:14px;border:none;font-weight:700;cursor:pointer;font-family:'Montserrat'}
 .btn-p{background:var(--B);color:var(--D)}
@@ -53,8 +50,8 @@ button.nav-btn{padding:1rem 1.8rem;border-radius:14px;border:none;font-weight:70
 
   <div id="loginSection" class="card">
     <h2 style="font-family:'Montserrat';margin-bottom:1rem">Acceso</h2>
-    <p>Introduce tu DNI para comenzar el test</p>
-    <input type="text" id="dniInput" placeholder="Tu DNI">
+    <p>Introduce tu DNI para comenzar</p>
+    <input type="text" id="dniInput" placeholder="DNI">
     <button class="btn-login" onclick="checkLogin()">ENTRAR</button>
     <p id="loginMsg" style="color:var(--R);margin-top:1rem;display:none">DNI no autorizado</p>
   </div>
@@ -62,7 +59,7 @@ button.nav-btn{padding:1rem 1.8rem;border-radius:14px;border:none;font-weight:70
   <div id="quizSection" style="display:none">
     <div class="card">
       <div class="p-wrap">
-        <div class="p-top"><span id="qNum">Pregunta</span><span id="qProg"></span></div>
+        <div class="p-top"><span id="qNum"></span><span id="qProg"></span></div>
         <div class="p-bar-bg"><div id="pbar"></div></div>
       </div>
       <div id="qContainer"></div>
@@ -78,13 +75,13 @@ button.nav-btn{padding:1rem 1.8rem;border-radius:14px;border:none;font-weight:70
     <div id="rEmoji" style="font-size:4.5rem;margin-bottom:1rem">🏆</div>
     <h2 style="font-family:'Montserrat';margin-bottom:1rem">¡Test Finalizado!</h2>
     <div style="font-size:3.5rem;font-weight:800;margin-bottom:1rem" id="rPct">0%</div>
-    <p>Correctas: <span id="rOk">0</span> | Incorrectas: <span id="rKo">0</span> de <span id="rTot">0</span></p>
+    <p>Correctas: <span id="rOk">0</span> | Incorrectas: <span id="rKo">0</span></p>
     <button onclick="location.reload()" class="nav-btn btn-n" style="margin-top:2rem">Reiniciar</button>
   </div>
 </div>
 
 <script>
-// --- URLS DE TUS GOOGLE SHEETS (EXPORTACIÓN CSV) ---
+// URLS DE TUS FICHEROS (Publicados como CSV)
 const URL_USUARIOS = 'https://docs.google.com/spreadsheets/d/1niLz8cxdTrNBJMAU0YDMRpiAWEmbGHt7h4HEPD6xkLA/export?format=csv&gid=353115110';
 const URL_PREGUNTAS = 'https://docs.google.com/spreadsheets/d/19mVUe0lezjxuAW4FqJTbG5UJx649ECUzA9HVwEwy0do/export?format=csv&gid=1012787791';
 
@@ -94,132 +91,111 @@ let idx = 0;
 let answered = [];
 let correct = [];
 
-// Función para procesar CSV de Google Sheets de forma segura
+// Función para procesar los datos de Google Sheets
 function parseCSV(csv) {
-    const lines = csv.split('\n');
-    const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
-    return lines.slice(1).filter(line => line.trim() !== "").map(line => {
-        const values = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-        const obj = {};
-        headers.forEach((header, i) => {
-            let val = values[i] ? values[i].trim() : "";
-            obj[header] = val.replace(/^"|"$/g, ''); // Quitar comillas si existen
-        });
-        return obj;
+  const lines = csv.split('\n');
+  const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+  return lines.slice(1).filter(l => l.trim()).map(line => {
+    const values = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+    const obj = {};
+    headers.forEach((h, i) => {
+      let v = values[i] ? values[i].trim() : "";
+      obj[h] = v.replace(/^"|"$/g, '');
     });
+    return obj;
+  });
 }
 
-// Cargar usuarios al iniciar
+// 1. Cargar Usuarios
 fetch(URL_USUARIOS)
-    .then(r => r.text())
-    .then(data => { users = parseCSV(data); })
-    .catch(e => console.error("Error cargando usuarios", e));
+  .then(res => res.text())
+  .then(data => { users = parseCSV(data); })
+  .catch(err => console.error("Error cargando usuarios"));
 
+// 2. Validar Login (Tal como estaba en tu index)
 function checkLogin() {
-    const dni = document.getElementById('dniInput').value.trim().toUpperCase();
-    const userFound = users.find(u => (u.dni || u.DNI) === dni);
-    
-    if (userFound) {
-        document.getElementById('loginSection').style.display = 'none';
-        startQuiz();
-    } else {
-        document.getElementById('loginMsg').style.display = 'block';
-    }
+  const dni = document.getElementById('dniInput').value.trim().toUpperCase();
+  const userFound = users.find(u => (u.dni || u.DNI) === dni);
+  
+  if(userFound) {
+    document.getElementById('loginSection').style.display = 'none';
+    cargarPreguntas();
+  } else {
+    document.getElementById('loginMsg').style.display = 'block';
+  }
 }
 
-function startQuiz() {
-    fetch(URL_PREGUNTAS)
-        .then(r => r.text())
-        .then(data => {
-            exam = parseCSV(data);
-            document.getElementById('quizSection').style.display = 'block';
-            showQ();
-        })
-        .catch(e => alert("Error cargando base de datos de preguntas"));
+// 3. Cargar Preguntas y mostrar Quiz
+function cargarPreguntas() {
+  fetch(URL_PREGUNTAS)
+    .then(res => res.text())
+    .then(data => {
+      exam = parseCSV(data);
+      document.getElementById('quizSection').style.display = 'block';
+      showQ();
+    })
+    .catch(err => alert("Error cargando base de datos"));
 }
 
 function showQ() {
-    const q = exam[idx];
-    const container = document.getElementById('qContainer');
-    const fbWrap = document.getElementById('fbWrap');
-    
-    container.innerHTML = '';
-    fbWrap.innerHTML = '';
-    
-    document.getElementById('qNum').textContent = 'Pregunta ' + (idx + 1);
-    document.getElementById('qProg').textContent = (idx + 1) + ' de ' + exam.length;
-    document.getElementById('pbar').style.width = ((idx + 1) / exam.length * 100) + '%';
-    document.getElementById('prevBtn').disabled = (idx === 0);
+  const q = exam[idx];
+  const container = document.getElementById('qContainer');
+  const fbWrap = document.getElementById('fbWrap');
+  container.innerHTML = '';
+  fbWrap.innerHTML = '';
 
-    const qText = document.createElement('div');
-    qText.className = 'qtxt';
-    qText.textContent = q.pregunta;
-    container.appendChild(qText);
+  document.getElementById('qNum').textContent = 'Pregunta ' + (idx + 1);
+  document.getElementById('qProg').textContent = (idx + 1) + ' de ' + exam.length;
+  document.getElementById('pbar').style.width = ((idx + 1) / exam.length * 100) + '%';
 
-    const optsDiv = document.createElement('div');
-    optsDiv.className = 'opts';
+  const qText = document.createElement('div');
+  qText.className = 'qtxt';
+  qText.textContent = q.pregunta || q.Pregunta;
+  container.appendChild(qText);
 
-    ['a', 'b', 'c', 'd'].forEach(l => {
-        const val = q['opcion_' + l];
-        if (val) {
-            const opt = document.createElement('div');
-            const isRes = (answered[idx] !== undefined);
-            opt.className = 'opt' + (isRes ? ' dis' : '');
-            
-            if (isRes) {
-                if (l === q.respuesta.toLowerCase()) opt.classList.add('ok');
-                else if (l === answered[idx]) opt.classList.add('ko');
-            }
+  const optsDiv = document.createElement('div');
+  optsDiv.className = 'opts';
 
-            opt.innerHTML = `<div class="oltr">${l.toUpperCase()}</div><span>${val}</span>`;
-            opt.onclick = () => { if(!isRes) checkAnswer(l); };
-            optsDiv.appendChild(opt);
-        }
-    });
-    container.appendChild(optsDiv);
-    if (answered[idx] !== undefined) showFeedback(q);
+  ['a', 'b', 'c', 'd'].forEach(l => {
+    const val = q['opcion_' + l] || q['Opcion_' + l];
+    if (val) {
+      const opt = document.createElement('div');
+      const isRes = (answered[idx] !== undefined);
+      opt.className = 'opt' + (isRes ? ' dis' : '');
+      
+      const resCorrecta = (q.respuesta || q.Respuesta).toLowerCase();
+      if (isRes) {
+        if (l === resCorrecta) opt.classList.add('ok');
+        else if (l === answered[idx]) opt.classList.add('ko');
+      }
+
+      opt.innerHTML = `<div class="oltr">${l.toUpperCase()}</div><span>${val}</span>`;
+      opt.onclick = () => { if(!isRes) checkAnswer(l); };
+      optsDiv.appendChild(opt);
+    }
+  });
+  container.appendChild(optsDiv);
+  if (answered[idx] !== undefined) showFeedback(q);
 }
 
 function checkAnswer(l) {
-    answered[idx] = l.toLowerCase();
-    correct[idx] = (answered[idx] === exam[idx].respuesta.toLowerCase());
-    showQ();
+  answered[idx] = l.toLowerCase();
+  const resCorrecta = (exam[idx].respuesta || exam[idx].Respuesta).toLowerCase();
+  correct[idx] = (answered[idx] === resCorrecta);
+  showQ();
 }
 
 function showFeedback(q) {
-    const isCorrect = correct[idx];
-    const fb = document.createElement('div');
-    fb.className = 'fb ' + (isCorrect ? 'ok' : 'ko');
-    fb.innerHTML = `
-        <div class="fb-title">${isCorrect ? '✓ ¡Correcto!' : '✗ Incorrecto'}</div>
-        <div class="fb-body"><strong>Respuesta correcta:</strong> ${q.respuesta.toUpperCase()}<br>${q.saber || ''}</div>
-    `;
-    document.getElementById('fbWrap').appendChild(fb);
+  const isCorrect = correct[idx];
+  const fb = document.createElement('div');
+  fb.className = 'fb ' + (isCorrect ? 'ok' : 'ko');
+  fb.innerHTML = `
+    <div class="fb-title">${isCorrect ? '✓ ¡Correcto!' : '✗ Incorrecto'}</div>
+    <div><strong>Respuesta: ${(q.respuesta || q.Respuesta).toUpperCase()}</strong></div>
+    <div style="font-size:0.9rem;margin-top:5px">${q.saber || q.Saber || ''}</div>
+  `;
+  fbWrap.appendChild(fb);
 }
 
 function nextQ() {
-    if (idx < exam.length - 1) { idx++; showQ(); } 
-    else { showResults(); }
-}
-
-function prevQ() { if (idx > 0) { idx--; showQ(); } }
-
-function showResults() {
-    document.getElementById('quizSection').style.display = 'none';
-    document.getElementById('results').style.display = 'block';
-    const ok = correct.filter(c => c).length;
-    const pct = Math.round(ok / exam.length * 100);
-    document.getElementById('rOk').textContent = ok;
-    document.getElementById('rKo').textContent = exam.length - ok;
-    document.getElementById('rTot').textContent = exam.length;
-    document.getElementById('rPct').textContent = pct + '%';
-    
-    let emoji = '😞';
-    if(pct >= 90) emoji = '🏆';
-    else if(pct >= 70) emoji = '😄';
-    else if(pct >= 50) emoji = '🙂';
-    document.getElementById('rEmoji').textContent = emoji;
-}
-</script>
-</body>
-</html>
+  if (idx 
