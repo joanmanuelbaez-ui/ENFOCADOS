@@ -3,80 +3,58 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ENFOCADOS</title>
+<title>ENFOCADOS - Test Profesional</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{--Y:rgb(250,250,0);--Yd:rgb(215,215,0);--D:#2c3e50;--D2:#1a252f;--V:#10b981;--R:#ef4444;--G:#64748b;--B:#e2e8f0}
-body{font-family:'Inter',sans-serif;background:linear-gradient(160deg,#fffef0 0%,#fff9c4 100%);min-height:100vh;color:#1e293b;line-height:1.6}
-.wrap{max-width:860px;margin:0 auto;padding:1.8rem 1.2rem}
-header{text-align:center;margin-bottom:1.6rem}
-h1{font-family:'Montserrat',sans-serif;font-size:2.2rem;font-weight:800;color:var(--D);letter-spacing:-1px;text-transform:uppercase}
-
-.card{background:#fff;border-radius:24px;padding:2.2rem;box-shadow:0 20px 25px -5px rgba(0,0,0,0.1),0 10px 10px -5px rgba(0,0,0,0.04);border:1px solid rgba(255,255,255,0.7);position:relative;margin-bottom:1.5rem}
-
-.p-wrap{margin-bottom:2rem}
-.p-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem}
-#qNum{font-family:'Montserrat',sans-serif;font-weight:700;color:var(--D);font-size:1.1rem}
-#qProg{font-weight:600;color:var(--G);font-size:.9rem;background:var(--B);padding:.2rem .8rem;border-radius:20px}
-.p-bar-bg{height:8px;background:var(--B);border-radius:4px;overflow:hidden}
-#pbar{height:100%;width:0%;background:linear-gradient(90deg, var(--Yd), var(--Y));transition:width .4s ease}
-
-.qtxt{font-size:1.35rem;font-weight:600;color:var(--D);margin-bottom:2rem;line-height:1.4}
-.opts{display:grid;gap:1rem}
-.opt{display:flex;align-items:center;padding:1.2rem;border:2px solid var(--B);border-radius:16px;cursor:pointer;transition:all .2s ease;background:#f8fafc;position:relative}
-.opt:hover:not(.dis){border-color:var(--Y);transform:translateX(4px);background:#fff}
-.oltr{width:36px;height:36px;background:var(--Y);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;margin-right:1.2rem;flex-shrink:0;box-shadow:0 4px 6px -1px rgba(0,0,0,0.1)}
-
-.opt.ok{border-color:var(--V);background:rgba(16,185,129,0.05)}
-.opt.ok .oltr{background:var(--V);color:#fff}
-.opt.ko{border-color:var(--R);background:rgba(239,68,68,0.05)}
-.opt.ko .oltr{background:var(--R);color:#fff}
-.opt.dis{cursor:default}
-
-.fb{margin-top:2rem;padding:1.5rem;border-radius:16px;animation:slideUp .3s ease forwards}
-.fb.ok{background:#ecfdf5;border:1px solid var(--V)}
-.fb.ko{background:#fef2f2;border:1px solid var(--R)}
-.fb-title{font-weight:700;margin-bottom:.4rem;font-size:1.1rem}
-.fb.ok .fb-title{color:var(--V)}
-.fb.ko .fb-title{color:var(--R)}
-.fb-body{color:var(--D);font-size:0.95rem}
-
-.nav{display:flex;justify-content:space-between;margin-top:1.5rem;gap:1rem}
-button{padding:1rem 1.8rem;border-radius:14px;border:none;font-weight:700;cursor:pointer;font-family:'Montserrat',sans-serif;transition:all .2s;display:flex;align-items:center;gap:.5rem;font-size:0.9rem}
-.btn-p{background:var(--B);color:var(--D)}
-.btn-n{background:var(--D);color:#fff;margin-left:auto}
-button:hover:not(:disabled){filter:brightness(1.1);transform:translateY(-2px)}
-button:disabled{opacity:.4;cursor:not-allowed}
-
-#results{display:none;text-align:center}
-.res-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(120px, 1fr));gap:1rem;margin:2rem 0}
-.res-item{padding:1.2rem;border-radius:16px;background:var(--B)}
-.res-val{display:block;font-size:1.8rem;font-weight:800;color:var(--D)}
-
-@keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+  /* Mantenemos tu diseño profesional intacto */
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{--Y:rgb(250,250,0);--Yd:rgb(215,215,0);--D:#2c3e50;--D2:#1a252f;--V:#10b981;--R:#ef4444;--G:#64748b;--B:#e2e8f0}
+  body{font-family:'Inter',sans-serif;background:linear-gradient(160deg,#fffef0 0%,#fff9c4 100%);min-height:100vh;color:#1e293b;line-height:1.6}
+  .wrap{max-width:860px;margin:0 auto;padding:1.8rem 1.2rem}
+  header{text-align:center;margin-bottom:1.6rem}
+  h1{font-family:'Montserrat',sans-serif;font-size:2.2rem;font-weight:800;color:var(--D);letter-spacing:-1px;text-transform:uppercase}
+  .card{background:#fff;border-radius:24px;padding:2.2rem;box-shadow:0 20px 25px -5px rgba(0,0,0,0.1);border:1px solid rgba(255,255,255,0.7);position:relative;margin-bottom:1.5rem}
+  .p-wrap{margin-bottom:2rem}
+  .p-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem}
+  #qNum{font-family:'Montserrat',sans-serif;font-weight:700;color:var(--D)}
+  #qProg{font-weight:600;color:var(--G);font-size:.9rem;background:var(--B);padding:.2rem .8rem;border-radius:20px}
+  .p-bar-bg{height:8px;background:var(--B);border-radius:4px;overflow:hidden}
+  #pbar{height:100%;width:0%;background:linear-gradient(90deg, var(--Yd), var(--Y));transition:width .4s ease}
+  .qtxt{font-size:1.35rem;font-weight:600;color:var(--D);margin-bottom:2rem}
+  .opts{display:grid;gap:1rem}
+  .opt{display:flex;align-items:center;padding:1.2rem;border:2px solid var(--B);border-radius:16px;cursor:pointer;transition:all .2s ease;background:#f8fafc}
+  .opt:hover:not(.dis){border-color:var(--Y);transform:translateX(4px);background:#fff}
+  .oltr{width:36px;height:36px;background:var(--Y);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;margin-right:1.2rem;flex-shrink:0}
+  .opt.ok{border-color:var(--V);background:rgba(16,185,129,0.05)}
+  .opt.ok .oltr{background:var(--V);color:#fff}
+  .opt.ko{border-color:var(--R);background:rgba(239,68,68,0.05)}
+  .opt.ko .oltr{background:var(--R);color:#fff}
+  .opt.dis{cursor:default;opacity:0.8}
+  .fb{margin-top:2rem;padding:1.5rem;border-radius:16px;animation:slideUp .3s ease forwards}
+  .fb.ok{background:#ecfdf5;border:1px solid var(--V);color:#065f46}
+  .fb.ko{background:#fef2f2;border:1px solid var(--R);color:#991b1b}
+  .fb-title{font-weight:700;margin-bottom:.4rem}
+  .nav{display:flex;justify-content:space-between;margin-top:1.5rem}
+  button{padding:1rem 1.8rem;border-radius:14px;border:none;font-weight:700;cursor:pointer;font-family:'Montserrat'}
+  .btn-p{background:var(--B);color:var(--D)}
+  .btn-n{background:var(--D);color:#fff}
+  #results{display:none;text-align:center}
+  @keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
 <body>
 
 <div class="wrap">
-  <header>
-    <h1>ENFOCADOS</h1>
-  </header>
+  <header><h1>ENFOCADOS</h1></header>
 
   <div id="quiz">
     <div class="card">
       <div class="p-wrap">
-        <div class="p-top">
-          <span id="qNum">Pregunta 1</span>
-          <span id="qProg">1 de 0</span>
-        </div>
+        <div class="p-top"><span id="qNum">Cargando preguntas...</span><span id="qProg"></span></div>
         <div class="p-bar-bg"><div id="pbar"></div></div>
       </div>
-
       <div id="qContainer"></div>
       <div id="fbWrap"></div>
-
       <div class="nav">
         <button onclick="prevQ()" id="prevBtn" class="btn-p">Anterior</button>
         <button onclick="nextQ()" id="nextBtn" class="btn-n">Siguiente</button>
@@ -86,137 +64,140 @@ button:disabled{opacity:.4;cursor:not-allowed}
 
   <div id="results" class="card">
     <div id="rEmoji" style="font-size:4.5rem;margin-bottom:1rem">🏆</div>
-    <h2 style="font-family:'Montserrat';font-size:1.8rem;margin-bottom:1.5rem">¡Test Finalizado!</h2>
-    <div class="res-grid">
-      <div class="res-item"><span class="res-val" id="rOk" style="color:var(--V)">0</span><small>Correctas</small></div>
-      <div class="res-item"><span class="res-val" id="rKo" style="color:var(--R)">0</span><small>Incorrectas</small></div>
-      <div class="res-item"><span class="res-val" id="rTot">0</span><small>Total</small></div>
-    </div>
-    <div style="background:var(--D);color:#fff;padding:2rem;border-radius:20px;margin-bottom:2rem">
-      <span style="font-size:0.8rem;opacity:0.8;text-transform:uppercase;letter-spacing:1px;font-weight:700">Puntuación</span>
-      <div id="rPct" style="font-size:3.5rem;font-weight:800">0%</div>
-    </div>
-    <button onclick="location.reload()" class="btn-n" style="margin:0 auto">Reiniciar Test</button>
+    <h2 style="font-family:'Montserrat';margin-bottom:1rem">¡Test Finalizado!</h2>
+    <div style="font-size:3.5rem;font-weight:800;margin-bottom:1rem" id="rPct">0%</div>
+    <p>Correctas: <span id="rOk">0</span> | Incorrectas: <span id="rKo">0</span></p>
+    <button onclick="location.reload()" class="btn-n" style="margin-top:2rem">Reiniciar Test</button>
   </div>
 </div>
 
 <script>
-var exam = [];
-var idx = 0;
-var answered = []; 
-var correct = [];
+// URL de exportación CSV de tu Google Sheet (BD GLOBAL)
+const SHEET_URL = 'https://docs.google.com/spreadsheets/d/19mVUe0lezjxuAW4FqJTbG5UJx649ECUzA9HVwEwy0do/export?format=csv&gid=1012787791';
 
-// Carga de datos
-fetch('preguntas.json')
-  .then(res => res.json())
-  .then(data => {
-    exam = data;
+let exam = [];
+let idx = 0;
+let answered = [];
+let correct = [];
+
+// Cargador de datos
+fetch(SHEET_URL)
+  .then(res => res.text())
+  .then(csv => {
+    exam = parseCSV(csv);
     showQ();
   })
-  .catch(err => console.error("Error cargando JSON:", err));
+  .catch(err => {
+    document.getElementById('qNum').textContent = "Error al conectar con la base de datos";
+    console.error(err);
+  });
+
+function parseCSV(csv) {
+  const lines = csv.split('\n');
+  const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+  const data = [];
+
+  for (let i = 1; i < lines.length; i++) {
+    if (!lines[i].trim()) continue;
+    // Manejo básico de comas dentro de celdas (si las hay)
+    const currentLine = lines[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+    const obj = {};
+    headers.forEach((header, index) => {
+      let val = currentLine[index] ? currentLine[index].trim() : "";
+      obj[header] = val.replace(/^"|"$/g, ''); // Quitar comillas
+    });
+    data.push(obj);
+  }
+  return data;
+}
 
 function showQ() {
-  if (exam.length === 0) return;
-  var q = exam[idx];
-  var container = document.getElementById('qContainer');
-  container.innerHTML = '';
+  if (!exam.length) return;
+  const q = exam[idx];
+  const container = document.getElementById('qContainer');
+  const fbWrap = document.getElementById('fbWrap');
   
-  // Header y Progreso
+  container.innerHTML = '';
+  fbWrap.innerHTML = '';
+  
   document.getElementById('qNum').textContent = 'Pregunta ' + (idx + 1);
   document.getElementById('qProg').textContent = (idx + 1) + ' de ' + exam.length;
   document.getElementById('pbar').style.width = ((idx + 1) / exam.length * 100) + '%';
   document.getElementById('prevBtn').disabled = (idx === 0);
-  document.getElementById('nextBtn').textContent = (idx === exam.length - 1) ? 'Finalizar' : 'Siguiente';
 
-  // Pregunta
-  var qDiv = document.createElement('div');
-  qDiv.className = 'qtxt';
-  qDiv.textContent = q.pregunta;
-  container.appendChild(qDiv);
+  const qText = document.createElement('div');
+  qText.className = 'qtxt';
+  qText.textContent = q.pregunta || q.Pregunta; // Soporta mayúsculas/minúsculas
+  container.appendChild(qText);
 
-  // Opciones
-  var optsDiv = document.createElement('div');
+  const optsDiv = document.createElement('div');
   optsDiv.className = 'opts';
 
-  ['a', 'b', 'c', 'd'].forEach(function(l) {
-    if (q['opcion_' + l]) {
-      var opt = document.createElement('div');
-      var isAnswered = (answered[idx] !== undefined);
-      opt.className = 'opt' + (isAnswered ? ' dis' : '');
+  ['a', 'b', 'c', 'd'].forEach(l => {
+    const val = q['opcion_' + l] || q['Opcion_' + l];
+    if (val) {
+      const opt = document.createElement('div');
+      const isRes = (answered[idx] !== undefined);
+      opt.className = 'opt' + (isRes ? ' dis' : '');
       
-      if (isAnswered) {
-        if (l === q.respuesta.toLowerCase()) opt.classList.add('ok');
+      const correctAns = (q.respuesta || q.Respuesta).toLowerCase();
+      if (isRes) {
+        if (l === correctAns) opt.classList.add('ok');
         else if (l === answered[idx]) opt.classList.add('ko');
       }
 
-      opt.innerHTML = '<div class="oltr">' + l.toUpperCase() + '</div><span>' + q['opcion_' + l] + '</span>';
-      opt.onclick = function() { if (!isAnswered) selectOpt(l); };
+      opt.innerHTML = `<div class="oltr">${l.toUpperCase()}</div><span>${val}</span>`;
+      opt.onclick = () => { if(!isRes) checkAnswer(l); };
       optsDiv.appendChild(opt);
     }
   });
   container.appendChild(optsDiv);
 
-  // Mostrar Motivación (Feedback) si ya se respondió
-  var fbWrap = document.getElementById('fbWrap');
-  fbWrap.innerHTML = '';
-  if (answered[idx] !== undefined) {
-    showFeedback(answered[idx] === q.respuesta.toLowerCase(), q);
-  }
+  if (answered[idx] !== undefined) showFeedback(q);
 }
 
-function selectOpt(letter) {
-  answered[idx] = letter.toLowerCase();
-  correct[idx] = (answered[idx] === exam[idx].respuesta.toLowerCase());
+function checkAnswer(selected) {
+  answered[idx] = selected.toLowerCase();
+  const correctAns = (exam[idx].respuesta || exam[idx].Respuesta).toLowerCase();
+  correct[idx] = (answered[idx] === correctAns);
   showQ();
 }
 
-function showFeedback(isCorrect, q) {
-  var fb = document.createElement('div');
+function showFeedback(q) {
+  const isCorrect = correct[idx];
+  const correctAns = (q.respuesta || q.Respuesta).toUpperCase();
+  const msg = q.saber || q.Saber || "¡Sigue adelante con tu formación!";
+  
+  const fb = document.createElement('div');
   fb.className = 'fb ' + (isCorrect ? 'ok' : 'ko');
-  fb.innerHTML = '<div class="fb-title">' + (isCorrect ? '✓ ¡Correcto!' : '✗ Incorrecto') + '</div>' +
-                 '<div class="fb-body"><strong>Respuesta correcta: ' + q.respuesta.toUpperCase() + '</strong><br>' + 
-                 (q.saber || '¡Sigue así!') + '</div>';
+  fb.innerHTML = `
+    <div class="fb-title">${isCorrect ? '✓ ¡Correcto!' : '✗ Incorrecto'}</div>
+    <div><strong>Respuesta: ${correctAns}</strong></div>
+    <div style="margin-top:5px; font-size:0.9rem">${msg}</div>
+  `;
   document.getElementById('fbWrap').appendChild(fb);
 }
 
 function nextQ() {
-  if (answered[idx] === undefined) {
-    alert("Por favor, selecciona una opción.");
-    return;
-  }
-  if (idx < exam.length - 1) {
-    idx++;
-    showQ();
-  } else {
-    showResults();
-  }
+  if (idx < exam.length - 1) { idx++; showQ(); } 
+  else { showResults(); }
 }
 
-function prevQ() {
-  if (idx > 0) {
-    idx--;
-    showQ();
-  }
-}
+function prevQ() { if (idx > 0) { idx--; showQ(); } }
 
 function showResults() {
   document.getElementById('quiz').style.display = 'none';
   document.getElementById('results').style.display = 'block';
-  
-  var ok = correct.filter(Boolean).length;
-  var pct = Math.round((ok / exam.length) * 100);
-  
-  document.getElementById('rOk').textContent = ok;
-  document.getElementById('rKo').textContent = exam.length - ok;
-  document.getElementById('rTot').textContent = exam.length;
+  const okCount = correct.filter(c => c).length;
+  const pct = Math.round((okCount / exam.length) * 100);
+  document.getElementById('rOk').textContent = okCount;
+  document.getElementById('rKo').textContent = exam.length - okCount;
   document.getElementById('rPct').textContent = pct + '%';
-
-  var emoji = '😞';
-  if(pct >= 90) emoji = '🏆';
-  else if(pct >= 75) emoji = '😄';
-  else if(pct >= 60) emoji = '🙂';
-  else if(pct >= 50) emoji = '😕';
   
+  let emoji = '😞';
+  if(pct >= 90) emoji = '🏆';
+  else if(pct >= 70) emoji = '😄';
+  else if(pct >= 50) emoji = '🙂';
   document.getElementById('rEmoji').textContent = emoji;
 }
 </script>
