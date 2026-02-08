@@ -6,52 +6,53 @@
 <title>ENFOCADOS</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <style>
-/* Estilos esenciales mantenidos */
+/* Estilos blindados */
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--Y:rgb(250,250,0);--D:#2c3e50;--V:#10b981;--R:#ef4444;--B:#e2e8f0}
 body{font-family:'Inter',sans-serif;background:#fffef0;color:#1e293b;padding:1rem}
 .card{background:#fff;border-radius:18px;padding:1.5rem;box-shadow:0 4px 20px rgba(0,0,0,.08);border:2px solid var(--Y);max-width:600px;margin:auto}
 .btn{width:100%;padding:1rem;background:var(--Y);color:var(--D);border:none;border-radius:10px;font-weight:700;cursor:pointer;margin-top:1rem}
-.opt{display:flex;align-items:center;gap:1rem;padding:1rem;border:2px solid var(--B);border-radius:11px;margin-bottom:10px;cursor:pointer}
+.opt{display:flex;align-items:center;gap:1rem;padding:1rem;border:2px solid var(--B);border-radius:11px;margin-bottom:10px;cursor:pointer;text-align:left}
 .opt.ok{border-color:var(--V);background:#f0fdf4}
 .opt.ko{border-color:var(--R);background:#fef2f2}
 .oltr{width:30px;height:30px;border-radius:50%;background:var(--B);display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0}
 .fb{margin-top:1rem;padding:1rem;background:#f8fafc;border-left:4px solid var(--Y);font-size:0.9rem}
 .hidden{display:none}
-input, select{width:100%;padding:.8rem;margin:10px 0;border:2px solid var(--B);border-radius:8px}
+input, select{width:100%;padding:.8rem;margin:10px 0;border:2px solid var(--B);border-radius:8px;font-family:inherit}
 </style>
 </head>
 <body>
 
 <div id="secLogin" class="card">
     <h1 style="text-align:center;font-family:Montserrat">ENFOCADOS</h1>
-    <input type="email" id="inEmail" placeholder="Tu correo electrónico">
+    <p style="text-align:center;margin-bottom:1rem">Acceso Autorizado</p>
+    <input type="email" id="inEmail" placeholder="Introduce tu correo">
     <button class="btn" onclick="doLogin()">Entrar</button>
 </div>
 
 <div id="secConfig" class="card hidden">
-    <h2 id="cfgUser"></h2>
+    <h2 id="cfgUser" style="margin-bottom:1rem"></h2>
     <label>Preguntas:</label><input type="number" id="inNum" value="10">
-    <label>Materia:</label><select id="selMateria"><option value="">Todas</option></select>
+    <label>Materia:</label><select id="selMateria"><option value="">Todas las materias</option></select>
     <button class="btn" onclick="startExam()">Empezar Test</button>
 </div>
 
 <div id="secQ" class="card hidden">
-    <div id="qTxt" style="font-weight:600;margin-bottom:1rem"></div>
+    <div id="qTxt" style="font-weight:600;margin-bottom:1.5rem;font-size:1.1rem"></div>
     <div id="optsWrap"></div>
     <div id="fbWrap"></div>
     <button id="btnNext" class="btn" onclick="nextQ()" disabled>Continuar</button>
 </div>
 
 <div id="secRes" class="card hidden" style="text-align:center">
-    <h2>Resultado</h2>
-    <div id="rPct" style="font-size:3rem;font-weight:800"></div>
-    <button class="btn" onclick="location.reload()">Reiniciar</button>
+    <h2>Resultado Final</h2>
+    <div id="rPct" style="font-size:4rem;font-weight:800;color:var(--D)"></div>
+    <button class="btn" onclick="location.reload()">Cerrar y Salir</button>
 </div>
 
 <script>
 const apiUrl = 'https://script.google.com/macros/s/AKfycbxOW1CWs8n04Lek1Sm0mYZE_F6N0epkbvr0czCt_QzY7qdn65X3g1oya0Br2BtwXQBS/exec';
-let allQs = [], exam = [], idx = 0, correct = [], curUser = null;
+let allQs = [], exam = [], idx = 0, correct = [];
 
 function fetchJSONP(url, callback) {
     const name = 'jsonp_' + Date.now();
@@ -63,17 +64,18 @@ function fetchJSONP(url, callback) {
 
 function doLogin() {
     const email = document.getElementById('inEmail').value.trim().toLowerCase();
+    if(!email) return;
     fetchJSONP(apiUrl + '?type=users', (res) => {
-        const users = res.rows.map(r => ({correo: r[res.headers.indexOf('Correo')]}));
-        if (users.some(u => u.correo?.toLowerCase() === email)) {
+        const emailIdx = res.headers.indexOf('Correo');
+        const user = res.rows.find(r => r[emailIdx]?.toLowerCase() === email);
+        if (user) {
             fetchJSONP(apiUrl + '?type=questions', (qRes) => {
-                const h = qRes.headers.map(str => str.toLowerCase());
+                const h = qRes.headers.map(s => s.toLowerCase().trim());
                 allQs = qRes.rows.map(r => {
                     let o = {};
                     h.forEach((name, i) => o[name] = r[i]);
                     return o;
                 });
-                // Cargar materias
                 const mats = [...new Set(allQs.map(q => q.materia).filter(m => m))];
                 mats.forEach(m => {
                     const o = document.createElement('option');
@@ -82,8 +84,9 @@ function doLogin() {
                 });
                 document.getElementById('secLogin').classList.add('hidden');
                 document.getElementById('secConfig').classList.remove('hidden');
+                document.getElementById('cfgUser').textContent = "Bienvenido";
             });
-        } else { alert("No autorizado"); }
+        } else { alert("Correo no autorizado."); }
     });
 }
 
@@ -104,22 +107,24 @@ function showQ() {
     document.getElementById('fbWrap').innerHTML = "";
     document.getElementById('btnNext').disabled = true;
 
-    // --- SEPARACIÓN POR PUNTO + LETRA ---
-    // Esta línea busca ". b)", ".c)" etc para dividir el texto
-    let raw = q.opciones || "";
-    let opts = raw.split(/\.\s*(?=[a-d]\))/i).map((t, i) => i > 0 ? t : t);
+    // --- LÓGICA DE DIVISIÓN POR LETRA CLAVE ---
+    // Buscamos el patrón: letra + paréntesis (a), b), c), d))
+    let texto = q.opciones || "";
+    let opts = texto.split(/\s*(?=[a-d]\))/i).map(t => t.trim()).filter(t => t.length > 0);
     
+    // Si la división falló (solo hay 1 bloque), intentamos dividir por letra + punto (a. b. c. d.)
+    if(opts.length <= 1) {
+        opts = texto.split(/\s*(?=[a-d]\.)/i).map(t => t.trim()).filter(t => t.length > 0);
+    }
+
     const wrap = document.getElementById('optsWrap');
     wrap.innerHTML = "";
 
     opts.forEach((txt) => {
-        // Limpiamos espacios y posibles puntos al inicio
-        const cleanTxt = txt.trim();
-        const letter = cleanTxt.substring(0, 1).toUpperCase();
-
+        const letter = txt.substring(0, 1).toUpperCase();
         const div = document.createElement('div');
         div.className = 'opt';
-        div.innerHTML = `<div class="oltr">${letter}</div><div>${cleanTxt}</div>`;
+        div.innerHTML = `<div class="oltr">${letter}</div><div>${txt}</div>`;
         
         div.onclick = () => {
             if(!document.getElementById('btnNext').disabled) return;
@@ -137,8 +142,8 @@ function showQ() {
             
             document.getElementById('fbWrap').innerHTML = `
                 <div class="fb">
-                    <b>${isOk ? '¡Correcto!' : 'Incorrecto'}</b><br>
-                    ${q.motivacion || q.saber || ''}
+                    <b style="color:${isOk?'green':'red'}">${isOk?'¡CORRECTO!':'INCORRECTO'}</b><br>
+                    <p style="margin-top:5px">${q.motivacion || q.saber || ''}</p>
                 </div>`;
             document.getElementById('btnNext').disabled = false;
         };
