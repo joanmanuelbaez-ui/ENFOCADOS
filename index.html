@@ -6,7 +6,7 @@
 <title>ENFOCADOS</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-/* Mantenemos tu CSS profesional intacto */
+/* DISEÑO PROFESIONAL MANTENIDO */
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--Y:rgb(250,250,0);--Yd:rgb(215,215,0);--D:#2c3e50;--D2:#1a252f;--V:#10b981;--R:#ef4444;--G:#64748b;--B:#e2e8f0}
 body{font-family:'Inter',sans-serif;background:linear-gradient(160deg,#fffef0 0%,#fff9c4 100%);min-height:100vh;color:#1e293b;line-height:1.6}
@@ -15,22 +15,22 @@ header{text-align:center;margin-bottom:1.6rem}
 h1{font-family:'Montserrat',sans-serif;font-size:2.4rem;font-weight:800;color:var(--D);letter-spacing:-1px}
 .card{background:#fff;border-radius:24px;padding:1.8rem;box-shadow:0 12px 30px -10px rgba(0,0,0,0.12);border:1px solid rgba(255,255,255,0.7);margin-bottom:1.5rem}
 
-/* Estilos de botones de respuesta */
+/* BOTONES DE RESPUESTA */
 .opt{display:block;width:100%;padding:1.1rem;margin-bottom:0.9rem;border:2px solid var(--B);border-radius:14px;text-align:left;background:#fff;cursor:pointer;font-size:1rem;transition:all 0.2s ease}
 .opt:hover{border-color:var(--Yd);background:#fffdf0}
 .opt.ok{border-color:var(--V);background:#ecfdf5;color:#065f46;font-weight:600}
 .opt.ko{border-color:var(--R);background:#fef2f2;color:#991b1b}
 
-/* Feedback y Motivación */
+/* CUADRO DE MOTIVACIÓN */
 .fb{margin-top:1.5rem;padding:1.2rem;border-radius:16px;animation:slideUp 0.3s ease-out}
 .fb.ok{background:#ecfdf5;border:1px solid var(--V);color:#065f46}
 .fb.ko{background:#fef2f2;border:1px solid var(--R);color:#991b1b}
 .fb-title{font-weight:700;margin-bottom:0.5rem;display:flex;align-items:center;gap:0.6rem}
 .saber-box{margin-top:0.8rem;padding-top:0.8rem;border-top:1px solid rgba(0,0,0,0.08);font-size:0.95rem}
 
-.btn{width:100%;padding:1rem;border-radius:14px;border:none;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.5rem}
+.btn{width:100%;padding:1rem;border-radius:14px;border:none;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.5rem;transition:0.3s}
 .btn-y{background:var(--Y);color:var(--D2);box-shadow:0 4px 0 var(--Yd)}
-.hidden{display:none}
+.btn-y:disabled{opacity:0.5;cursor:not-allowed}
 @keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
@@ -40,7 +40,7 @@ h1{font-family:'Montserrat',sans-serif;font-size:2.4rem;font-weight:800;color:va
     <header>
         <div style="font-size:3.5rem">⚡</div>
         <h1>ENFOCADOS</h1>
-        <p style="font-weight:600;color:var(--G)">PREMIUM 📚</p>
+        <p style="font-weight:600;color:var(--G)">PREMIUM 📚 ONLINE</p>
     </header>
 
     <div id="secQuiz" class="screen">
@@ -59,12 +59,10 @@ h1{font-family:'Montserrat',sans-serif;font-size:2.4rem;font-weight:800;color:va
 </div>
 
 <script>
-// VARIABLES GLOBALES
 var idx = 0;
 var exam = []; 
 var answered = [];
 
-// ESTA FUNCIÓN AHORA SÍ RECORRE LAS 4 OPCIONES (A, B, C, D)
 function showQ() {
     var q = exam[idx];
     document.getElementById('qNum').textContent = '📝 Pregunta ' + (idx + 1) + ' de ' + exam.length;
@@ -75,18 +73,22 @@ function showQ() {
     document.getElementById('fbWrap').innerHTML = ''; 
     document.getElementById('btnNext').disabled = true;
 
-    // Bucle para sacar las 4 opciones como en tu versión local
-    var letras = ['A', 'B', 'C', 'D'];
-    letras.forEach(function(l) {
-        var texto = q['opcion' + l];
-        if (texto && texto.toString().trim() !== "") {
-            var btn = document.createElement('button');
-            btn.className = 'opt';
-            btn.innerHTML = '<strong>' + l + '</strong> ' + texto;
-            btn.onclick = function() { checkAns(l, btn); };
-            divOpts.appendChild(btn);
-        }
-    });
+    // LÓGICA CLAVE: Dividir la columna única "opciones" por el salto de línea (\n)
+    if (q.opciones) {
+        var listaOpciones = q.opciones.split('\n');
+        var letras = ['A', 'B', 'C', 'D'];
+
+        listaOpciones.forEach(function(texto, i) {
+            if (texto.trim() !== "" && i < 4) {
+                var btn = document.createElement('button');
+                btn.className = 'opt';
+                // Añadimos la letra automáticamente según la posición
+                btn.innerHTML = '<strong>' + letras[i] + '</strong> ' + texto.trim();
+                btn.onclick = function() { checkAns(letras[i], btn); };
+                divOpts.appendChild(btn);
+            }
+        });
+    }
 }
 
 function checkAns(userAns, btn) {
@@ -94,12 +96,13 @@ function checkAns(userAns, btn) {
     answered[idx] = true;
     
     var q = exam[idx];
-    var isCorrect = (userAns === q.respuesta);
+    // Limpiamos la respuesta para comparar (por si acaso viene con espacios o puntos)
+    var respCorrecta = q.respuesta.toString().trim().toUpperCase();
+    var isCorrect = (userAns === respCorrecta);
     
-    // Marcar acierto/error visualmente
     var buttons = document.querySelectorAll('.opt');
     buttons.forEach(function(b) {
-        if (b.innerHTML.includes('<strong>' + q.respuesta + '</strong>')) {
+        if (b.innerHTML.includes('<strong>' + respCorrecta + '</strong>')) {
             b.classList.add('ok');
             b.innerHTML += ' ✅';
         } else if (b === btn && !isCorrect) {
@@ -108,11 +111,11 @@ function checkAns(userAns, btn) {
         }
     });
 
-    // Mostrar el cuadro de motivación (columna "saber")
     var fbWrap = document.getElementById('fbWrap');
     var fb = document.createElement('div');
     fb.className = 'fb ' + (isCorrect ? 'ok' : 'ko');
     
+    // Mostramos la motivación de la columna "saber"
     fb.innerHTML = `
         <div class="fb-title">${isCorrect ? '🌟 ¡Correcto!' : '💡 Ánimo'}</div>
         <div class="saber-box">
@@ -124,8 +127,8 @@ function checkAns(userAns, btn) {
     document.getElementById('btnNext').disabled = false;
 }
 
-// Nota: Asegúrate de que las funciones de carga de datos (fetch) 
-// estén presentes al final para que conecte con tu Google Sheets.
+function nextQ(){ if(idx < exam.length-1){ idx++; showQ(); } }
+function prevQ(){ if(idx > 0){ idx--; showQ(); } }
 </script>
 </body>
 </html>
