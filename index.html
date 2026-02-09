@@ -6,7 +6,7 @@
     <title>ENFOCADOS - Plataforma de Oposiciones</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        /* --- FORMATO ORIGINAL PROFESIONAL --- */
+        /* ESTILOS ORIGINALES ENFOCADOS */
         *{margin:0;padding:0;box-sizing:border-box}
         :root{--Y:rgb(250,250,0);--Yd:rgb(215,215,0);--D:#2c3e50;--D2:#1a252f;--V:#10b981;--R:#ef4444;--G:#64748b;--B:#e2e8f0}
         body{font-family:'Inter',sans-serif;background:linear-gradient(160deg,#fffef0 0%,#fff9c4 100%);min-height:100vh;color:#1e293b;line-height:1.6}
@@ -19,13 +19,14 @@
         .card{background:#fff;border-radius:18px;padding:2rem;box-shadow:0 4px 24px rgba(0,0,0,.08);border:2px solid var(--Y);margin-bottom:1.4rem}
         .ubar{background:linear-gradient(135deg,var(--Y),rgb(255,255,100));padding:.78rem 1.1rem;border-radius:10px;display:flex;justify-content:space-between;align-items:center;margin-bottom:1.4rem;font-weight:600}
         
-        /* Contador y Progreso */
+        /* Contador y Preguntas */
         .qhdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;border-bottom:2px solid var(--Y);padding-bottom:5px}
         .pbar-bg{background:var(--B);border-radius:4px;height:8px;margin-bottom:1.2rem;overflow:hidden}
-        .pbar{background:var(--Y);height:100%;transition:width .4s ease}
-
-        /* Preguntas y Opciones */
+        .pbar{background:var(--Y);height:100%;transition:width .4s ease; border-radius:4px}
+        
         #qTxt{font-size:1.2rem; font-weight:700; color:var(--D2); margin-bottom:1.5rem; white-space: pre-wrap;}
+        
+        /* Opciones con el formato circular */
         .opt{display:flex;align-items:center;gap:.85rem;padding:1.1rem;border:2px solid var(--B);border-radius:12px;cursor:pointer;background:#fff;margin-bottom:12px;transition:0.2s}
         .opt:hover:not(.dis){border-color:var(--Y);background:#fffef0;transform:translateX(4px)}
         .opt.dis{pointer-events:none;opacity:0.8}
@@ -36,16 +37,19 @@
         .opt.ok .oltr{background:var(--V);color:#fff}
         .opt.ko .oltr{background:var(--R);color:#fff}
 
-        /* Explicación (Feedback) */
+        /* Explicación / Saber */
         .fb{margin-top:1.5rem;padding:1.5rem;border-radius:12px;border-left:5px solid; display:none; animation:fadeIn 0.4s}
-        .fb.ok{background:#f0fdf4;border-left-color:var(--V);display:block}
-        .fb.ko{background:#fef2f2;border-left-color:var(--R);display:block}
+        .fb.show{display:block}
+        .fb.ok{background:#f0fdf4;border-left-color:var(--V)}
+        .fb.ko{background:#fef2f2;border-left-color:var(--R)}
         .fb-t{font-weight:800;margin-bottom:10px;font-family:'Montserrat'}
-        .fb-body{white-space: pre-wrap; font-size: 0.95rem}
+        .fb-body{white-space: pre-wrap; font-size: 1rem; color: var(--D2)}
 
-        .btn{width:100%;padding:.88rem 1.5rem;background:var(--Y);color:var(--D);border:none;border-radius:10px;font-size:1.05rem;font-weight:700;cursor:pointer;font-family:'Montserrat'}
+        .btn{width:100%;padding:.88rem 1.5rem;background:var(--Y);color:var(--D);border:none;border-radius:10px;font-size:1.05rem;font-weight:700;cursor:pointer;font-family:'Montserrat'; transition: 0.2s}
+        .btn:hover:not(:disabled){background:var(--Yd)}
+        .btn:disabled{background:#e2e8f0; color:#94a3b8; cursor:not-allowed}
         .hidden{display:none!important}
-        @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+        @keyframes fadeIn{from{opacity:0; transform:translateY(10px)}to{opacity:1; transform:translateY(0)}}
     </style>
 </head>
 <body>
@@ -58,45 +62,56 @@
     </header>
 
     <div id="secLogin" class="card">
-        <h2 style="text-align:center;margin-bottom:1.5rem">Panel de Acceso</h2>
-        <input type="email" id="inEmail" placeholder="Correo autorizado" style="width:100%;padding:.8rem;border-radius:10px;border:2px solid var(--B);margin-bottom:1rem">
-        <button class="btn" onclick="doLogin()">Entrar</button>
+        <h2 style="text-align:center;margin-bottom:1.5rem; font-family:'Montserrat'">Acceso Alumnos</h2>
+        <input type="email" id="inEmail" placeholder="Introduce tu email autorizado" style="width:100%;padding:.8rem;border-radius:10px;border:2px solid var(--B);margin-bottom:1rem; font-family:inherit">
+        <button class="btn" onclick="doLogin()">Entrar al Sistema</button>
     </div>
 
     <div id="secConfig" class="card hidden">
-        <div class="ubar"><span id="cfgUser"></span><span onclick="location.reload()" style="cursor:pointer">Cerrar Sesión</span></div>
-        <div style="margin-bottom:1rem">
-            <label>Nº Preguntas:</label>
-            <input type="number" id="inNum" value="10" style="width:60px;padding:5px">
+        <div class="ubar"><span id="cfgUser"></span><span onclick="location.reload()" style="cursor:pointer; font-size: 0.8rem">SALIR</span></div>
+        <div style="margin-bottom:1.5rem">
+            <label style="display:block; font-weight:600; margin-bottom:5px">Nº de preguntas:</label>
+            <input type="number" id="inNum" value="10" min="1" style="width:100%;padding:.8rem;border-radius:10px;border:2px solid var(--B)">
         </div>
-        <div style="margin-bottom:1rem">
-            <label>Materia:</label>
-            <select id="selMateria" style="width:100%;padding:8px"></select>
+        <div style="margin-bottom:1.5rem">
+            <label style="display:block; font-weight:600; margin-bottom:5px">Materia específica:</label>
+            <select id="selMateria" style="width:100%;padding:.8rem;border-radius:10px;border:2px solid var(--B)"></select>
         </div>
-        <button class="btn" onclick="startExam()">Iniciar Evaluación</button>
+        <button class="btn" onclick="startExam()">Comenzar Test</button>
     </div>
 
     <div id="secQ" class="card hidden">
-        <div class="qhdr"><span id="qNum" style="font-weight:800"></span><span id="qProg"></span></div>
+        <div class="qhdr">
+            <span id="qNum" style="font-weight:800; font-family:'Montserrat'"></span>
+            <span id="qProg" style="font-size:0.9rem"></span>
+        </div>
         <div class="pbar-bg"><div id="pBar" class="pbar"></div></div>
         <div id="qTxt"></div>
         <div id="optsWrap"></div>
+        
         <div id="fbWrap" class="fb">
             <div id="fbTitle" class="fb-t"></div>
             <div id="fbContent" class="fb-body"></div>
         </div>
-        <button id="btnNext" class="btn" style="margin-top:1.5rem" onclick="nextQ()" disabled>Continuar</button>
+        
+        <button id="btnNext" class="btn" style="margin-top:1.5rem" onclick="nextQ()" disabled>Siguiente Pregunta</button>
     </div>
 
     <div id="secRes" class="card hidden" style="text-align:center">
-        <h2>Evaluación Finalizada</h2>
-        <div id="rPct" style="font-size:4rem; font-weight:800; margin:1rem 0"></div>
-        <button class="btn" onclick="location.reload()">Reiniciar</button>
+        <h2 style="font-family:'Montserrat'">Resultado del Test</h2>
+        <div id="rPct" style="font-size:4.5rem; font-weight:800; color:var(--D); margin:1rem 0"></div>
+        <div style="margin-bottom:2rem; font-size:1.1rem">
+            Aciertos: <span id="rOk" style="color:var(--V); font-weight:700"></span> | 
+            Fallos: <span id="rKo" style="color:var(--R); font-weight:700"></span>
+        </div>
+        <button class="btn" onclick="location.reload()">Repetir Test</button>
     </div>
 </div>
 
 <script>
+// URL DE TU API (VERIFICA QUE SEA ESTA)
 const apiUrl = 'https://script.google.com/macros/s/AKfycbxTAER90Zz9hEsdXc1W86YZClONb09IrnrSbRb4K3vJ4nBVPKHlzfVPCnw7aDJF1ivW/exec';
+
 let allQuestions = [], exam = [], idx = 0, correctCount = 0, answered = false;
 
 function showScreen(id){
@@ -105,44 +120,70 @@ function showScreen(id){
 }
 
 function fetchJSONP(url, callback) {
-    const name = 'jsonp_' + Date.now();
-    window[name] = (data) => { delete window[name]; callback(data); };
-    const s = document.createElement('script');
-    s.src = url + (url.includes('?') ? '&' : '?') + 'callback=' + name;
-    document.body.appendChild(s);
+    const name = 'jsonp_' + Date.now() + Math.floor(Math.random()*1000);
+    window[name] = (data) => {
+        delete window[name];
+        document.body.removeChild(script);
+        callback(data);
+    };
+    const script = document.createElement('script');
+    script.src = url + (url.includes('?') ? '&' : '?') + 'callback=' + name;
+    document.body.appendChild(script);
 }
 
+// ESTA FUNCIÓN ES VITAL PARA QUE LOS DATOS CARGUEN
 function parseTable(res) {
+    if(!res || !res.rows) return [];
     return res.rows.map(row => {
         let obj = {};
-        res.headers.forEach((h, i) => obj[h.toLowerCase().trim()] = row[i]);
+        res.headers.forEach((h, i) => {
+            if(h) obj[h.toLowerCase().trim()] = row[i];
+        });
         return obj;
     });
 }
 
 function doLogin() {
     const email = document.getElementById('inEmail').value.trim().toLowerCase();
+    if(!email) return alert("Introduce tu email");
+
     fetchJSONP(apiUrl + '?type=users', (res) => {
         const users = parseTable(res);
-        const user = users.find(u => u.correo && u.correo.toLowerCase() === email);
+        const user = users.find(u => u.correo && u.correo.toLowerCase().trim() === email);
+        
         if(user) {
             fetchJSONP(apiUrl + '?type=questions', (qRes) => {
                 allQuestions = parseTable(qRes);
-                document.getElementById('cfgUser').innerText = "Hola, " + (user.usuario || "Opositor");
+                if(allQuestions.length === 0) {
+                    alert("No se pudieron cargar las preguntas. Revisa el Excel.");
+                    return;
+                }
+                document.getElementById('cfgUser').innerText = "HOLA, " + (user.usuario || email).toUpperCase();
+                
+                // Cargar Materias
                 const mats = [...new Set(allQuestions.map(q => q.materia))].filter(m => m);
                 const sel = document.getElementById('selMateria');
-                sel.innerHTML = '<option value="">Todas las materias</option>';
-                mats.forEach(m => sel.innerHTML += `<option value="${m}">${m}</option>`);
+                sel.innerHTML = '<option value="">--- Todas las materias ---</option>';
+                mats.forEach(m => {
+                    let o = document.createElement('option');
+                    o.value = m; o.innerText = m;
+                    sel.appendChild(o);
+                });
                 showScreen('secConfig');
             });
-        } else alert("Email no autorizado");
+        } else {
+            alert("Email no autorizado. Contacta con soporte.");
+        }
     });
 }
 
 function startExam() {
-    const n = parseInt(document.getElementById('inNum').value);
+    const n = parseInt(document.getElementById('inNum').value) || 10;
     const m = document.getElementById('selMateria').value;
     const pool = m ? allQuestions.filter(q => q.materia === m) : allQuestions;
+    
+    if(pool.length === 0) return alert("No hay preguntas disponibles.");
+    
     exam = pool.sort(() => 0.5 - Math.random()).slice(0, n);
     idx = 0; correctCount = 0;
     showQ();
@@ -152,70 +193,16 @@ function startExam() {
 function showQ() {
     answered = false;
     const q = exam[idx];
+    
+    // UI Básica
     document.getElementById('qNum').innerText = "PREGUNTA " + (idx + 1);
     document.getElementById('qProg').innerText = (idx + 1) + " de " + exam.length;
     document.getElementById('pBar').style.width = ((idx + 1) / exam.length * 100) + "%";
-    document.getElementById('qTxt').innerText = q.pregunta;
+    document.getElementById('qTxt').innerText = q.pregunta || "Sin texto de pregunta";
     
-    // --- LÓGICA DE PROCESAMIENTO DE OPCIONES (CLAUDE + MEJORAS) ---
+    // LÓGICA DE PROCESAMIENTO DE OPCIONES (CLAUDE LOGIC)
     let rawText = (q.opciones || "").toString();
     let opts = [];
-    let tempOpts = rawText.split('\n').map(o => o.trim()).filter(o => o.length > 0);
-
-    if(tempOpts.length >= 2) {
-        opts = tempOpts;
-    } else {
-        opts = rawText.split(/(?=[a-d]\))/i).map(o => o.trim()).filter(o => o.length > 0);
-    }
-    opts = opts.map(opt => opt.replace(/^[a-d]\)\s*/i, '').trim());
-
-    const wrap = document.getElementById('optsWrap');
-    wrap.innerHTML = "";
-    document.getElementById('fbWrap').className = "fb";
-    document.getElementById('btnNext').disabled = true;
-
-    const letters = ['A', 'B', 'C', 'D'];
-    opts.forEach((text, i) => {
-        const letter = letters[i];
-        const div = document.createElement('div');
-        div.className = 'opt';
-        div.innerHTML = `<div class="oltr">${letter}</div><div style="flex:1">${text}</div>`;
-        div.onclick = () => {
-            if(answered) return;
-            answered = true;
-            const correcta = (q.respuesta || "").toString().trim().toUpperCase();
-            const esOk = (letter === correcta);
-            if(esOk) { div.classList.add('ok'); correctCount++; } 
-            else { 
-                div.classList.add('ko');
-                Array.from(wrap.children).forEach(el => {
-                    if(el.querySelector('.oltr').innerText === correcta) el.classList.add('ok');
-                });
-            }
-            
-            // --- MOSTRAR EXPLICACIÓN (COLUMNA SABER) ---
-            const fb = document.getElementById('fbWrap');
-            fb.className = "fb " + (esOk ? 'ok' : 'ko');
-            document.getElementById('fbTitle').innerText = esOk ? "✓ ¡CORRECTO!" : "✗ INCORRECTO";
-            // Aquí busca en 'saber' o 'motivacion'
-            const explicacion = q.saber || q.motivacion || "Analiza esta pregunta en tu temario para reforzar.";
-            document.getElementById('fbContent').innerHTML = `<b>Respuesta correcta: ${correcta}</b><br><br>${explicacion}`;
-            
-            document.getElementById('btnNext').disabled = false;
-            Array.from(wrap.children).forEach(el => el.classList.add('dis'));
-        };
-        wrap.appendChild(div);
-    });
-}
-
-function nextQ() {
-    idx++;
-    if(idx < exam.length) showQ();
-    else {
-        document.getElementById('rPct').innerText = Math.round(correctCount/exam.length*100) + "%";
-        showScreen('secRes');
-    }
-}
-</script>
-</body>
-</html>
+    
+    // 1. Intentar por saltos de línea
+    let tempOpts = rawText.split('\n').map(o => o.trim()).filter(o => o.length
