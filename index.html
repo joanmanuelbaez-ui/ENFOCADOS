@@ -6,6 +6,7 @@
 <title>ENFOCADOS - Plataforma de Oposiciones</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+/* SE MANTIENE TU DISEÑO ORIGINAL INTACTO */
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--Y:rgb(250,250,0);--Yd:rgb(215,215,0);--D:#2c3e50;--D2:#1a252f;--V:#10b981;--R:#ef4444;--G:#64748b;--B:#e2e8f0}
 body{font-family:'Inter',sans-serif;background:linear-gradient(160deg,#fffef0 0%,#fff9c4 100%);min-height:100vh;color:#1e293b;line-height:1.6}
@@ -78,11 +79,9 @@ input:focus{outline:none;border-color:var(--Y);box-shadow:0 0 0 4px rgba(250,250
 </div>
 
 <script>
-// CONFIGURACIÓN
 const apiUrl = 'https://script.google.com/macros/s/AKfycbxTAER90Zz9hEsdXc1W86YZClONb09IrnrSbRb4K3vJ4nBVPKHlzfVPCnw7aDJF1ivW/exec';
 let allQ = [], exam = [], idx = 0, correct = [];
 
-// MOTOR DE CARGA
 function showScreen(id) {
     document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
     document.getElementById(id).classList.add('active');
@@ -152,9 +151,10 @@ function showQ() {
     document.getElementById('fbWrap').innerHTML = "";
     document.getElementById('btnNext').disabled = true;
 
-    // --- SOLUCIÓN DE SALTO DE LÍNEA (Lógica Claude) ---
-    // Dividimos el texto por saltos de línea reales (\n)
-    var opts = (q.opciones || '').split('\n').filter(function(o){return o.trim()});
+    // --- MEJORA PARA SALTOS DE LÍNEA ---
+    // Esta línea detecta tanto saltos de línea reales (\n) como el texto "/n" literal
+    let rawOpts = (q.opciones || "").toString();
+    let opts = rawOpts.split(/\n|\/n/).map(o => o.trim()).filter(o => o !== "");
 
     const wrap = document.getElementById('optsWrap');
     wrap.innerHTML = "";
@@ -174,18 +174,17 @@ function showQ() {
             
             Array.from(wrap.children).forEach(o => o.classList.add('dis'));
             
-            // Marcar correcta en verde
             Array.from(wrap.children).forEach(o => {
                 if(o.dataset.letter === respCorrecta) o.classList.add('ok');
             });
             
-            // Si falló, marcar la seleccionada en rojo
             if(!esOk) div.classList.add('ko');
             
+            const explicacion = q.saber || q.motivacion || '¡Sigue adelante!';
             document.getElementById('fbWrap').innerHTML = `
                 <div class="fb ${esOk ? 'ok' : 'ko'}">
                     <div class="fb-t">${esOk ? '✓ ¡Correcto!' : '✗ Incorrecto'}</div>
-                    <p>${q.saber || '¡Sigue adelante!'}</p>
+                    <p><strong>Explicación:</strong> ${explicacion}</p>
                 </div>`;
             document.getElementById('btnNext').disabled = false;
         };
