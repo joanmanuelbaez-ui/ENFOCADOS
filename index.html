@@ -1,152 +1,237 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ENFOCADOS - Recuperado</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{--Y:rgb(250,250,0);--Yd:rgb(215,215,0);--D:#2c3e50;--D2:#1a252f;--V:#10b981;--R:#ef4444;--G:#64748b;--B:#e2e8f0}
-body{font-family:'Inter',sans-serif;background:linear-gradient(160deg,#fffef0 0%,#fff9c4 100%);min-height:100vh;color:#1e293b;line-height:1.6}
-.wrap{max-width:860px;margin:0 auto;padding:1.8rem 1.2rem}
-header{text-align:center;margin-bottom:1.6rem}
-h1{font-family:'Montserrat',sans-serif;font-size:2.5rem;font-weight:800;color:var(--D)}
-.card{background:#fff;border-radius:18px;padding:2rem;box-shadow:0 4px 24px rgba(0,0,0,.08);border:2px solid var(--Y);margin-bottom:1.4rem; display:none}
-.active{display:block!important}
-.field{margin-bottom:1.1rem}
-.field label{display:block;margin-bottom:.3rem;font-weight:600}
-input, select{width:100%;padding:.82rem;border:2px solid var(--B);border-radius:10px;font-family:inherit}
-.btn{width:100%;padding:1rem;background:var(--Y);color:var(--D);border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Montserrat'}
-.btn:hover{background:var(--Yd)}
-.opt{display:flex;align-items:center;gap:.85rem;padding:1rem;border:2px solid var(--B);border-radius:11px;cursor:pointer;margin-bottom:10px}
-.opt.ok{border-color:var(--V);background:#f0fdf4}
-.opt.ko{border-color:var(--R);background:#fef2f2}
-.oltr{width:30px;height:30px;border-radius:50%;background:var(--B);display:flex;align-items:center;justify-content:center;font-weight:700}
-.fb{margin-top:1.3rem;padding:1.2rem;border-radius:10px;border-left:4px solid var(--Y)}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENFOCADOS - Plataforma de Oposiciones</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{--Y:rgb(250,250,0);--Yd:rgb(215,215,0);--D:#2c3e50;--D2:#1a252f;--V:#10b981;--R:#ef4444;--G:#64748b;--B:#e2e8f0}
+        body{font-family:'Inter',sans-serif;background:linear-gradient(160deg,#fffef0 0%,#fff9c4 100%);min-height:100vh;color:#1e293b;line-height:1.6}
+        .wrap{max-width:860px;margin:0 auto;padding:1.8rem 1.2rem}
+        header{text-align:center;margin-bottom:1.6rem}
+        header svg{display:block;margin:0 auto .4rem}
+        h1{font-family:'Montserrat',sans-serif;font-size:3rem;font-weight:800;color:var(--D);letter-spacing:-1px}
+        .sub{color:var(--G);font-size:1.02rem;font-weight:500;text-transform:uppercase;letter-spacing:1px}
+        .card{background:#fff;border-radius:18px;padding:2rem;box-shadow:0 4px 24px rgba(0,0,0,.08);border:2px solid var(--Y);margin-bottom:1.4rem}
+        .field{margin-bottom:1.1rem;text-align:left}
+        .field label{display:block;margin-bottom:.3rem;color:var(--D);font-weight:600;font-size:.9rem}
+        .field input, .field select{width:100%;padding:.82rem 1rem;border:2px solid var(--B);border-radius:10px;font-size:1rem;font-family:inherit}
+        .btn{width:100%;padding:.88rem 1.5rem;background:var(--Y);color:var(--D);border:none;border-radius:10px;font-size:1.05rem;font-weight:700;cursor:pointer;font-family:'Montserrat',sans-serif;transition:all .2s;box-shadow:0 3px 8px rgba(250,250,0,0.3)}
+        .btn:hover{background:var(--Yd);transform:translateY(-1px)}
+        .btn:disabled{background:#cbd5e1;color:#94a3b8;cursor:not-allowed}
+        .ubar{background:linear-gradient(135deg,var(--Y),rgb(255,255,100));padding:.78rem 1.1rem;border-radius:10px;display:flex;justify-content:space-between;align-items:center;margin-bottom:1.4rem;font-weight:600}
+        .spin-wrap{text-align:center;padding:2.8rem 0;color:var(--G)}
+        .spin{border:3px solid #eee;border-top:3px solid var(--Y);border-radius:50%;width:40px;height:40px;animation:sp .9s linear infinite;margin:0 auto .9rem}
+        @keyframes sp{to{transform:rotate(360deg)}}
+        .qhdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;border-bottom:2px solid var(--Y);padding-bottom:5px}
+        .pbar-bg{background:var(--B);border-radius:4px;height:6px;margin-bottom:1.2rem;overflow:hidden}
+        .pbar{background:var(--Y);height:100%;transition:width .4s ease}
+        .opt{display:flex;align-items:center;gap:.85rem;padding:1rem;border:2px solid var(--B);border-radius:11px;cursor:pointer;background:#fff;margin-bottom:10px;transition:0.2s}
+        .opt:hover:not(.dis){border-color:var(--Y);background:#fffef0;transform:translateX(3px)}
+        .opt.dis{pointer-events:none;opacity:0.7}
+        .opt.ok{border-color:var(--V);background:#f0fdf4}
+        .opt.ko{border-color:var(--R);background:#fef2f2}
+        .oltr{width:30px;height:30px;border-radius:50%;background:var(--B);display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:0.9rem;color:var(--D)}
+        .opt.ok .oltr{background:var(--V);color:#fff}
+        .opt.ko .oltr{background:var(--R);color:#fff}
+        .fb{margin-top:1.3rem;padding:1.2rem;border-radius:10px;animation:slideIn 0.3s ease}
+        .fb.ok{background:#f0fdf4;border-left:4px solid var(--V)}
+        .fb.ko{background:#fef2f2;border-left:4px solid var(--R)}
+        .fb-t{font-weight:700;margin-bottom:8px;font-size:1rem}
+        .fb.ok .fb-t{color:var(--V)}
+        .fb.ko .fb-t{color:var(--R)}
+        .fb-body{font-size:0.95rem;line-height:1.6;color:var(--D2)}
+        @keyframes slideIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+        .hidden{display:none!important}
+    </style>
 </head>
 <body>
 
 <div class="wrap">
-    <header><h1>ENFOCADOS</h1></header>
+    <header>
+        <svg width="60" height="60" viewBox="0 0 68 68" fill="none">
+            <circle cx="34" cy="34" r="32" fill="rgb(250,250,0)" stroke="#2c3e50" stroke-width="3"/>
+            <path d="M22 34L30 42L46 26" stroke="#2c3e50" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h1>ENFOCADOS</h1>
+        <div class="sub">Plataforma de Preparación Profesional</div>
+    </header>
 
-    <div id="secLogin" class="card active">
-        <div class="field"><label>Email</label><input type="email" id="inEmail" placeholder="tu@email.com"></div>
+    <div id="secLogin" class="card">
+        <h2 style="text-align:center;margin-bottom:1.5rem;font-family:'Montserrat'">Panel de Acceso</h2>
+        <div class="field">
+            <label>Correo Electrónico Autorizado</label>
+            <input type="email" id="inEmail" placeholder="ejemplo@correo.com">
+        </div>
         <button class="btn" onclick="doLogin()">Entrar</button>
     </div>
 
-    <div id="secLoading" class="card"><p style="text-align:center">Cargando base de datos...</p></div>
-
-    <div id="secConfig" class="card">
-        <h3 id="cfgUser" style="margin-bottom:1rem"></h3>
-        <div class="field"><label>Nº de preguntas</label><input type="number" id="inNum" value="10"></div>
-        <div class="field"><label>Materia</label><select id="selMateria"></select></div>
-        <button class="btn" onclick="startExam()">Empezar</button>
+    <div id="secLoading" class="card hidden">
+        <div class="spin-wrap">
+            <div class="spin"></div>
+            <p id="loadMsg">Sincronizando con base de datos...</p>
+        </div>
     </div>
 
-    <div id="secQ" class="card">
-        <div id="qTxt" style="font-weight:700; margin-bottom:1.5rem"></div>
+    <div id="secConfig" class="card hidden">
+        <div class="ubar"><span id="cfgUser"></span><span style="font-size:0.8rem; cursor:pointer" onclick="location.reload()">Cerrar Sesión</span></div>
+        <h3 style="margin-bottom:1.2rem; font-family:'Montserrat'">Configuración del Test</h3>
+        <div class="field">
+            <label>Cantidad de preguntas</label>
+            <input type="number" id="inNum" value="10" min="1" max="100">
+        </div>
+        <div class="field">
+            <label>Materia o Bloque</label>
+            <select id="selMateria"><option value="">Todos los bloques</option></select>
+        </div>
+        <button class="btn" onclick="startExam()">Iniciar Evaluación</button>
+    </div>
+
+    <div id="secQ" class="card hidden">
+        <div class="qhdr"><span id="qNum" style="font-weight:800; color:var(--D)"></span><span id="qProg" style="font-size:0.9rem"></span></div>
+        <div class="pbar-bg"><div id="pBar" class="pbar"></div></div>
+        <div id="qTxt" style="font-size:1.15rem; font-weight:600; margin-bottom:1.5rem; color:var(--D2)"></div>
         <div id="optsWrap"></div>
         <div id="fbWrap"></div>
-        <button id="btnNext" class="btn" style="margin-top:1rem" onclick="nextQ()" disabled>Siguiente</button>
+        <button id="btnNext" class="btn" style="margin-top:1.5rem" onclick="nextQ()" disabled>Continuar</button>
     </div>
 
-    <div id="secRes" class="card" style="text-align:center">
-        <h2>Resultado</h2>
-        <div id="rPct" style="font-size:3rem; font-weight:800"></div>
-        <button class="btn" onclick="location.reload()">Repetir</button>
+    <div id="secRes" class="card hidden" style="text-align:center">
+        <h2 style="font-family:'Montserrat'; margin-bottom:0.5rem">Evaluación Finalizada</h2>
+        <div id="rPct" style="font-size:4.5rem; font-weight:800; color:var(--D); margin:1rem 0"></div>
+        <div style="display:flex; justify-content:center; gap:2rem; margin-bottom:2rem">
+            <div><b id="rOk" style="color:var(--V);font-size:1.6rem"></b><br><small>Aciertos</small></div>
+            <div><b id="rKo" style="color:var(--R);font-size:1.6rem"></b><br><small>Errores</small></div>
+        </div>
+        <button class="btn" onclick="location.reload()">Reiniciar Plataforma</button>
     </div>
 </div>
 
 <script>
-// URL RECUPERADA DE TU ARCHIVO ORIGINAL QUE SÍ FUNCIONABA
+// URL DE TU API GOOGLE SHEETS
 const apiUrl = 'https://script.google.com/macros/s/AKfycbxTAER90Zz9hEsdXc1W86YZClONb09IrnrSbRb4K3vJ4nBVPKHlzfVPCnw7aDJF1ivW/exec';
 
-let allQ = [], exam = [], idx = 0, correct = [];
+let allQuestions = [], exam = [], idx = 0, answers = [], correct = [], curUser = null;
 
 function showScreen(id) {
-    document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
+    document.getElementById(id).classList.remove('hidden');
 }
 
-function fetchJSONP(url, cb) {
-    const name = 'callback_' + Math.round(100000 * Math.random());
-    window[name] = function(data) { delete window[name]; document.body.removeChild(s); cb(data); };
-    const s = document.createElement('script');
-    s.src = url + (url.indexOf('?') >= 0 ? '&' : '?') + 'callback=' + name;
-    document.body.appendChild(s);
+// Función para llamar a la API evitando problemas de CORS
+function fetchJSONP(url, callback) {
+    const callbackName = 'jsonp_' + Math.round(100000 * Math.random());
+    window[callbackName] = function(data) {
+        delete window[callbackName];
+        document.body.removeChild(script);
+        callback(data);
+    };
+    const script = document.createElement('script');
+    script.src = url + (url.indexOf('?') >= 0 ? '&' : '?') + 'callback=' + callbackName;
+    document.body.appendChild(script);
 }
 
-function parse(res) {
-    return res.rows.map(row => {
-        let o = {};
-        res.headers.forEach((h, i) => { if(h) o[h.toLowerCase().trim()] = row[i]; });
-        return o;
+function parseTable(headers, rows) {
+    if (!headers || !rows) return [];
+    return rows.map(row => {
+        let obj = {};
+        headers.forEach((h, i) => { if(h) obj[h.toLowerCase().trim()] = row[i]; });
+        return obj;
     });
 }
 
 function doLogin() {
     const email = document.getElementById('inEmail').value.trim().toLowerCase();
+    if(!email) { alert("Introduce tu email"); return; }
     showScreen('secLoading');
-    fetchJSONP(apiUrl + '?type=users', (res) => {
-        const users = parse(res);
+    fetchJSONP(apiUrl + '?type=users', function(res) {
+        const users = parseTable(res.headers, res.rows);
         const user = users.find(u => u.correo && u.correo.toLowerCase().trim() === email);
         if(user) {
-            fetchJSONP(apiUrl + '?type=questions', (qRes) => {
-                allQ = parse(qRes);
-                const mats = [...new Set(allQ.map(q => q.materia).filter(m => m))];
-                const sel = document.getElementById('selMateria');
-                sel.innerHTML = '<option value="">Todas</option>';
-                mats.forEach(m => sel.innerHTML += `<option value="${m}">${m}</option>`);
-                document.getElementById('cfgUser').innerText = "Hola " + (user.usuario || email);
+            curUser = user;
+            fetchJSONP(apiUrl + '?type=questions', function(qRes) {
+                allQuestions = parseTable(qRes.headers, qRes.rows);
+                setupConfig();
                 showScreen('secConfig');
             });
         } else {
-            alert("No autorizado");
+            alert("Acceso denegado: Correo no registrado.");
             showScreen('secLogin');
         }
     });
 }
 
+function setupConfig() {
+    document.getElementById('cfgUser').textContent = "Usuario: " + (curUser.usuario || "Autorizado");
+    const materias = [...new Set(allQuestions.map(q => q.materia).filter(m => m))];
+    const sel = document.getElementById('selMateria');
+    sel.innerHTML = '<option value="">Todos los bloques</option>';
+    materias.forEach(m => {
+        const opt = document.createElement('option');
+        opt.value = m; opt.textContent = m;
+        sel.appendChild(opt);
+    });
+}
+
 function startExam() {
-    const n = parseInt(document.getElementById('inNum').value) || 10;
-    const m = document.getElementById('selMateria').value;
-    let p = m ? allQ.filter(q => q.materia === m) : allQ;
-    exam = p.sort(() => 0.5 - Math.random()).slice(0, n);
-    idx = 0; correct = [];
+    const num = parseInt(document.getElementById('inNum').value) || 10;
+    const mat = document.getElementById('selMateria').value;
+    const pool = mat ? allQuestions.filter(q => q.materia === mat) : allQuestions;
+    exam = pool.sort(() => 0.5 - Math.random()).slice(0, num);
+    idx = 0; answers = []; correct = [];
     showQ();
     showScreen('secQ');
 }
 
 function showQ() {
     const q = exam[idx];
-    document.getElementById('qTxt').innerText = q.pregunta;
-    document.getElementById('fbWrap').innerHTML = "";
-    document.getElementById('btnNext').disabled = true;
+    document.getElementById('qNum').textContent = "Pregunta " + (idx + 1);
+    document.getElementById('qProg').textContent = (idx + 1) + " de " + exam.length;
+    document.getElementById('pBar').style.width = ((idx + 1) / exam.length * 100) + "%";
+    document.getElementById('qTxt').textContent = q.pregunta;
     
-    // SOLUCIÓN PARA OPCIONES (SPLIT POR SALTO DE LÍNEA)
-    let opts = (q.opciones || "").toString().split('\n').filter(o => o.trim() !== "");
+    // Procesa las opciones separadas por saltos de línea (\n)
+    let rawOpts = q.opciones || "";
+    let opts = rawOpts.toString().split('\n').map(o => o.trim()).filter(o => o !== "");
+    
     const wrap = document.getElementById('optsWrap');
     wrap.innerHTML = "";
-    
-    const letters = ['A','B','C','D'];
-    opts.forEach((txt, i) => {
-        const L = letters[i];
-        const d = document.createElement('div');
-        d.className = 'opt';
-        d.innerHTML = `<div class="oltr">${L}</div><div>${txt}</div>`;
-        d.onclick = () => {
-            if(document.querySelector('.opt.dis')) return;
-            const okResp = (q.respuesta || "").toString().trim().toUpperCase();
-            const isOk = L === okResp;
+    document.getElementById('fbWrap').innerHTML = "";
+    document.getElementById('btnNext').disabled = true;
+
+    const letters = ['A', 'B', 'C', 'D', 'E'];
+    opts.forEach((optTxt, i) => {
+        const letter = letters[i] || '?';
+        const div = document.createElement('div');
+        div.className = 'opt';
+        div.innerHTML = `<div class="oltr">${letter}</div><div>${optTxt}</div>`;
+        div.dataset.letter = letter;
+        
+        div.onclick = () => {
+            if(answers[idx] !== undefined) return;
+            const respCorrecta = (q.respuesta || "").toString().trim().toUpperCase();
+            const isOk = letter === respCorrecta;
+            answers[idx] = letter;
             correct[idx] = isOk;
-            document.querySelectorAll('.opt').forEach(el => el.classList.add('dis'));
-            if(isOk) d.classList.add('ok'); else d.classList.add('ko');
-            document.getElementById('fbWrap').innerHTML = `<div class="fb"><strong>Explicación:</strong> ${q.saber || '¡Correcto!'}</div>`;
+            
+            // Bloquear y mostrar feedback
+            Array.from(wrap.children).forEach(opt => opt.classList.add('dis'));
+            Array.from(wrap.children).forEach(opt => {
+                if(opt.dataset.letter === respCorrecta) opt.classList.add('ok');
+            });
+            if(!isOk) div.classList.add('ko');
+            
+            const explicacion = q.saber || q.motivacion || '¡Sigue así!';
+            document.getElementById('fbWrap').innerHTML = `
+                <div class="fb ${isOk ? 'ok' : 'ko'}">
+                    <div class="fb-t">${isOk ? '✓ ¡Correcto!' : '✗ Incorrecto'}</div>
+                    <div class="fb-body"><strong>Respuesta:</strong> ${respCorrecta}<br><strong>💡 Explicación:</strong> ${explicacion}</div>
+                </div>`;
             document.getElementById('btnNext').disabled = false;
         };
-        wrap.appendChild(d);
+        wrap.appendChild(div);
     });
 }
 
@@ -155,7 +240,9 @@ function nextQ() {
     if(idx < exam.length) showQ();
     else {
         const ok = correct.filter(c => c).length;
-        document.getElementById('rPct').innerText = Math.round(ok/exam.length*100) + "%";
+        document.getElementById('rOk').textContent = ok;
+        document.getElementById('rKo').textContent = exam.length - ok;
+        document.getElementById('rPct').textContent = Math.round(ok/exam.length*100) + "%";
         showScreen('secRes');
     }
 }
