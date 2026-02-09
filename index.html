@@ -6,14 +6,13 @@
 <title>ENFOCADOS - Plataforma de Oposiciones</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-/* SE MANTIENE TU DISEÑO ORIGINAL INTACTO */
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--Y:rgb(250,250,0);--Yd:rgb(215,215,0);--D:#2c3e50;--D2:#1a252f;--V:#10b981;--R:#ef4444;--G:#64748b;--B:#e2e8f0}
 body{font-family:'Inter',sans-serif;background:linear-gradient(160deg,#fffef0 0%,#fff9c4 100%);min-height:100vh;color:#1e293b;line-height:1.6}
 .wrap{max-width:860px;margin:0 auto;padding:1.8rem 1.2rem}
 header{text-align:center;margin-bottom:1.6rem}
 header svg{display:block;margin:0 auto .4rem}
-h1{font-family:'Montserrat';font-weight:800;font-size:2.2rem;letter-spacing:-1px;color:var(--D);text-align:center;margin-bottom:2rem}
+h1{font-family:'Montserrat',sans-serif;font-weight:800;font-size:2.2rem;letter-spacing:-1px;color:var(--D);text-align:center;margin-bottom:2rem}
 .card{background:#fff;border-radius:24px;padding:2.5rem;box-shadow:0 10px 30px rgba(0,0,0,0.08);border:1px solid rgba(250,250,0,0.3);display:none}
 .card.active{display:block;animation:fadeIn 0.4s ease-out}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
@@ -21,7 +20,7 @@ h1{font-family:'Montserrat';font-weight:800;font-size:2.2rem;letter-spacing:-1px
 label{display:block;margin-bottom:.5rem;font-weight:600;color:var(--G);font-size:0.9rem}
 input,select{width:100%;padding:14px 18px;border:2px solid var(--B);border-radius:12px;font-size:1rem;font-family:inherit;transition:all 0.2s}
 input:focus{outline:none;border-color:var(--Y);box-shadow:0 0 0 4px rgba(250,250,0,0.15)}
-.btn{width:100%;padding:16px;background:var(--Y);color:var(--D);border:none;border-radius:14px;font-weight:700;font-size:1rem;cursor:pointer;font-family:'Montserrat';transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:10px}
+.btn{width:100%;padding:16px;background:var(--Y);color:var(--D);border:none;border-radius:14px;font-weight:700;font-size:1rem;cursor:pointer;font-family:'Montserrat',sans-serif;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:10px}
 .btn:hover{background:var(--Yd);transform:translateY(-2px);box-shadow:0 5px 15px rgba(215,215,0,0.3)}
 .btn:disabled{background:var(--B);cursor:not-allowed;transform:none}
 .opt{padding:14px 20px;border:2px solid var(--B);border-radius:14px;margin-bottom:12px;cursor:pointer;transition:0.2s;display:flex;align-items:center;font-weight:500;gap:15px;position:relative}
@@ -79,130 +78,5 @@ input:focus{outline:none;border-color:var(--Y);box-shadow:0 0 0 4px rgba(250,250
 </div>
 
 <script>
-const apiUrl = 'https://script.google.com/macros/s/AKfycbxTAER90Zz9hEsdXc1W86YZClONb09IrnrSbRb4K3vJ4nBVPKHlzfVPCnw7aDJF1ivW/exec';
-let allQ = [], exam = [], idx = 0, correct = [];
-
-function showScreen(id) {
-    document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    window.scrollTo(0,0);
-}
-
-function callGoogle(params, cb) {
-    const callbackName = 'jsonp_' + Math.round(Math.random() * 1000000);
-    window[callbackName] = function(data) {
-        delete window[callbackName];
-        document.body.removeChild(script);
-        cb(data);
-    };
-    const script = document.createElement('script');
-    script.src = apiUrl + params + (params.includes('?') ? '&' : '?') + 'callback=' + callbackName;
-    document.body.appendChild(script);
-}
-
-function processData(res) {
-    if (!res || !res.rows) return [];
-    const headers = res.headers.map(h => h ? h.toLowerCase().trim() : '');
-    return res.rows.map(row => {
-        let obj = {};
-        headers.forEach((h, i) => { if(h) obj[h] = row[i]; });
-        return obj;
-    });
-}
-
-function doLogin() {
-    const email = document.getElementById('inEmail').value.trim().toLowerCase();
-    if(!email) return alert("Introduce tu email");
-    showScreen('secLoading');
-    callGoogle('?type=users', (res) => {
-        const users = processData(res);
-        const user = users.find(u => u.correo && u.correo.toLowerCase().trim() === email);
-        if(user) {
-            callGoogle('?type=questions', (qRes) => {
-                allQ = processData(qRes);
-                const mats = [...new Set(allQ.map(q => q.materia).filter(m => m))];
-                const sel = document.getElementById('selMateria');
-                sel.innerHTML = '<option value="">Todas las materias</option>';
-                mats.forEach(m => sel.innerHTML += `<option value="${m}">${m}</option>`);
-                document.getElementById('cfgUser').innerText = "Hola, " + (user.usuario || email) + " 👋";
-                showScreen('secConfig');
-            });
-        } else {
-            alert("Acceso denegado");
-            showScreen('secLogin');
-        }
-    });
-}
-
-function startExam() {
-    const mat = document.getElementById('selMateria').value;
-    const num = parseInt(document.getElementById('inNum').value) || 10;
-    let pool = mat ? allQ.filter(q => q.materia === mat) : allQ;
-    exam = pool.sort(() => 0.5 - Math.random()).slice(0, num);
-    idx = 0; correct = [];
-    showQ();
-    showScreen('secQ');
-}
-
-function showQ() {
-    const q = exam[idx];
-    document.getElementById('qProg').innerText = `PREGUNTA ${idx + 1} DE ${exam.length}`;
-    document.getElementById('qTxt').innerText = q.pregunta;
-    document.getElementById('fbWrap').innerHTML = "";
-    document.getElementById('btnNext').disabled = true;
-
-    // --- MEJORA PARA SALTOS DE LÍNEA ---
-    // Esta línea detecta tanto saltos de línea reales (\n) como el texto "/n" literal
-    let rawOpts = (q.opciones || "").toString();
-    let opts = rawOpts.split(/\n|\/n/).map(o => o.trim()).filter(o => o !== "");
-
-    const wrap = document.getElementById('optsWrap');
-    wrap.innerHTML = "";
-    const letters = ['A', 'B', 'C', 'D'];
-
-    opts.forEach((txt, i) => {
-        const div = document.createElement('div');
-        div.className = 'opt';
-        const letter = letters[i] || '?';
-        div.dataset.letter = letter;
-        div.innerHTML = `<div class="circle">${letter}</div><span>${txt}</span>`;
-        
-        div.onclick = () => {
-            const respCorrecta = (q.respuesta || "").toString().trim().toUpperCase();
-            const esOk = (letter === respCorrecta);
-            correct[idx] = esOk;
-            
-            Array.from(wrap.children).forEach(o => o.classList.add('dis'));
-            
-            Array.from(wrap.children).forEach(o => {
-                if(o.dataset.letter === respCorrecta) o.classList.add('ok');
-            });
-            
-            if(!esOk) div.classList.add('ko');
-            
-            const explicacion = q.saber || q.motivacion || '¡Sigue adelante!';
-            document.getElementById('fbWrap').innerHTML = `
-                <div class="fb ${esOk ? 'ok' : 'ko'}">
-                    <div class="fb-t">${esOk ? '✓ ¡Correcto!' : '✗ Incorrecto'}</div>
-                    <p><strong>Explicación:</strong> ${explicacion}</p>
-                </div>`;
-            document.getElementById('btnNext').disabled = false;
-        };
-        wrap.appendChild(div);
-    });
-}
-
-function nextQ() {
-    idx++;
-    if(idx < exam.length) showQ();
-    else {
-        const okCount = correct.filter(c => c).length;
-        document.getElementById('rOk').innerText = okCount;
-        document.getElementById('rKo').innerText = exam.length - okCount;
-        document.getElementById('rPct').innerText = Math.round((okCount/exam.length)*100) + "%";
-        showScreen('secRes');
-    }
-}
-</script>
-</body>
-</html>
+// USANDO EXACTAMENTE TU APIURL Y LÓGICA DE CARGA ORIGINAL
+const apiUrl = '
