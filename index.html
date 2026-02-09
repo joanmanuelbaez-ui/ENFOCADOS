@@ -6,250 +6,179 @@
 <title>ENFOCADOS - Plataforma de Oposiciones</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+/* TU DISEÑO PROFESIONAL RECUPERADO */
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--Y:rgb(250,250,0);--Yd:rgb(215,215,0);--D:#2c3e50;--D2:#1a252f;--V:#10b981;--R:#ef4444;--G:#64748b;--B:#e2e8f0}
 body{font-family:'Inter',sans-serif;background:linear-gradient(160deg,#fffef0 0%,#fff9c4 100%);min-height:100vh;color:#1e293b;line-height:1.6}
 .wrap{max-width:860px;margin:0 auto;padding:1.8rem 1.2rem}
 header{text-align:center;margin-bottom:1.6rem}
 header svg{display:block;margin:0 auto .4rem}
-h1{font-family:'Montserrat',sans-serif;font-size:3rem;font-weight:800;color:var(--D);letter-spacing:-1px}
-.sub{color:var(--G);font-size:1.02rem;font-weight:500;text-transform:uppercase;letter-spacing:1px}
-.card{background:#fff;border-radius:18px;padding:2rem;box-shadow:0 4px 24px rgba(0,0,0,.08);border:2px solid var(--Y);margin-bottom:1.4rem}
-.field{margin-bottom:1.1rem;text-align:left}
-.field label{display:block;margin-bottom:.3rem;color:var(--D);font-weight:600;font-size:.9rem}
-.field input, .field select{width:100%;padding:.82rem 1rem;border:2px solid var(--B);border-radius:10px;font-size:1rem;font-family:inherit}
-.btn{width:100%;padding:.88rem 1.5rem;background:var(--Y);color:var(--D);border:none;border-radius:10px;font-size:1.05rem;font-weight:700;cursor:pointer;font-family:'Montserrat',sans-serif;transition:all .2s;box-shadow:0 3px 8px rgba(250,250,0,0.3)}
-.btn:hover{background:var(--Yd);transform:translateY(-1px)}
-.btn:disabled{background:#cbd5e1;color:#94a3b8;cursor:not-allowed}
-.ubar{background:linear-gradient(135deg,var(--Y),rgb(255,255,100));padding:.78rem 1.1rem;border-radius:10px;display:flex;justify-content:space-between;align-items:center;margin-bottom:1.4rem;font-weight:600}
-.spin-wrap{text-align:center;padding:2.8rem 0;color:var(--G)}
-.spin{border:3px solid #eee;border-top:3px solid var(--Y);border-radius:50%;width:40px;height:40px;animation:sp .9s linear infinite;margin:0 auto .9rem}
-@keyframes sp{to{transform:rotate(360deg)}}
-.qhdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;border-bottom:2px solid var(--Y);padding-bottom:5px}
-.pbar-bg{background:var(--B);border-radius:4px;height:6px;margin-bottom:1.2rem;overflow:hidden}
-.pbar{background:var(--Y);height:100%;transition:width .4s ease}
-.opt{display:flex;align-items:center;gap:.85rem;padding:1rem;border:2px solid var(--B);border-radius:11px;cursor:pointer;background:#fff;margin-bottom:10px;transition:0.2s}
-.opt:hover:not(.dis){border-color:var(--Y);background:#fffef0;transform:translateX(3px)}
-.opt.dis{pointer-events:none;opacity:0.7}
-.opt.ok{border-color:var(--V);background:#f0fdf4}
-.opt.ko{border-color:var(--R);background:#fef2f2}
-.oltr{width:30px;height:30px;border-radius:50%;background:var(--B);display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:0.9rem;color:var(--D)}
-.opt.ok .oltr{background:var(--V);color:#fff}
-.opt.ko .oltr{background:var(--R);color:#fff}
-.fb{margin-top:1.3rem;padding:1.2rem;border-radius:10px;animation:slideIn 0.3s ease}
-.fb.ok{background:#f0fdf4;border-left:4px solid var(--V)}
-.fb.ko{background:#fef2f2;border-left:4px solid var(--R)}
-.fb-t{font-weight:700;margin-bottom:8px;font-size:1rem}
-.fb.ok .fb-t{color:var(--V)}
-.fb.ko .fb-t{color:var(--R)}
-.fb-body{font-size:0.95rem;line-height:1.6;color:var(--D2)}
-@keyframes slideIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
-.hidden{display:none!important}
+h1{font-family:'Montserrat';font-weight:800;font-size:2.2rem;letter-spacing:-1px;color:var(--D);text-align:center;margin-bottom:2rem}
+.card{background:#fff;border-radius:24px;padding:2.5rem;box-shadow:0 10px 30px rgba(0,0,0,0.08);border:1px solid rgba(250,250,0,0.3);display:none}
+.card.active{display:block;animation:fadeIn 0.4s ease-out}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.field{margin-bottom:1.5rem}
+label{display:block;margin-bottom:.5rem;font-weight:600;color:var(--G);font-size:0.9rem}
+input, select{width:100%;padding:14px 18px;border:2px solid var(--B);border-radius:12px;font-size:1rem;font-family:inherit;transition:all 0.2s}
+input:focus{outline:none;border-color:var(--Y);box-shadow:0 0 0 4px rgba(250,250,0,0.15)}
+.btn{width:100%;padding:16px;background:var(--Y);color:var(--D);border:none;border-radius:14px;font-weight:700;font-size:1rem;cursor:pointer;font-family:'Montserrat';transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:10px}
+.btn:hover{background:var(--Yd);transform:translateY(-2px);box-shadow:0 5px 15px rgba(215,215,0,0.3)}
+.btn:disabled{background:var(--B);cursor:not-allowed;transform:none;box-shadow:none}
+.opt{padding:14px 20px;border:2px solid var(--B);border-radius:14px;margin-bottom:12px;cursor:pointer;transition:0.2s;display:flex;align-items:center;font-weight:500;position:relative}
+.opt:hover{border-color:var(--Y);background:rgba(250,250,0,0.05)}
+.opt.ok{border-color:var(--V);background:#f0fdf4;color:#065f46}
+.opt.ko{border-color:var(--R);background:#fef2f2;color:#991b1b}
+.opt.dis{pointer-events:none}
+.fb{margin-top:1.5rem;padding:1.5rem;border-radius:16px;line-height:1.5;animation:slideUp 0.3s ease-out}
+.fb.ok{background:#f0fdf4;border:1px solid var(--V)}
+.fb.ko{background:#fef2f2;border:1px solid var(--R)}
+.fb-t{font-weight:700;margin-bottom:0.5rem;font-size:1.1rem}
+@keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
 <body>
 
 <div class="wrap">
     <header>
-        <svg width="60" height="60" viewBox="0 0 68 68" fill="none">fg
-            <circle cx="34" cy="34" r="32" fill="rgb(250,250,0)" stroke="#2c3e50" stroke-width="3"/>
-            <path d="M22 34L30 42L46 26" stroke="#2c3e50" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <h1>ENFOCADOS</h1>
-        <div class="sub">Plataforma de Preparación Profesional</div>
+        <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="rgb(250,250,0)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
     </header>
 
-    <div id="secLogin" class="card">
-        <h2 style="text-align:center;margin-bottom:1.5rem;font-family:'Montserrat'">Panel de Acceso</h2>
-        <div class="field">
-            <label>Correo Electrónico Autorizado</label>
-            <input type="email" id="inEmail" placeholder="ejemplo@correo.com">
-        </div>
-        <button class="btn" onclick="doLogin()">Entrar</button>
+    <div id="secLogin" class="card active">
+        <h1>ENFOCADOS</h1>
+        <div class="field"><label>Correo electrónico</label><input type="email" id="inEmail" placeholder="tu@correo.com"></div>
+        <button class="btn" onclick="doLogin()">Entrar al Sistema</button>
     </div>
 
-    <div id="secLoading" class="card hidden">
-        <div class="spin-wrap">
-            <div class="spin"></div>
-            <p id="loadMsg">Sincronizando con base de datos...</p>
-        </div>
+    <div id="secLoading" class="card" style="text-align:center">
+        <div style="font-size:2rem;margin-bottom:1rem">⏳</div>
+        <p>Cargando base de datos...</p>
     </div>
 
-    <div id="secConfig" class="card hidden">
-        <div class="ubar"><span id="cfgUser"></span><span style="font-size:0.8rem; cursor:pointer" onclick="location.reload()">Cerrar Sesión</span></div>
-        <h3 style="margin-bottom:1.2rem; font-family:'Montserrat'">Configuración del Test</h3>
-        <div class="field">
-            <label>Cantidad de preguntas</label>
-            <input type="number" id="inNum" value="10" min="1" max="100">
-        </div>
-        <div class="field">
-            <label>Materia o Bloque</label>
-            <select id="selMateria"><option value="">Todos los bloques</option></select>
-        </div>
-        <button class="btn" onclick="startExam()">Iniciar Evaluación</button>
+    <div id="secConfig" class="card">
+        <h2 id="cfgUser" style="margin-bottom:1.5rem"></h2>
+        <div class="field"><label>Número de preguntas</label><input type="number" id="inNum" value="10"></div>
+        <div class="field"><label>Materia</label><select id="selMateria"></select></div>
+        <button class="btn" onclick="startExam()">Empezar Test</button>
     </div>
 
-    <div id="secQ" class="card hidden">
-        <div class="qhdr"><span id="qNum" style="font-weight:800; color:var(--D)"></span><span id="qProg" style="font-size:0.9rem"></span></div>
-        <div class="pbar-bg"><div id="pBar" class="pbar"></div></div>
-        <div id="qTxt" style="font-size:1.15rem; font-weight:600; margin-bottom:1.5rem; color:var(--D2)"></div>
+    <div id="secQ" class="card">
+        <div id="qProg" style="color:var(--G);margin-bottom:1rem;font-weight:600;font-size:0.9rem"></div>
+        <div id="qTxt" style="font-size:1.2rem;font-weight:700;margin-bottom:1.5rem;color:var(--D2)"></div>
         <div id="optsWrap"></div>
         <div id="fbWrap"></div>
-        <button id="btnNext" class="btn" style="margin-top:1.5rem" onclick="nextQ()" disabled>Continuar</button>
+        <button id="btnNext" class="btn" style="margin-top:2rem" onclick="nextQ()" disabled>Continuar</button>
     </div>
 
-    <div id="secRes" class="card hidden" style="text-align:center">
-        <h2 style="font-family:'Montserrat'; margin-bottom:0.5rem">Evaluación Finalizada</h2>
-        <div id="rPct" style="font-size:4.5rem; font-weight:800; color:var(--D); margin:1rem 0"></div>
-        <div style="display:flex; justify-content:center; gap:2rem; margin-bottom:2rem">
-            <div><b id="rOk" style="color:var(--V);font-size:1.6rem"></b><br><small>Aciertos</small></div>
-            <div><b id="rKo" style="color:var(--R);font-size:1.6rem"></b><br><small>Errores</small></div>
-        </div>
-        <button class="btn" onclick="location.reload()">Reiniciar Plataforma</button>
+    <div id="secRes" class="card" style="text-align:center">
+        <h1>Resultados</h1>
+        <div id="rPct" style="font-size:4rem;font-weight:800;color:var(--D)"></div>
+        <button class="btn" onclick="location.reload()">Nuevo Test</button>
     </div>
 </div>
 
-<script> 
-const apiUrl = 'URL de implementación: 'https://script.google.com/macros/s/AKfycbxOW1CWs8n04Lek1Sm0mYZE_F6N0epkbvr0czCt_QzY7qdn65X3g1oya0Br2BtwXQBS/exec';
+<script>
+// URL NUEVA ACTUALIZADA
+const apiUrl = 'https://script.google.com/macros/s/AKfycbxTAER90Zz9hEsdXc1W86YZClONb09IrnrSbRb4K3vJ4nBVPKHlzfVPCnw7aDJF1ivW/exec';
 
-let allQuestions = [], exam = [], idx = 0, answers = [], correct = [], curUser = null;
+let allQ = [], exam = [], idx = 0, correctCount = 0;
 
 function showScreen(id) {
-    document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
-    document.getElementById(id).classList.remove('hidden');
+    document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
 }
 
-function fetchJSONP(url, callback) {
-    const callbackName = 'jsonp_' + Math.round(100000 * Math.random());
+// SISTEMA DE CONEXIÓN SEGURO PARA GITHUB Y MÓVIL
+function callGoogle(params, cb) {
+    const callbackName = 'jsonp_' + Math.round(Math.random() * 1000000);
     window[callbackName] = function(data) {
         delete window[callbackName];
         document.body.removeChild(script);
-        callback(data);
+        cb(data);
     };
     const script = document.createElement('script');
-    script.src = url + (url.indexOf('?') >= 0 ? '&' : '?') + 'callback=' + callbackName;
+    script.src = apiUrl + params + '&callback=' + callbackName;
     document.body.appendChild(script);
 }
 
-function parseTable(headers, rows) {
-    return rows.map(row => {
+function processData(res) {
+    if (!res || !res.rows) return [];
+    return res.rows.map(row => {
         let obj = {};
-        headers.forEach((h, i) => obj[h.toLowerCase().trim()] = row[i]);
+        res.headers.forEach((h, i) => { if(h) obj[h.toLowerCase().trim()] = row[i]; });
         return obj;
     });
 }
 
 function doLogin() {
     const email = document.getElementById('inEmail').value.trim().toLowerCase();
-    if(!email) return;
+    if(!email) return alert("Introduce tu email");
     showScreen('secLoading');
-    fetchJSONP(apiUrl + '?type=users', function(res) {
-        const users = parseTable(res.headers, res.rows);
-        const user = users.find(u => u.correo && u.correo.toLowerCase() === email);
+    callGoogle('?type=users', (res) => {
+        const users = processData(res);
+        const user = users.find(u => u.correo && u.correo.toLowerCase().trim() === email);
         if(user) {
-            curUser = user;
-            fetchJSONP(apiUrl + '?type=questions', function(qRes) {
-                allQuestions = parseTable(qRes.headers, qRes.rows);
-                setupConfig();
+            callGoogle('?type=questions', (qRes) => {
+                allQ = processData(qRes);
+                const mats = [...new Set(allQ.map(q => q.materia).filter(m => m))];
+                const sel = document.getElementById('selMateria');
+                sel.innerHTML = '<option value="">Todas las materias</option>';
+                mats.forEach(m => sel.innerHTML += `<option value="${m}">${m}</option>`);
+                document.getElementById('cfgUser').innerText = "Hola, " + (user.usuario || email) + " 👋";
                 showScreen('secConfig');
             });
         } else {
-            alert("Acceso denegado.");
+            alert("Usuario no registrado");
             showScreen('secLogin');
         }
     });
 }
 
-function setupConfig() {
-    document.getElementById('cfgUser').textContent = "Usuario: " + (curUser.usuario || curUser.nombre || "Autorizado");
-    const materias = [...new Set(allQuestions.map(q => q.materia).filter(m => m))];
-    const sel = document.getElementById('selMateria');
-    sel.innerHTML = '<option value="">Todos los bloques</option>';
-    materias.forEach(m => {
-        const opt = document.createElement('option');
-        opt.value = m; opt.textContent = m;
-        sel.appendChild(opt);
-    });
-}
-
 function startExam() {
-    const num = parseInt(document.getElementById('inNum').value);
     const mat = document.getElementById('selMateria').value;
-    const pool = mat ? allQuestions.filter(q => q.materia === mat) : allQuestions;
+    const num = parseInt(document.getElementById('inNum').value) || 10;
+    let pool = mat ? allQ.filter(q => q.materia === mat) : allQ;
     exam = pool.sort(() => 0.5 - Math.random()).slice(0, num);
-    idx = 0; answers = []; correct = [];
+    idx = 0; correctCount = 0;
     showQ();
     showScreen('secQ');
 }
 
 function showQ() {
     const q = exam[idx];
-    document.getElementById('qNum').textContent = "Pregunta " + (idx + 1);
-    document.getElementById('qProg').textContent = (idx + 1) + " de " + exam.length;
-    document.getElementById('pBar').style.width = ((idx + 1) / exam.length * 100) + "%";
-    document.getElementById('qTxt').textContent = q.pregunta;
-    
-    // ✅ SOLUCIÓN: Detecta AMBOS formatos (saltos de línea Y patrón a), b), c), d))
-    let rawText = q.opciones || "";
-    let opts = [];
-    
-    // Intenta primero con saltos de línea
-    let tempOpts = rawText.split('\n').map(o => o.trim()).filter(o => o.length > 0);
-    
-    if(tempOpts.length >= 2) {
-        // Tiene saltos de línea reales
-        opts = tempOpts;
-    } else {
-        // No tiene saltos de línea, busca patrón a), b), c), d)
-        // Divide por el patrón: letra minúscula + paréntesis de cierre
-        opts = rawText.split(/(?=[a-d]\))/i).map(o => o.trim()).filter(o => o.length > 0);
-    }
-    
-    // Limpia cada opción: quita la letra y paréntesis del inicio si existe
-    opts = opts.map(opt => opt.replace(/^[a-d]\)\s*/i, '').trim()).filter(o => o.length > 0);
-    
-    const wrap = document.getElementById('optsWrap');
-    wrap.innerHTML = "";
+    document.getElementById('qProg').innerText = `PREGUNTA ${idx + 1} DE ${exam.length}`;
+    document.getElementById('qTxt').innerText = q.pregunta;
     document.getElementById('fbWrap').innerHTML = "";
     document.getElementById('btnNext').disabled = true;
 
-    opts.forEach((optTxt, i) => {
-        const letter = String.fromCharCode(65 + i); // A, B, C, D
+    const opts = (q.opciones || '').split('\n').filter(o => o.trim());
+    const wrap = document.getElementById('optsWrap');
+    wrap.innerHTML = "";
 
+    opts.forEach(txt => {
         const div = document.createElement('div');
         div.className = 'opt';
-        div.innerHTML = `<div class="oltr">${letter}</div><div>${optTxt}</div>`;
-        div.dataset.letter = letter;
-        
+        div.innerText = txt.trim();
         div.onclick = () => {
-            if(answers[idx] !== undefined) return;
-            
-            const respCorrecta = (q.respuesta || "").trim().toUpperCase();
-            const isOk = letter === respCorrecta;
-            
-            answers[idx] = letter;
-            correct[idx] = isOk;
-            
-            Array.from(wrap.children).forEach(opt => opt.classList.add('dis'));
-            
-            Array.from(wrap.children).forEach(opt => {
-                if(opt.dataset.letter === respCorrecta) {
-                    opt.classList.add('ok');
-                }
-            });
-            
-            if(!isOk) {
+            document.querySelectorAll('.opt').forEach(o => o.classList.add('dis'));
+            const letra = txt.trim().substring(0, 1).toUpperCase();
+            const correcta = (q.respuesta || "").toString().trim().toUpperCase();
+            const esOk = (letra === correcta);
+
+            if(esOk) {
+                div.classList.add('ok');
+                correctCount++;
+            } else {
                 div.classList.add('ko');
+                Array.from(wrap.children).forEach(child => {
+                    if(child.innerText.trim().substring(0,1).toUpperCase() === correcta) child.classList.add('ok');
+                });
             }
-            
-            const explicacion = q.saber || q.motivacion || '¡Excelente trabajo! Sigue adelante 💪';
-            
+            const saber = q.saber || '¡Sigue así! 💪';
             document.getElementById('fbWrap').innerHTML = `
-                <div class="fb ${isOk ? 'ok' : 'ko'}">
-                    <div class="fb-t">${isOk ? '✓ ¡Respuesta Correcta!' : '✗ Respuesta Incorrecta'}</div>
-                    <div class="fb-body"><strong>Respuesta correcta:</strong> ${respCorrecta}<br><br><strong>💡 Explicación:</strong> ${explicacion}</div>
+                <div class="fb ${esOk ? 'ok' : 'ko'}">
+                    <div class="fb-t">${esOk ? '✓ ¡Correcto!' : '✗ Incorrecto'}</div>
+                    <p>${saber}</p>
                 </div>`;
-            
             document.getElementById('btnNext').disabled = false;
         };
         wrap.appendChild(div);
@@ -260,10 +189,7 @@ function nextQ() {
     idx++;
     if(idx < exam.length) showQ();
     else {
-        const ok = correct.filter(c => c).length;
-        document.getElementById('rOk').textContent = ok;
-        document.getElementById('rKo').textContent = exam.length - ok;
-        document.getElementById('rPct').textContent = Math.round(ok/exam.length*100) + "%";
+        document.getElementById('rPct').innerText = Math.round((correctCount/exam.length)*100) + "%";
         showScreen('secRes');
     }
 }
