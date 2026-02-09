@@ -6,7 +6,7 @@
 <title>ENFOCADOS - Plataforma de Oposiciones</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-/* --- ESTILOS ORIGINALES CONSERVADOS --- */
+/* --- ESTILOS ORIGINALES --- */
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--Y:rgb(250,250,0);--Yd:rgb(215,215,0);--D:#2c3e50;--D2:#1a252f;--V:#10b981;--R:#ef4444;--G:#64748b;--B:#e2e8f0}
 body{font-family:'Inter',sans-serif;background:linear-gradient(160deg,#fffef0 0%,#fff9c4 100%);min-height:100vh;color:#1e293b;line-height:1.6}
@@ -23,9 +23,6 @@ h1{font-family:'Montserrat',sans-serif;font-size:3rem;font-weight:800;color:var(
 .btn:hover{background:var(--Yd);transform:translateY(-1px)}
 .btn:disabled{background:#cbd5e1;color:#94a3b8;cursor:not-allowed}
 .ubar{background:linear-gradient(135deg,var(--Y),rgb(255,255,100));padding:.78rem 1.1rem;border-radius:10px;display:flex;justify-content:space-between;align-items:center;margin-bottom:1.4rem;font-weight:600}
-.spin-wrap{text-align:center;padding:2.8rem 0;color:var(--G)}
-.spin{border:3px solid #eee;border-top:3px solid var(--Y);border-radius:50%;width:40px;height:40px;animation:sp .9s linear infinite;margin:0 auto .9rem}
-@keyframes sp{to{transform:rotate(360deg)}}
 .qhdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;border-bottom:2px solid var(--Y);padding-bottom:5px}
 .pbar-bg{background:var(--B);border-radius:4px;height:6px;margin-bottom:1.2rem;overflow:hidden}
 .pbar{background:var(--Y);height:100%;transition:width .4s ease}
@@ -41,8 +38,9 @@ h1{font-family:'Montserrat',sans-serif;font-size:3rem;font-weight:800;color:var(
 .fb.ok{background:#f0fdf4;border-left:4px solid var(--V)}
 .fb.ko{background:#fef2f2;border-left:4px solid var(--R)}
 .fb-t{font-weight:700;margin-bottom:8px;font-size:1rem}
-.fb-body{font-size:0.95rem;line-height:1.6;color:var(--D2)}
+.fb-body{font-size:0.95rem;line-height:1.6;color:var(--D2); white-space: pre-wrap}
 .hidden{display:none!important}
+@keyframes slideIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
 <body>
@@ -67,21 +65,15 @@ h1{font-family:'Montserrat',sans-serif;font-size:3rem;font-weight:800;color:var(
     </div>
 
     <div id="secLoading" class="card hidden">
-        <div class="spin-wrap"><div class="spin"></div><p id="loadMsg">Sincronizando datos...</p></div>
+        <div style="text-align:center;padding:2rem"><p>Cargando cuestionario...</p></div>
     </div>
 
     <div id="secConfig" class="card hidden">
-        <div class="ubar"><span id="cfgUser"></span><span style="font-size:0.8rem; cursor:pointer" onclick="location.reload()">Cerrar Sesión</span></div>
+        <div class="ubar"><span id="cfgUser"></span><span style="font-size:0.8rem; cursor:pointer" onclick="location.reload()">CERRAR SESIÓN</span></div>
         <h3 style="margin-bottom:1.2rem; font-family:'Montserrat'">Configuración del Test</h3>
-        <div class="field">
-            <label>Cantidad de preguntas</label>
-            <input type="number" id="inNum" value="10">
-        </div>
-        <div class="field">
-            <label>Materia o Bloque</label>
-            <select id="selMateria"><option value="">Todos los bloques</option></select>
-        </div>
-        <button class="btn" onclick="startExam()">Iniciar Evaluación</button>
+        <div class="field"><label>Número de preguntas</label><input type="number" id="inNum" value="10"></div>
+        <div class="field"><label>Seleccionar Materia</label><select id="selMateria"><option value="">Todos los bloques</option></select></div>
+        <button class="btn" onclick="startExam()">Comenzar Evaluación</button>
     </div>
 
     <div id="secQ" class="card hidden">
@@ -90,18 +82,22 @@ h1{font-family:'Montserrat',sans-serif;font-size:3rem;font-weight:800;color:var(
         <div id="qTxt" style="font-size:1.15rem; font-weight:600; margin-bottom:1.5rem; color:var(--D2); white-space:pre-wrap"></div>
         <div id="optsWrap"></div>
         <div id="fbWrap"></div>
-        <button id="btnNext" class="btn" style="margin-top:1.5rem" onclick="nextQ()" disabled>Continuar</button>
+        <button id="btnNext" class="btn" style="margin-top:1.5rem" onclick="nextQ()" disabled>Siguiente</button>
     </div>
 
     <div id="secRes" class="card hidden" style="text-align:center">
-        <h2 style="font-family:'Montserrat'">Evaluación Finalizada</h2>
-        <div id="rPct" style="font-size:4.5rem; font-weight:800; color:var(--D); margin:1rem 0"></div>
-        <button class="btn" onclick="location.reload()">Reiniciar Plataforma</button>
+        <h2 style="font-family:'Montserrat'">Evaluación Completada</h2>
+        <div id="rPct" style="font-size:4.5rem; font-weight:800; color:var(--D); margin:0.5rem 0"></div>
+        <div style="margin-bottom:2rem; font-size:1.2rem">
+            <span style="color:var(--V); font-weight:700">Aciertos: <span id="rOk">0</span></span> | 
+            <span style="color:var(--R); font-weight:700">Fallos: <span id="rKo">0</span></span>
+        </div>
+        <button class="btn" onclick="location.reload()">Repetir Evaluación</button>
     </div>
 </div>
 
 <script>
-// ✅ CORRECCIÓN DE ID: He puesto la URL que funcionaba anteriormente
+// URL FUNCIONAL COMPROBADA
 const apiUrl = 'https://script.google.com/macros/s/AKfycbxTAER90Zz9hEsdXc1W86YZClONb09IrnrSbRb4K3vJ4nBVPKHlzfVPCnw7aDJF1ivW/exec';
 
 let allQuestions = [], exam = [], idx = 0, correctCount = 0;
@@ -123,9 +119,7 @@ function parseTable(res) {
     if(!res || !res.rows) return [];
     return res.rows.map(row => {
         let obj = {};
-        res.headers.forEach((h, i) => {
-            if(h) obj[h.toLowerCase().trim()] = row[i];
-        });
+        res.headers.forEach((h, i) => { if(h) obj[h.toLowerCase().trim()] = row[i]; });
         return obj;
     });
 }
@@ -171,13 +165,12 @@ function showQ() {
     document.getElementById('pBar').style.width = ((idx + 1) / exam.length * 100) + "%";
     document.getElementById('qTxt').textContent = q.pregunta;
 
-    // ✅ LÓGICA DE OPCIONES (CLAUDE)
     let rawText = (q.opciones || "").toString();
     let opts = [];
     let tempOpts = rawText.split('\n').map(o => o.trim()).filter(o => o.length > 0);
     if(tempOpts.length >= 2) opts = tempOpts;
     else opts = rawText.split(/(?=[a-d]\))/i).map(o => o.trim()).filter(o => o.length > 0);
-    opts = opts.map(opt => opt.replace(/^[a-d]\)\s*/i, '').trim());
+    opts = opts.map(opt => opt.replace(/^[a-d][\)\.]\s*/i, '').trim());
 
     const wrap = document.getElementById('optsWrap');
     wrap.innerHTML = "";
@@ -189,7 +182,7 @@ function showQ() {
         const letter = letters[i];
         const div = document.createElement('div');
         div.className = 'opt';
-        div.innerHTML = `<div class="oltr">${letter}</div><div>${txt}</div>`;
+        div.innerHTML = `<div class="oltr">${letter}</div><div style="flex:1">${txt}</div>`;
         div.onclick = () => {
             if(document.querySelector('.opt.dis')) return;
             const correcta = (q.respuesta || "").toString().trim().toUpperCase();
@@ -202,12 +195,11 @@ function showQ() {
                 if(o.querySelector('.oltr').innerText === correcta) o.classList.add('ok');
             });
 
-            // ✅ CARGA COLUMNA 'SABER'
-            const feedback = q.saber || q.motivacion || "¡Sigue adelante!";
+            const feedback = q.saber || q.motivacion || "¡Sigue adelante con tu preparación!";
             document.getElementById('fbWrap').innerHTML = `
                 <div class="fb ${isOk?'ok':'ko'}">
                     <div class="fb-t">${isOk?'✓ CORRECTO':'✗ INCORRECTO'}</div>
-                    <div class="fb-body"><b>Respuesta: ${correcta}</b><br>${feedback}</div>
+                    <div class="fb-body"><b>Respuesta: ${correcta}</b><br><br>${feedback}</div>
                 </div>`;
             document.getElementById('btnNext').disabled = false;
         };
@@ -219,6 +211,8 @@ function nextQ() {
     idx++;
     if(idx < exam.length) showQ();
     else {
+        document.getElementById('rOk').textContent = correctCount;
+        document.getElementById('rKo').textContent = exam.length - correctCount;
         document.getElementById('rPct').textContent = Math.round(correctCount/exam.length*100) + "%";
         showScreen('secRes');
     }
