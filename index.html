@@ -66,7 +66,10 @@ h1{font-family:'Montserrat',sans-serif;font-size:2.8rem;font-weight:800;color:va
     <div id="secConfig" class="card hidden">
         <div class="ubar"><span id="cfgUser"></span><span style="font-size:0.8rem;cursor:pointer" onclick="resetApp(true)">SALIR</span></div>
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px">
-            <div class="field"><label>Nº Preguntas</label><input type="number" id="inNum" value="10"></div>
+            <div class="field">
+                <label>Nº Preguntas (10-100)</label>
+                <input type="number" id="inNum" value="10" min="10" max="100">
+            </div>
             <div class="field">
                 <label>Modo Feedback</label>
                 <select id="inFeedback">
@@ -115,6 +118,7 @@ const apiUrl = 'https://script.google.com/macros/s/AKfycbxTAER90Zz9hEsdXc1W86YZC
 let allQuestions = [], exam = [], idx = 0, userAnswers = [], isReviewing = false;
 let questionsWithMistakes = [], showInstantFeedback = true;
 
+// --- FUNCIONES DE NAVEGACIÓN Y CARGA ---
 function showScreen(id) {
     document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
     document.getElementById(id).classList.remove('hidden');
@@ -136,11 +140,12 @@ function parseTable(res) {
     });
 }
 
+// LOGIN SEGURO (MÉTODO SIMPLE: SI NO ESTÁ EN LA TABLA, NO ENTRA)
 function doLogin() {
     const email = document.getElementById('inEmail').value.trim().toLowerCase();
     const btn = document.getElementById('btnLogin');
     if(!email) return;
-    btn.textContent = "Cargando...";
+    btn.textContent = "Verificando...";
     fetchJSONP(apiUrl + '?type=users', (res) => {
         const users = parseTable(res);
         const user = users.find(u => u.correo && u.correo.toLowerCase().trim() === email);
@@ -182,11 +187,25 @@ function updateStartButton() {
     btn.textContent = sel.length === 1 ? "EXAMEN SINGULAR" : (sel.length > 1 ? "EXAMEN ÓMNIBUS" : "Selecciona una materia");
 }
 
+// --- AJUSTE SOLICITADO: VALIDACIÓN DE Nº DE PREGUNTAS ---
 function startExam() {
-    const num = parseInt(document.getElementById('inNum').value) || 10;
+    let numInput = document.getElementById('inNum');
+    let num = parseInt(numInput.value);
+
+    // Validación de rango (Mínimo 10, Máximo 100)
+    if (isNaN(num) || num < 10) {
+        num = 10;
+        numInput.value = 10;
+    } else if (num > 100) {
+        num = 100;
+        numInput.value = 100;
+    }
+
     showInstantFeedback = document.getElementById('inFeedback').value === "con";
     const selectedMats = Array.from(document.querySelectorAll('input[name="materia"]:checked')).map(cb => cb.value);
     let pool = allQuestions.filter(q => selectedMats.includes(q.materia));
+    
+    // Mezcla y corte
     exam = pool.sort(() => 0.5 - Math.random()).slice(0, num);
     idx = 0; isReviewing = false;
     userAnswers = new Array(exam.length).fill(null);
@@ -195,33 +214,27 @@ function startExam() {
     showScreen('secQ');
 }
 
+// --- RESTO DE FUNCIONES DE EXAMEN ---
 function showQ() {
     const q = exam[idx], savedAns = userAnswers[idx];
     document.getElementById('qNum').textContent = "Pregunta " + (idx + 1);
     document.getElementById('qProg').textContent = (idx + 1) + "/" + exam.length;
     document.getElementById('pBar').style.width = ((idx + 1) / exam.length * 100) + "%";
     document.getElementById('qTxt').textContent = q.pregunta;
-    
     document.getElementById('btnPrev').disabled = (idx === 0);
-    
-    // AJUSTE: El botón siguiente siempre está habilitado para permitir blancos
     document.getElementById('btnNext').disabled = false;
-
     const wrap = document.getElementById('optsWrap');
     wrap.innerHTML = ""; document.getElementById('fbWrap').innerHTML = "";
     const letters = ['A', 'B', 'C', 'D'];
     const correcta = (q.respuesta || "").toString().trim().toUpperCase();
-
     let raw = (q.opciones || "").toString();
     let opts = raw.split('\n').map(o => o.trim()).filter(o => o.length > 0);
     if(opts.length < 2) opts = raw.split(/(?=[a-d]\))/i).map(o => o.trim()).filter(o => o.length > 0);
     opts = opts.map(o => o.replace(/^[a-d][\)\.]\s*/i, '').trim());
-
     opts.forEach((txt, i) => {
         const letter = letters[i];
         const div = document.createElement('div');
         div.className = 'opt';
-        
         if(savedAns !== null && (isReviewing || showInstantFeedback)) {
             div.classList.add('dis');
             if(letter === correcta) div.classList.add('ok');
@@ -234,18 +247,13 @@ function showQ() {
         else if (savedAns !== null && !showInstantFeedback && !isReviewing) {
             if (letter === savedAns) div.classList.add('selected-no-fb');
         }
-
         div.innerHTML = `<div class="oltr">${letter}</div><div style="flex:1">${txt}</div>`;
-        
         div.onclick = () => { 
             if(!isReviewing) {
-                // AJUSTE: Permitimos cambiar respuesta o desmarcar (volver a null) pulsando la misma
                 if(!showInstantFeedback) {
                     userAnswers[idx] = (userAnswers[idx] === letter) ? null : letter;
                     showQ();
                 } else if(savedAns === null || savedAns === letter) {
-                    // En modo feedback inmediato, si ya respondió no puede cambiar a OTRA, 
-                    // pero con este ajuste permitimos que si pulsa la misma se "desmarque"
                     userAnswers[idx] = (userAnswers[idx] === letter) ? null : letter;
                     showQ();
                 }
@@ -253,14 +261,11 @@ function showQ() {
         };
         wrap.appendChild(div);
     });
-
-    // Mostrar feedback si hay respuesta o estamos revisando
     if(isReviewing || (savedAns !== null && showInstantFeedback)) {
         const isOk = (savedAns === correcta);
         const isBlank = (savedAns === null);
         let fbType = isOk ? 'ok' : (isBlank ? 'wa' : 'ko');
         let fbTitle = isOk ? '✓ CORRECTO' : (isBlank ? '⚠ EN BLANCO' : '✗ INCORRECTO');
-        
         document.getElementById('fbWrap').innerHTML = `<div class="fb ${fbType}"><div class="fb-t">${fbTitle}</div><div class="fb-body"><b>Respuesta: ${correcta}</b><br><br>${q.saber || q.motivacion || "Sin detalles."}</div></div>`;
     }
 }
@@ -278,27 +283,15 @@ function finishExam() {
     questionsWithMistakes = [];
     userAnswers.forEach((ans, i) => {
         const cor = (exam[i].respuesta || "").toString().trim().toUpperCase();
-        if(ans === cor) {
-            oks++;
-        } else if (ans === null) {
-            was++;
-            questionsWithMistakes.push({ q: exam[i], a: ans });
-        } else {
-            kos++;
-            questionsWithMistakes.push({ q: exam[i], a: ans });
-        }
+        if(ans === cor) { oks++; } else if (ans === null) { was++; questionsWithMistakes.push({ q: exam[i], a: ans }); } else { kos++; questionsWithMistakes.push({ q: exam[i], a: ans }); }
     });
-
     document.getElementById('rOk').textContent = oks;
     document.getElementById('rKo').textContent = kos;
     document.getElementById('rWa').textContent = was;
     document.getElementById('rPct').textContent = Math.round(oks/exam.length*100) + "%";
-
     const btnArea = document.getElementById('resButtons');
     btnArea.innerHTML = `<button class="btn" onclick="resetApp(false)">Nueva Evaluación</button><button class="btn btn-alt" onclick="reviewFull()">Revisar Todo</button>`;
-    if(questionsWithMistakes.length > 0) {
-        btnArea.innerHTML += `<button class="btn btn-outline" onclick="reviewOnlyMistakes()">Revisar errores/blancos (${questionsWithMistakes.length})</button>`;
-    }
+    if(questionsWithMistakes.length > 0) { btnArea.innerHTML += `<button class="btn btn-outline" onclick="reviewOnlyMistakes()">Revisar errores/blancos (${questionsWithMistakes.length})</button>`; }
     showScreen('secRes');
 }
 
