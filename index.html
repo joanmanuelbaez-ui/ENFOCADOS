@@ -8,7 +8,7 @@
 <style>
 /* --- ESTILOS --- */
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--Y:rgb(250,250,0);--Yd:rgb(215,215,0);--D:#2c3e50;--D2:#1a252f;--V:#10b981;--R:#ef4444;--G:#64748b;--B:#e2e8f0}
+:root{--Y:rgb(250,250,0);--Yd:rgb(215,215,0);--D:#2c3e50;--D2:#1a252f;--V:#10b981;--R:#ef4444;--G:#64748b;--B:#e2e8f0;--W:#f59e0b}
 body{font-family:'Inter',sans-serif;background:linear-gradient(160deg,#fffef0 0%,#fff9c4 100%);min-height:100vh;color:#1e293b;line-height:1.6}
 .wrap{max-width:860px;margin:0 auto;padding:1.8rem 1.2rem}
 header{text-align:center;margin-bottom:1.6rem}
@@ -42,6 +42,7 @@ h1{font-family:'Montserrat',sans-serif;font-size:2.8rem;font-weight:800;color:va
 .fb{margin-top:1.3rem;padding:1.2rem;border-radius:10px}
 .fb.ok{background:#f0fdf4;border-left:4px solid var(--V)}
 .fb.ko{background:#fef2f2;border-left:4px solid var(--R)}
+.fb.wa{background:#fffbeb;border-left:4px solid var(--W)}
 .fb-t{font-weight:700;margin-bottom:8px}
 .fb-body{font-size:0.95rem;color:var(--D2);white-space:pre-wrap}
 .hidden{display:none!important}
@@ -92,7 +93,7 @@ h1{font-family:'Montserrat',sans-serif;font-size:2.8rem;font-weight:800;color:va
         <div id="fbWrap"></div>
         <div style="display:flex; gap:10px; margin-top:1.5rem">
             <button id="btnPrev" class="btn btn-alt" style="flex:1" onclick="prevQ()">Anterior</button>
-            <button id="btnNext" class="btn" style="flex:1" onclick="nextQ()" disabled>Siguiente</button>
+            <button id="btnNext" class="btn" style="flex:1" onclick="nextQ()">Siguiente</button>
         </div>
         <button id="btnBackRes" class="btn btn-outline hidden" style="width:100%" onclick="showScreen('secRes')">← Volver a Resultados</button>
     </div>
@@ -100,7 +101,11 @@ h1{font-family:'Montserrat',sans-serif;font-size:2.8rem;font-weight:800;color:va
     <div id="secRes" class="card hidden" style="text-align:center">
         <h2>Resultado</h2>
         <div id="rPct" style="font-size:4rem;font-weight:800;margin:1rem 0"></div>
-        <div style="margin-bottom:2rem">Aciertos: <span id="rOk" style="color:var(--V);font-weight:700"></span> | Fallos: <span id="rKo" style="color:var(--R);font-weight:700"></span></div>
+        <div style="margin-bottom:2rem">
+            Aciertos: <span id="rOk" style="color:var(--V);font-weight:700"></span> | 
+            Fallos: <span id="rKo" style="color:var(--R);font-weight:700"></span> | 
+            Blancos: <span id="rWa" style="color:var(--W);font-weight:700"></span>
+        </div>
         <div id="resButtons" style="display:flex; flex-direction:column; gap:10px"></div>
     </div>
 </div>
@@ -198,7 +203,9 @@ function showQ() {
     document.getElementById('qTxt').textContent = q.pregunta;
     
     document.getElementById('btnPrev').disabled = (idx === 0);
-    document.getElementById('btnNext').disabled = (savedAns === null && !isReviewing);
+    
+    // AJUSTE: El botón siguiente siempre está habilitado para permitir blancos
+    document.getElementById('btnNext').disabled = false;
 
     const wrap = document.getElementById('optsWrap');
     wrap.innerHTML = ""; document.getElementById('fbWrap').innerHTML = "";
@@ -220,6 +227,10 @@ function showQ() {
             if(letter === correcta) div.classList.add('ok');
             if(letter === savedAns && letter !== correcta) div.classList.add('ko');
         } 
+        else if(savedAns === null && isReviewing) {
+            div.classList.add('dis');
+            if(letter === correcta) div.classList.add('ok');
+        }
         else if (savedAns !== null && !showInstantFeedback && !isReviewing) {
             if (letter === savedAns) div.classList.add('selected-no-fb');
         }
@@ -228,11 +239,14 @@ function showQ() {
         
         div.onclick = () => { 
             if(!isReviewing) {
+                // AJUSTE: Permitimos cambiar respuesta o desmarcar (volver a null) pulsando la misma
                 if(!showInstantFeedback) {
-                    userAnswers[idx] = letter;
+                    userAnswers[idx] = (userAnswers[idx] === letter) ? null : letter;
                     showQ();
-                } else if(savedAns === null) {
-                    userAnswers[idx] = letter;
+                } else if(savedAns === null || savedAns === letter) {
+                    // En modo feedback inmediato, si ya respondió no puede cambiar a OTRA, 
+                    // pero con este ajuste permitimos que si pulsa la misma se "desmarque"
+                    userAnswers[idx] = (userAnswers[idx] === letter) ? null : letter;
                     showQ();
                 }
             }
@@ -240,9 +254,14 @@ function showQ() {
         wrap.appendChild(div);
     });
 
-    if(savedAns !== null && (isReviewing || showInstantFeedback)) {
+    // Mostrar feedback si hay respuesta o estamos revisando
+    if(isReviewing || (savedAns !== null && showInstantFeedback)) {
         const isOk = (savedAns === correcta);
-        document.getElementById('fbWrap').innerHTML = `<div class="fb ${isOk?'ok':'ko'}"><div class="fb-t">${isOk?'✓ CORRECTO':'✗ INCORRECTO'}</div><div class="fb-body"><b>Respuesta: ${correcta}</b><br><br>${q.saber || q.motivacion || "Sin detalles."}</div></div>`;
+        const isBlank = (savedAns === null);
+        let fbType = isOk ? 'ok' : (isBlank ? 'wa' : 'ko');
+        let fbTitle = isOk ? '✓ CORRECTO' : (isBlank ? '⚠ EN BLANCO' : '✗ INCORRECTO');
+        
+        document.getElementById('fbWrap').innerHTML = `<div class="fb ${fbType}"><div class="fb-t">${fbTitle}</div><div class="fb-body"><b>Respuesta: ${correcta}</b><br><br>${q.saber || q.motivacion || "Sin detalles."}</div></div>`;
     }
 }
 
@@ -255,19 +274,30 @@ function nextQ() {
 function prevQ() { if(idx > 0) { idx--; showQ(); } }
 
 function finishExam() {
-    let oks = 0; questionsWithMistakes = [];
+    let oks = 0, kos = 0, was = 0;
+    questionsWithMistakes = [];
     userAnswers.forEach((ans, i) => {
         const cor = (exam[i].respuesta || "").toString().trim().toUpperCase();
-        if(ans === cor) oks++;
-        else questionsWithMistakes.push({ q: exam[i], a: ans });
+        if(ans === cor) {
+            oks++;
+        } else if (ans === null) {
+            was++;
+            questionsWithMistakes.push({ q: exam[i], a: ans });
+        } else {
+            kos++;
+            questionsWithMistakes.push({ q: exam[i], a: ans });
+        }
     });
+
     document.getElementById('rOk').textContent = oks;
-    document.getElementById('rKo').textContent = exam.length - oks;
+    document.getElementById('rKo').textContent = kos;
+    document.getElementById('rWa').textContent = was;
     document.getElementById('rPct').textContent = Math.round(oks/exam.length*100) + "%";
+
     const btnArea = document.getElementById('resButtons');
     btnArea.innerHTML = `<button class="btn" onclick="resetApp(false)">Nueva Evaluación</button><button class="btn btn-alt" onclick="reviewFull()">Revisar Todo</button>`;
     if(questionsWithMistakes.length > 0) {
-        btnArea.innerHTML += `<button class="btn btn-outline" onclick="reviewOnlyMistakes()">Revisar solo fallos (${questionsWithMistakes.length})</button>`;
+        btnArea.innerHTML += `<button class="btn btn-outline" onclick="reviewOnlyMistakes()">Revisar errores/blancos (${questionsWithMistakes.length})</button>`;
     }
     showScreen('secRes');
 }
