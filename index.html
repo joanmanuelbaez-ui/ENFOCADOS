@@ -23,9 +23,12 @@ h1{font-family:'Montserrat',sans-serif;font-size:2.8rem;font-weight:800;color:va
 .btn:hover:not(:disabled){background:var(--Yd);transform:translateY(-1px)}
 .btn:disabled{background:#cbd5e1;color:#94a3b8;cursor:not-allowed;box-shadow:none}
 .btn-alt{background:#fff;border:2px solid var(--Y);color:var(--D)}
-.btn-outline{background:transparent; border: 2px solid var(--D); color: var(--D); margin-top: 15px}
+.btn-outline{border: 2px solid var(--D); color: var(--D); margin-top: 15px}
+
+/* AJUSTE SOLICITADO: Botón Terminar ahora es AMARILLO con letras oscuras */
 .btn-danger{background:var(--Y); color:var(--D); border: 2px solid var(--D); box-shadow: 0 3px 8px rgba(0,0,0,0.1); margin-top: 10px}
 .btn-danger:hover{background:var(--Yd)}
+
 .ubar{background:linear-gradient(135deg,var(--Y),rgb(255,255,100));padding:.78rem 1.1rem;border-radius:10px;display:flex;justify-content:space-between;align-items:center;margin-bottom:1.4rem;font-weight:600}
 .multi-box{border:2px solid var(--B);border-radius:10px;padding:10px;max-height:200px;overflow-y:auto;background:#f8fafc}
 .m-item{display:flex;align-items:center;padding:8px;gap:10px;cursor:pointer;border-bottom:1px solid #edf2f7;font-size:0.95rem}
@@ -60,7 +63,7 @@ h1{font-family:'Montserrat',sans-serif;font-size:2.8rem;font-weight:800;color:va
     </header>
 
     <div id="secLogin" class="card">
-        <h2 style="text-align:center;margin-bottom:1.5rem">Acceso</h2>
+      <h2 style="text-align:center;margin-bottom:1.5rem">Acceso</h2>
         <div class="field"><label>Email</label><input type="email" id="inEmail" placeholder="tu@email.com"></div>
         <button id="btnLogin" class="btn" style="width:100%" onclick="doLogin()">Entrar</button>
     </div>
@@ -80,7 +83,7 @@ h1{font-family:'Montserrat',sans-serif;font-size:2.8rem;font-weight:800;color:va
                 </select>
             </div>
         </div>
-        <div class="field">
+      <div class="field">
             <div style="display:flex; justify-content:space-between; margin-bottom:8px">
                 <label style="font-weight:600; font-size:0.9rem">Materias</label>
                 <button class="btn-sm" style="border:none; cursor:pointer" onclick="toggleAll()">Todas/Ninguna</button>
@@ -94,16 +97,13 @@ h1{font-family:'Montserrat',sans-serif;font-size:2.8rem;font-weight:800;color:va
         <div class="qhdr"><span id="qNum" style="font-weight:800"></span><span id="qProg"></span></div>
         <div class="pbar-bg"><div id="pBar" class="pbar"></div></div>
         <div id="qTxt" style="font-size:1.1rem;font-weight:600;margin-bottom:1.5rem;white-space:pre-wrap"></div>
-        <div id="optsWrap"></div>
+      <div id="optsWrap"></div>
         <div id="fbWrap"></div>
-        
         <div style="display:flex; gap:10px; margin-top:1.5rem">
             <button id="btnPrev" class="btn btn-alt" style="flex:1" onclick="prevQ()">Anterior</button>
             <button id="btnNext" class="btn" style="flex:1" onclick="nextQ()">Siguiente</button>
         </div>
-        
         <button id="btnFinishNow" class="btn btn-danger" style="width:100%" onclick="forceFinish()">Terminar Intento</button>
-        
         <button id="btnBackRes" class="btn btn-outline hidden" style="width:100%" onclick="showScreen('secRes')">← Volver a Resultados</button>
     </div>
 
@@ -196,11 +196,9 @@ function startExam() {
     let num = parseInt(numInput.value);
     if (isNaN(num) || num < 10) { num = 10; numInput.value = 10; }
     else if (num > 100) { num = 100; numInput.value = 100; }
-
     showInstantFeedback = document.getElementById('inFeedback').value === "con";
     const selectedMats = Array.from(document.querySelectorAll('input[name="materia"]:checked')).map(cb => cb.value);
     let pool = allQuestions.filter(q => selectedMats.includes(q.materia));
-    
     exam = pool.sort(() => 0.5 - Math.random()).slice(0, num);
     idx = 0; isReviewing = false;
     userAnswers = new Array(exam.length).fill(null);
@@ -218,17 +216,15 @@ function showQ() {
     document.getElementById('qTxt').textContent = q.pregunta;
     document.getElementById('btnPrev').disabled = (idx === 0);
     document.getElementById('btnNext').textContent = (idx === exam.length - 1 && !isReviewing) ? "Finalizar" : "Siguiente";
-    
     const wrap = document.getElementById('optsWrap');
-    wrap.innerHTML = ""; document.getElementById('fbWrap').innerHTML = "";
+    wrap.innerHTML = "";
+    document.getElementById('fbWrap').innerHTML = "";
     const letters = ['A', 'B', 'C', 'D'];
     const correcta = (q.respuesta || "").toString().trim().toUpperCase();
-    
     let raw = (q.opciones || "").toString();
     let opts = raw.split('\n').map(o => o.trim()).filter(o => o.length > 0);
     if(opts.length < 2) opts = raw.split(/(?=[a-d]\))/i).map(o => o.trim()).filter(o => o.length > 0);
     opts = opts.map(o => o.replace(/^[a-d][\)\.]\s*/i, '').trim());
-
     opts.forEach((txt, i) => {
         const letter = letters[i];
         const div = document.createElement('div');
@@ -259,7 +255,6 @@ function showQ() {
         };
         wrap.appendChild(div);
     });
-    
     if(isReviewing || (savedAns !== null && showInstantFeedback)) {
         const isOk = (savedAns === correcta);
         const isBlank = (savedAns === null);
@@ -290,18 +285,15 @@ function finishExam() {
         else if (ans === null) { was++; questionsWithMistakes.push({ q: exam[i], a: ans }); } 
         else { kos++; questionsWithMistakes.push({ q: exam[i], a: ans }); }
     });
-    
     document.getElementById('rOk').textContent = oks;
     document.getElementById('rKo').textContent = kos;
     document.getElementById('rWa').textContent = was;
     document.getElementById('rPct').textContent = Math.round(oks/exam.length*100) + "%";
-    
     document.getElementById('btnFinishNow').classList.add('hidden');
-    
     const btnArea = document.getElementById('resButtons');
     btnArea.innerHTML = `<button class="btn" onclick="resetApp(false)">Nueva Evaluación</button><button class="btn btn-alt" onclick="reviewFull()">Revisar Todo (${exam.length})</button>`;
     if(questionsWithMistakes.length > 0) { 
-        btnArea.innerHTML += `<button class="btn btn-outline" onclick="reviewOnlyMistakes()">Revisar errores/blancos (${questionsWithMistakes.length})</button>`; 
+        btnArea.innerHTML += `<button class="btn btn-outline" onclick="reviewOnlyMistakes()">Revisar errores/blancos (${questionsWithMistakes.length})</button>`;
     }
     showScreen('secRes');
 }
@@ -311,7 +303,8 @@ function reviewFull() { isReviewing = true; idx = 0; document.getElementById('bt
 function reviewOnlyMistakes() {
     exam = questionsWithMistakes.map(m => m.q);
     userAnswers = questionsWithMistakes.map(m => m.a);
-    isReviewing = true; idx = 0;
+    isReviewing = true;
+    idx = 0;
     document.getElementById('btnBackRes').classList.remove('hidden');
     document.getElementById('btnFinishNow').classList.add('hidden');
     showQ(); showScreen('secQ');
@@ -319,7 +312,8 @@ function reviewOnlyMistakes() {
 
 function resetApp(logout) {
     if(logout) location.reload();
-    else { exam=[]; userAnswers=[]; isReviewing=false; showScreen('secConfig'); updateStartButton(); }
+    else { exam=[]; userAnswers=[]; isReviewing=false;
+    showScreen('secConfig'); updateStartButton(); }
 }
 </script>
 </body>
